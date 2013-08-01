@@ -1,6 +1,6 @@
 if (Meteor.isClient) {
   Template.hello.greeting = function () {
-    return "Welcome to seo-vietnam.";
+    return "This is the future application staging server of the project.";
   };
 
   Template.hello.events({
