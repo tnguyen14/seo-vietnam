@@ -1,0 +1,153 @@
+<template name="apply">
+	<h1>Your Application</h1>
+	<div class="form">
+		{{> personal-info}}
+		{{> education}}
+		{{> qualifications}}
+		{{> professional}}
+		{{> essay-passion}}
+		{{> essay-community}}
+		{{> essay-leadership}}
+		{{> completed}}
+	</div>
+</template>
+
+<template name="personal-info">
+	<form id="personal-info" name="personal-info" class="fragment current" method="post" action="">
+	<h2>Personal Information</h2>
+		<div class="field-group">
+			<label for="firstname">First Name</label>
+			<input type="text" name="firstname" placeholder="e.g. Tri" value="{{firstname}}" />
+			<label for="lastname">Last Name</label>
+			<input type="text" name="lastname" placeholder="e.g. Nguyen" value="{{lastname}}" />
+			<label for="middlename">Middle Name</label>
+			<input type="text" name="middlename" placeholder="e.g. Thi Phuoc" value="{{middlename}}" />
+		</div>
+		<label for="citizenship">Citizenship</label>
+		<select name="citizenship">
+			{{#each countries}}
+				<option>{{name}}</option>
+			{{/each}}
+		</select>
+		<div class="field-group">
+			<label for="tel">Phone number</label>
+			<input type="tel" name="tel" placeholder="+84 934 132313"/>
+		</div>
+		<button type="submit" class="btn btn-primary next-fragment">Next</button>
+	</form>
+</template>
+
+<template name="education">
+	<form id="education" name="education" class="fragment next" method="post" action="">
+	<h2>Education</h2>
+		<label for="college">College/ University</label>
+		<select class="form-control" name="college" placeholder="Select a College/ University">
+			{{#each colleges}}
+				<option value="">{{name}}</option>
+			{{/each}}
+		</select>
+		<label for="major">Major</label>
+		<select class="form-control" name="major" placeholder="Select a Major">
+			{{#each majors}}
+				<option value="{{slug}}">{{name}}</option>
+			{{/each}}
+		</select>
+		<button class="btn btn-default prev-fragment">Back</button>
+
+		<button type="submit" class="btn btn-primary next-fragment">Next</button>
+	</form>
+</template>
+
+<template name="qualifications">
+	<form id="qualifications" name="qualifications" class="fragment next" method="post" action="">
+	<h2>Qualifications</h2>
+		<div class="field-group">
+			{{#each languages}}
+				<label for="language-{{slug}}">Fluency in {{name}}</label>
+				<select class="form-control" name="language-{{slug}}">
+					<option value="none">None</option>
+					<option value="fluent">Fluent</option>
+				</select>
+			{{/each}}
+		</div>
+
+		<div class="field-group">
+			<h3>SAT Scores</h3>
+			<label for="sat-writing">Writing</label>
+			<input type="number" name="sat-writing"/>
+			<label for="sat-reading">Reading</label>
+			<input type="number" name="sat-reading"/>
+			<label for="sat-math">Math</label>
+			<input type="number" name="sat-math"/>
+		</div>
+		<button class="btn btn-default prev-fragment">Back</button>
+
+		<button type="submit" class="btn btn-primary next-fragment">Next</button>
+	</form>
+</template>
+
+<template name="professional">
+	<form id="professional" name="professional" class="fragment next" method="post" action="">
+		<h2>Professional Interests</h2>
+		<div class="field-group">
+			<label for="industries">Industries</label>
+			<select class="form-control" name="industries">
+			</select>
+		</div>
+		<div class="field-group">
+			<label for="functions">Functions</label>
+			<select class="form-control" name="functions">
+			</select>
+		</div>
+		<button class="btn btn-default prev-fragment">Back</button>
+
+		<button type="submit" class="btn btn-primary next-fragment">Next</button>
+	</form>
+</template>
+
+<template name="essay-passion">
+	<form id="essay-passion" name="essay-passion" class="fragment next" method="post" action="">
+		<h2>Essays</h2>
+		<div class="field-group">
+			<label for="passion">Tell us about something you are passionate about</label>
+			<textarea name="passion"></textarea>
+		</div>
+		<button class="btn btn-default prev-fragment">Back</button>
+
+		<button type="submit" class="btn btn-primary next-fragment">Next</button>
+	</form>
+</template>
+
+<template name="essay-community">
+	<form id="essay-community" name="essay-community" class="fragment next" method="post" action="">
+		<h2>Essays</h2>
+		<div class="field-group">
+			<label for="community">Have you had any community-oriented experience that shaped your perspective?</label>
+			<textarea name="commuity"></textarea>
+		</div>
+		<button class="btn btn-default prev-fragment">Back</button>
+
+		<button type="submit" class="btn btn-primary next-fragment">Next</button>
+	</form>
+</template>
+
+<template name="essay-leadership">
+	<form id="essay-leadership" name="essay-leadership" class="fragment next" method="post" action="">
+		<h2>Essays</h2>
+		<div class="field-group">
+			<label for="leadership">Are you more of a leader or a follower? Why do you think so?</label>
+			<textarea name="leadership"></textarea>
+		</div>
+		<button class="btn btn-default prev-fragment">Back</button>
+
+		<button type="submit" class="btn btn-primary next-fragment">Next</button>
+	</form>
+</template>
+
+<template name="completed">
+	<div id="completed" class="fragment next">
+		<h2 class="thank-you">Thank you!</h2>
+		<p>You have completed the application process.</p>
+		<button class="btn review">Review your application</button>
+	</div>
+</template>

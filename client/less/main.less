@@ -1,0 +1,24 @@
+@import "public/bower_components/bootstrap/less/bootstrap.less";
+
+.form {
+	position: relative;
+	padding: 5em;
+}
+.fragment {
+	position: absolute;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	&.prev {
+		left: -100%;
+		opacity: 0;
+	}
+	&.next {
+		left: 100%;
+		opacity: 0;
+	}
+	&.current {
+		opacity: 1;
+		position: relative;
+		top: 0;
+	}
+}
