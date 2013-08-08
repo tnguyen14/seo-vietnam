@@ -45,34 +45,34 @@ Template.qualifications.events = {
 }
 Template.professional.events = {
 	'click .next-fragment': function(e) {
-		navigate(e, 'essay-passion', true);
+		navigate(e, 'passion', true);
 	},
 	'click .prev-fragment': function(e) {
 		navigate(e, 'qualifications', false);
 	}
 }
-Template['essay-passion'].events = {
+Template.passion.events = {
 	'click .next-fragment': function(e) {
-		navigate(e, 'essay-community', true);
+		navigate(e, 'community', true);
 	},
 	'click .prev-fragment': function(e) {
 		navigate(e, 'professional', false);
 	}
 }
-Template['essay-community'].events = {
+Template.community.events = {
 	'click .next-fragment': function(e) {
-		navigate(e, 'essay-leadership', true);
+		navigate(e, 'leadership', true);
 	},
 	'click .prev-fragment': function(e) {
-		navigate(e, 'essay-passion', false);
+		navigate(e, 'passion', false);
 	}
 }
-Template['essay-leadership'].events = {
+Template.leadership.events = {
 	'click .next-fragment': function(e) {
 		navigate(e, 'completed', true);
 	},
 	'click .prev-fragment': function(e) {
-		navigate(e, 'essay-community', false);
+		navigate(e, 'community', false);
 	}
 }
 Template.completed.events = {

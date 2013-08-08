@@ -5,9 +5,9 @@
 		{{> education}}
 		{{> qualifications}}
 		{{> professional}}
-		{{> essay-passion}}
-		{{> essay-community}}
-		{{> essay-leadership}}
+		{{> passion}}
+		{{> community}}
+		{{> leadership}}
 		{{> completed}}
 	</div>
 </template>
@@ -105,12 +105,12 @@
 	</form>
 </template>
 
-<template name="essay-passion">
-	<form id="essay-passion" name="essay-passion" class="fragment next" method="post" action="">
+<template name="passion">
+	<form id="passion" name="passion" class="fragment next" method="post" action="">
 		<h2>Essays</h2>
 		<div class="field-group">
-			<label for="passion">Tell us about something you are passionate about</label>
-			<textarea name="passion"></textarea>
+			<label for="essay-passion">Tell us about something you are passionate about</label>
+			<textarea name="essay-passion"></textarea>
 		</div>
 		<button class="btn btn-default prev-fragment">Back</button>
 
@@ -118,12 +118,12 @@
 	</form>
 </template>
 
-<template name="essay-community">
-	<form id="essay-community" name="essay-community" class="fragment next" method="post" action="">
+<template name="community">
+	<form id="community" name="community" class="fragment next" method="post" action="">
 		<h2>Essays</h2>
 		<div class="field-group">
-			<label for="community">Have you had any community-oriented experience that shaped your perspective?</label>
-			<textarea name="commuity"></textarea>
+			<label for="essay-community">Have you had any community-oriented experience that shaped your perspective?</label>
+			<textarea name="essay-commuity"></textarea>
 		</div>
 		<button class="btn btn-default prev-fragment">Back</button>
 
@@ -131,12 +131,12 @@
 	</form>
 </template>
 
-<template name="essay-leadership">
-	<form id="essay-leadership" name="essay-leadership" class="fragment next" method="post" action="">
+<template name="leadership">
+	<form id="leadership" name="leadership" class="fragment next" method="post" action="">
 		<h2>Essays</h2>
 		<div class="field-group">
-			<label for="leadership">Are you more of a leader or a follower? Why do you think so?</label>
-			<textarea name="leadership"></textarea>
+			<label for="essay-leadership">Are you more of a leader or a follower? Why do you think so?</label>
+			<textarea name="essay-leadership"></textarea>
 		</div>
 		<button class="btn btn-default prev-fragment">Back</button>
 
