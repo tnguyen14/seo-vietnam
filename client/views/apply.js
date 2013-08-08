@@ -78,9 +78,6 @@ var navigate = function() {
 
 Template.apply.rendered = function() {
 	// reset
-	$('.fragment').removeClass('current prev next');
-	$('.prev-fragment, .next-fragment').show();
-
 	navigate();
 	if ("onhashchange" in window) {
 		window.onhashchange = navigate;
