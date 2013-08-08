@@ -1,0 +1,1 @@
+Colleges = new Meteor.Collection('colleges');
