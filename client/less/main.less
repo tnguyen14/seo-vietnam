@@ -2,23 +2,24 @@
 
 .form {
 	position: relative;
-	padding: 5em;
+	margin: 5em;
 }
 .fragment {
 	position: absolute;
 	-webkit-transition: all 0.3s;
 	transition: all 0.3s;
+	left: 100%;
+	top: 0;
+	opacity: 0;
+	width: 100%;
 	&.prev {
 		left: -100%;
-		opacity: 0;
 	}
 	&.next {
-		left: 100%;
-		opacity: 0;
 	}
 	&.current {
 		opacity: 1;
 		position: relative;
-		top: 0;
+		left: 0;
 	}
 }
