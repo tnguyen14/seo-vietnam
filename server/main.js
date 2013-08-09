@@ -51,6 +51,28 @@ Meteor.startup(function () {
 			slug: "us"
 		});
 	}
+	if (Industries.find().count() === 0) {
+		Industries.insert({
+			name: "Finance",
+			slug: "finance"
+		});
+		Industries.insert({
+			name: "Civil Engineering",
+			slug: "civil-engineering"
+		});
+		Industries.insert({
+			name: "Computer Engineering",
+			slug: "computer-engineering"
+		});
+		Industries.insert({
+			name: "Retail",
+			slug: "retail"
+		});
+		Industries.insert({
+			name: "Non-Profit",
+			slug: "nonprofit"
+		});
+	}
 	if (Meteor.users.find().count() === 0) {
 		FakeUsers.remove({});
 		FakeUsers.insert({
@@ -58,28 +80,4 @@ Meteor.startup(function () {
 			name: "Tri Nguyen"
 		});
 	}
-});
-
-Meteor.publish('colleges', function(){
-	return Colleges.find();
-});
-
-Meteor.publish('majors', function(){
-	return Majors.find();
-});
-
-Meteor.publish('languages', function(){
-	return Languages.find();
-});
-
-Meteor.publish('countries', function(){
-	return Countries.find();
-});
-
-Meteor.publish('applications', function(){
-	return Applications.find({});
-});
-
-Meteor.publish('fake-users', function(){
-	return FakeUsers.find();
 });

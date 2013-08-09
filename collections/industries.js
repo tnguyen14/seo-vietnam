@@ -1,0 +1,1 @@
+Industries = new Meteor.Collection('industries');

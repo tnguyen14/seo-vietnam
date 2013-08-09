@@ -1,6 +1,7 @@
 Meteor.subscribe('colleges');
 Meteor.subscribe('majors');
 Meteor.subscribe('languages');
+Meteor.subscribe('industries');
 Meteor.subscribe('countries');
 Meteor.subscribe('fake-users');
 Meteor.subscribe('applications');
@@ -89,6 +90,8 @@ Template.apply.rendered = function() {
 	if ("onhashchange" in window) {
 		window.onhashchange = navigate;
 	}
+	// use bootstrap-select
+	$('.selectpicker').selectpicker();
 }
 
 Template.apply.events = {
@@ -140,6 +143,9 @@ Template.qualifications.languages = function() {
 	return Languages.find();
 }
 
+Template.professional.industries = function() {
+	return Industries.find();
+}
 Template['personal-info'].countries = function() {
 	return Countries.find();
 }

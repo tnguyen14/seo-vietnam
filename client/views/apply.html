@@ -33,7 +33,7 @@
 			<input type="text" name="middlename" placeholder="Thi Phuoc" value="{{middlename}}" />
 		</div>
 		<label for="citizenship">Citizenship</label>
-		<select name="citizenship" class="form-control">
+		<select name="citizenship" class="selectpicker">
 			{{#each countries}}
 				<option>{{name}}</option>
 			{{/each}}
@@ -49,13 +49,13 @@
 	<form id="education" name="education" class="fragment" method="post" action="">
 	<h2>Education</h2>
 		<label for="college">College/ University</label>
-		<select class="form-control" name="college" placeholder="Select a College/ University">
+		<select class="selectpicker" name="college" placeholder="Select a College/ University">
 			{{#each colleges}}
 				<option value="{{slug}}">{{name}}</option>
 			{{/each}}
 		</select>
 		<label for="major">Major</label>
-		<select class="form-control" name="major" placeholder="Select a Major">
+		<select class="selectpicker" name="major" placeholder="Select a Major">
 			{{#each majors}}
 				<option value="{{slug}}">{{name}}</option>
 			{{/each}}
@@ -93,7 +93,10 @@
 		<h2>Professional Interests</h2>
 		<div class="field-group">
 			<label for="industries">Industries</label>
-			<select class="form-control" name="industries">
+			<select class="selectpicker" name="industries" multiple>
+			{{#each industries}}
+				<option value="{{slug}}">{{name}}</option>
+			{{/each}}
 			</select>
 		</div>
 		<div class="field-group">
