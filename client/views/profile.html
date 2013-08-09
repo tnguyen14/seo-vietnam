@@ -1,0 +1,13 @@
+<template name="profile">
+	<div class="profile">
+		<h1>Your Profile</h1>
+		{{#with user}}
+			<h2>{{name}}</h2>
+			<div class="field-group">
+			<label for="email">Email</label>
+			<input type="email" name="email" readonly value="{{email}}"/>
+			<span class="edit glyphicon glyphicon-pencil"></span>
+			</div>
+		{{/with}}
+	</div>
+</template>

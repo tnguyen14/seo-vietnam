@@ -1,4 +1,15 @@
 @import "public/bower_components/bootstrap/less/bootstrap.less";
+@import "public/bower_components/bootstrap-glyphicons/less/bootstrap-glyphicons.less";
+
+// Import glyphicon fonts
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.eot');
+  src: url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.eot?#iefix') format('embedded-opentype'),
+       url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.woff') format('woff'),
+       url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.ttf') format('truetype'),
+       url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
 
 .form {
 	min-height: 19em;
@@ -21,5 +32,15 @@
 	&.current {
 		opacity: 1;
 		left: 0;
+	}
+}
+
+.profile {
+	.edit {
+		color: rgb(84,84,84);
+		cursor: pointer;
+		&:hover {
+			color: black;
+		}
 	}
 }

@@ -6,13 +6,15 @@
 		{{/each}}
 	</ul>
 	<div class="form">
-		{{> personal-info}}
-		{{> education}}
-		{{> qualifications}}
-		{{> professional}}
-		{{> passion}}
-		{{> community}}
-		{{> leadership}}
+		{{#with user}}
+			{{> personal-info}}
+			{{> education}}
+			{{> qualifications}}
+			{{> professional}}
+			{{> passion}}
+			{{> community}}
+			{{> leadership}}
+		{{/with}}
 	</div>
 
 	<button class="btn btn-default prev-fragment">Back</button>
@@ -24,14 +26,14 @@
 	<h2>Personal Information</h2>
 		<div class="field-group">
 			<label for="firstname">First Name</label>
-			<input type="text" name="firstname" placeholder="Tri" value="{{firstname}}" />
+			<input type="text" name="firstname"placeholder="Tri" value="{{firstname}}" />
 			<label for="lastname">Last Name</label>
 			<input type="text" name="lastname" placeholder="Nguyen" value="{{lastname}}" />
 			<label for="middlename">Middle Name</label>
 			<input type="text" name="middlename" placeholder="Thi Phuoc" value="{{middlename}}" />
 		</div>
 		<label for="citizenship">Citizenship</label>
-		<select name="citizenship">
+		<select name="citizenship" class="form-control">
 			{{#each countries}}
 				<option>{{name}}</option>
 			{{/each}}
@@ -49,7 +51,7 @@
 		<label for="college">College/ University</label>
 		<select class="form-control" name="college" placeholder="Select a College/ University">
 			{{#each colleges}}
-				<option value="">{{name}}</option>
+				<option value="{{slug}}">{{name}}</option>
 			{{/each}}
 		</select>
 		<label for="major">Major</label>

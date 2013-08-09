@@ -2,7 +2,8 @@
   "name": "seo-vietnam",
   "version": "0.0.1",
   "dependencies": {
-    "bootstrap": "~3.0.0-rc1"
+    "bootstrap": "~3.0.0-rc1",
+    "bootstrap-glyphicons": "gh-pages"
   },
   "ignore": [
     "**/.*",

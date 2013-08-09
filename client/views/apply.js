@@ -1,6 +1,9 @@
 Meteor.subscribe('colleges');
 Meteor.subscribe('majors');
 Meteor.subscribe('languages');
+Meteor.subscribe('countries');
+Meteor.subscribe('fake-users');
+Meteor.subscribe('applications');
 
 var structure = [
 	{
@@ -29,6 +32,10 @@ var structure = [
 
 Template.apply.fragments = function() {
 	return structure;
+}
+
+Template.apply.user = function() {
+	return Applications.findOne({user: Session.get('userId')});
 }
 
 var getCurrentHash = function() {
@@ -104,7 +111,21 @@ Template.apply.events = {
 		} else {
 			Meteor.Router.to('/completed');
 		}
-	},
+
+		$('input, textarea, select', $('#' + current)).each(function(){
+			var userId = Session.get("userId"),
+				name = $(this).attr('name'),
+				value = $(this).val(),
+				field = {};
+			field[name] = value;
+			if (Applications.find({'user': userId}).count() === 0 ){
+				Applications.insert({'user': userId});
+			}
+			var appId = Applications.findOne({'user': userId})._id;
+			Applications.update(appId, {$set: field});
+
+		});
+	}
 }
 
 Template.education.colleges = function() {
@@ -117,4 +138,8 @@ Template.education.majors = function() {
 
 Template.qualifications.languages = function() {
 	return Languages.find();
+}
+
+Template['personal-info'].countries = function() {
+	return Countries.find();
 }

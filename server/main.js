@@ -31,7 +31,6 @@ Meteor.startup(function () {
 			slug: "psychology"
 		});
 	}
-
 	if (Languages.find().count() === 0) {
 		Languages.insert({
 			name: "Vietnamese",
@@ -40,6 +39,23 @@ Meteor.startup(function () {
 		Languages.insert({
 			name: "English",
 			slug: "english"
+		});
+	}
+	if (Countries.find().count() === 0) {
+		Countries.insert({
+			name: "Vietnam",
+			slug: "vietnam"
+		});
+		Countries.insert({
+			name: "United States",
+			slug: "us"
+		});
+	}
+	if (Meteor.users.find().count() === 0) {
+		FakeUsers.remove({});
+		FakeUsers.insert({
+			_id: "1",
+			name: "Tri Nguyen"
 		});
 	}
 });
@@ -54,4 +70,16 @@ Meteor.publish('majors', function(){
 
 Meteor.publish('languages', function(){
 	return Languages.find();
+});
+
+Meteor.publish('countries', function(){
+	return Countries.find();
+});
+
+Meteor.publish('applications', function(){
+	return Applications.find({});
+});
+
+Meteor.publish('fake-users', function(){
+	return FakeUsers.find();
 });

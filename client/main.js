@@ -1,7 +1,4 @@
 Handlebars.registerHelper("isEqual", function(a, b, options){
-	console.log(options);
-	console.log(a);
-	console.log(b);
 	if (a === b) {
 		return options.fn(this);
 	}
@@ -10,4 +7,6 @@ Handlebars.registerHelper("isEqual", function(a, b, options){
 
 Handlebars.registerHelper("debug", function(stuff){
 	console.log(stuff);
-})
+});
+
+Session.set("userId", 1);

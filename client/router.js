@@ -1,5 +1,6 @@
 Meteor.Router.add({
 	'/': 'login',
 	'/apply': 'apply',
-	'/completed': 'completed'
+	'/completed': 'completed',
+	'/profile': 'profile'
 });

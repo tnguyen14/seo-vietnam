@@ -1,0 +1,1 @@
+FakeUsers = new Meteor.Collection("fake-users");
