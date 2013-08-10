@@ -88,10 +88,39 @@ Template.apply.rendered = function() {
 	// reset
 	navigate();
 	if ("onhashchange" in window) {
-		window.onhashchange = navigate;
+		window.addEventListener("hashchange", function(){
+			navigate();
+			$('.selectpicker').selectpicker();
+		});
 	}
 	// use bootstrap-select
 	$('.selectpicker').selectpicker();
+
+	// Applications.find().observe({
+	// 	changed: function() {
+	// 		console.log('something changed');
+	// 		setTimeout(function(){
+	// 			$('.selectpicker').selectpicker();
+	// 			console.log('trying to update select picker');
+	// 		}, 1000);
+	// 	}
+	// });
+	$("#passion textarea").simplyCountable({
+		counter: '#passion-counter',
+		countType: 'words',
+		maxCount: 500
+	});
+	$("#community textarea").simplyCountable({
+		counter: '#community-counter',
+		countType: 'words',
+		maxCount: 500
+	});
+	$("#leadership textarea").simplyCountable({
+		counter: '#leadership-counter',
+		countType: 'words',
+		maxCount: 500
+	});
+
 }
 
 Template.apply.events = {
@@ -126,6 +155,7 @@ Template.apply.events = {
 			}
 			var appId = Applications.findOne({'user': userId})._id;
 			Applications.update(appId, {$set: field});
+
 
 		});
 	}

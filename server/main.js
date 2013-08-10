@@ -9,7 +9,7 @@ Meteor.startup(function () {
 		});
 		Colleges.insert({
 			name: "New York University",
-			slug: "wheatonma"
+			slug: "nyu"
 		});
 		Colleges.insert({
 			name: "Stonehill College",

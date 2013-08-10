@@ -4,7 +4,8 @@
   "dependencies": {
     "bootstrap": "~3.0.0-rc1",
     "bootstrap-glyphicons": "gh-pages",
-    "bootstrap-select": "*"
+    "bootstrap-select": "*",
+    "jquery-simply-countable": "git@github.com:aaronrussell/jquery-simply-countable.git#~0.5.0"
   },
   "ignore": [
     "**/.*",

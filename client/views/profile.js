@@ -15,5 +15,12 @@ Template.profile.helpers({
 	},
 	name: function() {
 		return this.firstname + " " + this.lastname;
+	},
+	college: function() {
+		return Colleges.findOne({slug: this.college}).name;
 	}
 });
+
+Template.profile.colleges = function() {
+	return Colleges.find();
+}
