@@ -1,5 +1,6 @@
 @import "public/bower_components/bootstrap/less/bootstrap.less";
 @import "public/bower_components/bootstrap-glyphicons/less/bootstrap-glyphicons.less";
+@import "mixins.lessimport";
 
 // Import glyphicon fonts
 @font-face {
@@ -16,27 +17,48 @@
 		margin-top: 8px;
 	}
 }
-.form {
-	min-height: 19em;
-	margin: 3em;
-	position: relative;
+.form-container {
+	overflow: hidden;
+	height: 50em;
 }
-.fragment {
-	position: absolute;
-	-webkit-transition: all 0.3s;
-	transition: all 0.3s;
-	left: 100%;
-	top: 0;
-	opacity: 0;
-	width: 100%;
-	&.prev {
-		left: -100%;
+.form {
+	position: relative;
+	.fragment {
+		position: absolute;
+		width: 100%;
+		left: 100%;
+		.transition(all 0.3s ease);
+		&.current {
+			left: 0;
+		}
+		&.prev {
+			left: -100%;
+		}
 	}
-	&.next {
+}
+
+.prev-fragment,
+.next-fragment {
+	.hide-text();
+	cursor: pointer;
+	.glyphicon {
+		color: @gray;
+		font-size: 4rem;
+		left: 0.75em;
+		line-height: 3;
+		padding: 1em 2%;
+		position: absolute;
+		top: 40%;
+		&:hover {
+			background: rgba(0,0,0,0.15);
+		}
 	}
-	&.current {
-		opacity: 1;
-		left: 0;
+}
+.next-fragment {
+	right: 0;
+	.glyphicon {
+		right: 0.75em;
+		left: auto;
 	}
 }
 
@@ -49,3 +71,6 @@
 		}
 	}
 }
+// input[type=text], textarea {
+// 	.glow-input();
+// }

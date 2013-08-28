@@ -1,6 +1,12 @@
+apply = function(id) {
+	Session.set('applySection', id);
+	return 'apply';
+};
+
 Meteor.Router.add({
 	'/': 'login',
-	'/apply': 'apply',
+	'/apply': apply,
+	'/apply/:id': apply,
 	'/completed': 'completed',
 	'/profile': 'profile'
 });

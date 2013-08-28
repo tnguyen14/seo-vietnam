@@ -2,45 +2,53 @@
 	<h1>Your Application</h1>
 	<ul class="pagination">
 		{{#each fragments}}
-			<li data-name="{{name}}"><a href="#{{name}}">{{index}}</a></li>
+			<li data-name="{{name}}"><a href="{{name}}">{{index}}</a></li>
 		{{/each}}
 	</ul>
-	<div class="form">
-		{{#with user}}
-			{{> personal-info}}
-			{{> education}}
-			{{> qualifications}}
-			{{> professional}}
-			{{> passion}}
-			{{> community}}
-			{{> leadership}}
-		{{/with}}
+	<div class="form-container">
+		<div class="form">
+			{{#with user}}
+				{{> personal-info}}
+				{{> education}}
+				{{> qualifications}}
+				{{> professional}}
+				{{> passion}}
+				{{> community}}
+				{{> leadership}}
+			{{/with}}
+		</div>
 	</div>
 
-	<button class="btn btn-default prev-fragment">Back</button>
-	<button type="submit" class="btn btn-primary next-fragment">Next</button>
+	<a class="prev-fragment"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
+	<a class="next-fragment"><span class="glyphicon glyphicon-chevron-right"></span>Next</a>
 </template>
 
 <template name="personal-info">
 	<form id="personal-info" name="personal-info" class="fragment" method="post" action="">
 	<h2>Personal Information</h2>
-		<div class="field-group">
-			<label for="firstname">First Name</label>
-			<input type="text" name="firstname"placeholder="Tri" value="{{firstname}}" />
-			<label for="lastname">Last Name</label>
-			<input type="text" name="lastname" placeholder="Nguyen" value="{{lastname}}" />
-			<label for="middlename">Middle Name</label>
-			<input type="text" name="middlename" placeholder="Thi Phuoc" value="{{middlename}}" />
+		<div class="form-group">
+			<label for="firstname" class="control-label">First Name</label>
+			<input type="text" name="firstname" class="form-control" placeholder="Tri" value="{{firstname}}" />
 		</div>
-		<label for="citizenship">Citizenship</label>
-		<select name="citizenship" class="selectpicker">
+		<div class="form-group">
+			<label for="lastname" class="control-label">Last Name</label>
+			<input type="text" name="lastname" class="form-control" placeholder="Nguyen" value="{{lastname}}" />
+		</div>
+		<div class="form-group">
+			<label for="middlename" class="control-label">Middle Name</label>
+			<input type="text" name="middlename" class="form-control" placeholder="Thi Phuoc" value="{{middlename}}" />
+		</div>
+		<div class="form-group">
+			<label for="citizenship" class="control-label">Citizenship</label>
+			<select name="citizenship" class="form-control">
 			{{#each countries}}
 				<option>{{name}}</option>
 			{{/each}}
-		</select>
-		<div class="field-group">
-			<label for="tel">Phone number</label>
-			<input type="tel" name="tel" placeholder="+84 934 132313"/>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="tel" class="control-label">Phone number</label>
+			<input type="tel" name="tel" class="form-control" placeholder="+84 934 132313"/>
 		</div>
 	</form>
 </template>
@@ -48,35 +56,40 @@
 <template name="education">
 	<form id="education" name="education" class="fragment" method="post" action="">
 	<h2>Education</h2>
-		<label for="college">College/ University</label>
-		<select class="selectpicker" name="college" placeholder="Select a College/ University">
+		<div class="form-group" id="college-box">
+			<label for="college" class="control-label">College/ University</label>
+			<select class="selectpicker" id="college" name="college" placeholder="Select a College/ University">
 			{{#each colleges}}
-				<option value="{{slug}}">{{name}}</option>
+				<option value="{{slug}}" {{selected slug ../college}}>{{name}}</option>
 			{{/each}}
-		</select>
-		<label for="major">Major</label>
-		<select class="selectpicker" name="major" placeholder="Select a Major">
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="major" class="control-label">Major</label>
+			<select class="form-control" name="major" placeholder="Select a Major">
 			{{#each majors}}
 				<option value="{{slug}}">{{name}}</option>
 			{{/each}}
-		</select>
+			</select>
+		</div>
 	</form>
 </template>
 
 <template name="qualifications">
 	<form id="qualifications" name="qualifications" class="fragment" method="post" action="">
 	<h2>Qualifications</h2>
-		<div class="field-group">
+
 			{{#each languages}}
-				<label for="language-{{slug}}">Fluency in {{name}}</label>
-				<select class="form-control" name="language-{{slug}}">
+			<div class="form-group">
+				<label for="language-{{slug}}" class="control-label">Fluency in {{name}}</label>
+				<select class="selectpicker" id="language-{{slug}}" name="language-{{slug}}">
 					<option value="none">None</option>
 					<option value="fluent">Fluent</option>
 				</select>
+			</div>
 			{{/each}}
-		</div>
 
-		<div class="field-group">
+		<div class="form-group">
 			<h3>SAT Scores</h3>
 			<label for="sat-writing">Writing</label>
 			<input type="number" name="sat-writing"/>
@@ -91,16 +104,16 @@
 <template name="professional">
 	<form id="professional" name="professional" class="fragment" method="post" action="">
 		<h2>Professional Interests</h2>
-		<div class="field-group">
-			<label for="industries">Industries</label>
-			<select class="selectpicker" name="industries" multiple>
+		<div class="form-group">
+			<label for="industries" class="control-label">Industries</label>
+			<select class="form-control" name="industries" multiple>
 			{{#each industries}}
 				<option value="{{slug}}">{{name}}</option>
 			{{/each}}
 			</select>
 		</div>
-		<div class="field-group">
-			<label for="functions">Functions</label>
+		<div class="form-group">
+			<label for="functions" class="control-label">Functions</label>
 			<select class="form-control" name="functions">
 			</select>
 		</div>
@@ -110,9 +123,9 @@
 <template name="passion">
 	<form id="passion" name="passion" class="fragment" method="post" action="">
 		<h2>Essays</h2>
-		<div class="field-group">
-			<label for="essay-passion">Tell us about something you are passionate about</label>
-			<textarea name="essay-passion"></textarea>
+		<div class="form-group">
+			<label for="essay-passion" class="control-label">Tell us about something you are passionate about</label>
+			<textarea name="essay-passion" class="form-control">{{essay-passion}}</textarea>
 			<span class="counter" id="passion-counter"></span><span> words remaining</span>
 		</div>
 	</form>
@@ -121,9 +134,9 @@
 <template name="community">
 	<form id="community" name="community" class="fragment" method="post" action="">
 		<h2>Essays</h2>
-		<div class="field-group">
-			<label for="essay-community">Have you had any community-oriented experience that shaped your perspective?</label>
-			<textarea name="essay-commuity"></textarea>
+		<div class="form-group">
+			<label for="essay-community" class="control-label">Have you had any community-oriented experience that shaped your perspective?</label>
+			<textarea name="essay-commuity" class="form-control">{{essay-community}}</textarea>
 			<span class="counter" id="community-counter"></span><span> words remaining</span>
 		</div>
 	</form>
@@ -132,9 +145,9 @@
 <template name="leadership">
 	<form id="leadership" name="leadership" class="fragment" method="post" action="">
 		<h2>Essays</h2>
-		<div class="field-group">
-			<label for="essay-leadership">Are you more of a leader or a follower? Why do you think so?</label>
-			<textarea name="essay-leadership"></textarea>
+		<div class="form-group">
+			<label for="essay-leadership" class="control-label">Are you more of a leader or a follower? Why do you think so?</label>
+			<textarea name="essay-leadership" class="form-control">{{essay-leadership}}</textarea>
 			<span class="counter" id="leadership-counter"></span><span> words remaining</span>
 		</div>
 	</form>

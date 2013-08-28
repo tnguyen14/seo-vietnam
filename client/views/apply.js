@@ -39,11 +39,6 @@ Template.apply.user = function() {
 	return Applications.findOne({user: Session.get('userId')});
 }
 
-var getCurrentHash = function() {
-	var hash = window.location.hash.split('#')[1];
-	hash = (hash) ? hash : 'personal-info';
-	return hash;
-}
 var getIndex = function(el, array) {
 	var i = -1;
 	array.forEach(function(element, index) {
@@ -54,8 +49,29 @@ var getIndex = function(el, array) {
 	return i;
 }
 
+var saveInputs = function() {
+	var current = Session.get('applySection');
+	$('input, textarea, select', $('#' + current)).each(function(){
+		var userId = Session.get("userId"),
+			name = $(this).attr('name'),
+			value = $(this).val(),
+			field = {};
+
+		field[name] = value;
+		if (Applications.find({'user': userId}).count() === 0 ){
+			Applications.insert({'user': userId});
+		}
+		var appId = Applications.findOne({'user': userId})._id;
+		Applications.update(appId, {$set: field});
+
+	});
+}
+
 var navigate = function() {
-	var to = getCurrentHash();
+	var to = Session.get('applySection');
+	if (!to) {
+		to = "personal-info";
+	}
 	// add active class
 	$(".pagination li")
 		.removeClass('active')
@@ -82,29 +98,19 @@ var navigate = function() {
 			$el.addClass('current');
 		}
 	});
+	var prevIndex = (toIndex === 0) ? structure.length -1 : toIndex -1,
+		nextIndex = (toIndex === structure.length -1) ? 0 : toIndex + 1;
+	$("#" + structure[prevIndex].name).addClass('prev');
+	$("#" + structure[nextIndex].name).addClass('next');
+	$("#" + to).addClass('current');
 }
 
 Template.apply.rendered = function() {
 	// reset
 	navigate();
-	if ("onhashchange" in window) {
-		window.addEventListener("hashchange", function(){
-			navigate();
-			$('.selectpicker').selectpicker();
-		});
-	}
 	// use bootstrap-select
 	$('.selectpicker').selectpicker();
 
-	// Applications.find().observe({
-	// 	changed: function() {
-	// 		console.log('something changed');
-	// 		setTimeout(function(){
-	// 			$('.selectpicker').selectpicker();
-	// 			console.log('trying to update select picker');
-	// 		}, 1000);
-	// 	}
-	// });
 	$("#passion textarea").simplyCountable({
 		counter: '#passion-counter',
 		countType: 'words',
@@ -120,47 +126,59 @@ Template.apply.rendered = function() {
 		countType: 'words',
 		maxCount: 500
 	});
-
 }
 
+//Template Events
 Template.apply.events = {
 	'click .prev-fragment': function(e) {
 		e.preventDefault();
-		var current = getCurrentHash(),
+		var current = Session.get('applySection'),
 			currentIndex = getIndex(current, structure),
-			prev = structure[currentIndex-1].name;
-		window.location.hash = prev;
+			prev = (currentIndex === 0) ? current : structure[currentIndex-1].name;
+
+		saveInputs();
+
+		// navigate away!
+		Session.set('applySection', prev);
+		Meteor.Router.to('/apply/' + prev);
+		navigate();
 	},
 	'click .next-fragment': function(e) {
 		e.preventDefault();
-		var current = getCurrentHash(),
+		var current = Session.get('applySection'),
 			currentIndex = getIndex(current, structure);
 
+		saveInputs();
+		// not yet at the last fragment
 		if (currentIndex + 1 < structure.length) {
 			var next = structure[currentIndex+1].name;
-			window.location.hash = next;
+			Session.get('applySection', next);
+			Meteor.Router.to('/apply/' + next);
+			navigate();
 		// completed!
 		} else {
 			Meteor.Router.to('/completed');
 		}
-
-		$('input, textarea, select', $('#' + current)).each(function(){
-			var userId = Session.get("userId"),
-				name = $(this).attr('name'),
-				value = $(this).val(),
-				field = {};
-			field[name] = value;
-			if (Applications.find({'user': userId}).count() === 0 ){
-				Applications.insert({'user': userId});
-			}
-			var appId = Applications.findOne({'user': userId})._id;
-			Applications.update(appId, {$set: field});
-
-
-		});
+	},
+	'click .pagination li': function(e) {
+		// this is the context of of these li's
+		var to = this.name;
+		Session.set('applySection', to);
+		Meteor.Router.to('/apply/' + to);
+		navigate();
 	}
-}
+};
 
+// Template Helpers
+Template.education.helpers({
+	'selected': function(slug, stuff) {
+		if (slug === stuff) {
+			return 'selected';
+		}
+	}
+});
+
+// Template Variables
 Template.education.colleges = function() {
 	return Colleges.find();
 }
