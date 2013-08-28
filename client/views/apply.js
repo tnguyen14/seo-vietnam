@@ -50,21 +50,29 @@ var getIndex = function(el, array) {
 }
 
 var saveInputs = function() {
-	var current = Session.get('applySection');
-	$('input, textarea, select', $('#' + current)).each(function(){
-		var userId = Session.get("userId"),
-			name = $(this).attr('name'),
-			value = $(this).val(),
-			field = {};
+	var current = Session.get('applySection'),
+		userId = Session.get("userId"),
+		name,
+		value,
+		field = {};
 
+	if (Applications.find({'user': userId}).count() === 0 ){
+		Applications.insert({'user': userId});
+	}
+	var appId = Applications.findOne({'user': userId})._id;
+
+	$('input[type="text"], textarea, select', $('#' + current)).each(function(){
+		name = $(this).attr('name');
+		value = $(this).val();
 		field[name] = value;
-		if (Applications.find({'user': userId}).count() === 0 ){
-			Applications.insert({'user': userId});
-		}
-		var appId = Applications.findOne({'user': userId})._id;
-		Applications.update(appId, {$set: field});
-
 	});
+	$('input[type="checkbox"]:checked').each(function(){
+		name = $(this).attr('name');
+		value = $(this).val();
+		field[name] = field[name] || [];
+		field[name].push(value);
+	});
+	Applications.update(appId, {$set: field});
 }
 
 var navigate = function() {
@@ -171,9 +179,16 @@ Template.apply.events = {
 
 // Template Helpers
 Template.education.helpers({
-	'selected': function(slug, stuff) {
-		if (slug === stuff) {
+	'selected': function(slug, value) {
+		if (slug === value) {
 			return 'selected';
+		}
+	}
+});
+Template.professional.helpers({
+	'checked': function (slug, values) {
+		if (_.contains(values, slug)) {
+			return 'checked';
 		}
 	}
 });
