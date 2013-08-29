@@ -38,8 +38,14 @@ Template.apply.fragments = function() {
 	return structure;
 }
 
-Template.apply.user = function() {
-	return Applications.findOne({user: Session.get('userId')});
+Template.apply.app = function() {
+	var userId = Session.get("userId");
+	console.log(userId);
+	if (Applications.find({'user': userId}).count() === 0 ){
+		console.log('creating new user');
+		//Applications.insert({'user': userId});
+	}
+	return Applications.findOne({'user': userId});
 }
 
 var getIndex = function(el, array) {
@@ -52,36 +58,54 @@ var getIndex = function(el, array) {
 	return i;
 }
 
+var save = function(object) {
+	var userId = Session.get("userId"),
+		appId = Applications.findOne({'user': userId})._id;
+
+	console.log(object);
+	Applications.update(appId, {$set: object});
+}
+
 var saveInputs = function() {
 	var current = Session.get('applySection'),
-		userId = Session.get("userId"),
-		name,
-		value,
-		field = {};
+		group = {};
 
-	if (Applications.find({'user': userId}).count() === 0 ){
-		Applications.insert({'user': userId});
-	}
-	var appId = Applications.findOne({'user': userId})._id;
+	console.log('saving inputs for ' + current);
 
-	$('input[type="text"], textarea, select', $('#' + current)).each(function(){
-		name = $(this).attr('name');
-		value = $(this).val();
-		field[name] = value;
+	$('.form-group', $('#' + current)).each(function() {
+		var field = {};
+		$('input[type="text"], input[type="number"], textarea, select', this).each(function(){
+			var name = $(this).attr('name'),
+				value = $(this).val();
+			field[name] = value;
+		});
+
+		// checkboxes are saved as array of values
+		$('input[type="checkbox"]:checked').each(function(){
+			var name = $(this).attr('name'),
+				value = $(this).val();
+			field[name] = field[name] || [];
+			field[name].push(value);
+		});
+
+		var name = $(this).attr('name');
+		if (name) {
+			group[name] = field;
+		} else {
+			group = field;
+		}
+
+		save(group);
+
 	});
-	$('input[type="checkbox"]:checked').each(function(){
-		name = $(this).attr('name');
-		value = $(this).val();
-		field[name] = field[name] || [];
-		field[name].push(value);
-	});
-	Applications.update(appId, {$set: field});
 }
 
 var navigate = function() {
 	var to = Session.get('applySection');
+	console.log('navingating to ' + to);
 	if (!to) {
 		to = "personal-info";
+		Session.set('applySection', to);
 	}
 	// add active class
 	$(".pagination li")
@@ -120,7 +144,7 @@ Template.apply.rendered = function() {
 	// reset
 	navigate();
 	// use bootstrap-select
-	$('.selectpicker').selectpicker();
+	// $('.selectpicker').selectpicker();
 
 	$("#passion textarea").simplyCountable({
 		counter: '#passion-counter',
@@ -150,9 +174,7 @@ Template.apply.events = {
 		saveInputs();
 
 		// navigate away!
-		Session.set('applySection', prev);
 		Meteor.Router.to('/apply/' + prev);
-		navigate();
 	},
 	'click .next-fragment': function(e) {
 		e.preventDefault();
@@ -163,18 +185,16 @@ Template.apply.events = {
 		// not yet at the last fragment
 		if (currentIndex + 1 < structure.length) {
 			var next = structure[currentIndex+1].name;
-			Session.get('applySection', next);
 			Meteor.Router.to('/apply/' + next);
-			navigate();
 		// completed!
 		} else {
 			Meteor.Router.to('/completed');
 		}
 	},
 	'click .pagination li': function(e) {
-		// this is the context of of these li's
+		// `this` is the context of of these li's
 		var to = this.name;
-		Session.set('applySection', to);
+		// Session.set('applySection', to);
 		Meteor.Router.to('/apply/' + to);
 		navigate();
 	}
@@ -190,6 +210,9 @@ Template.resume.events = {
 			filepicker.store(fileInput, {
 				location: 'S3'
 			},function(InkBlob){
+				// successful response
+				// {"url":"https://www.filepicker.io/api/file/5TEGc0A4RPWNcvTtxyYs","filename":"ac2af834-a599-4dbd-b4c0-a925b981f206.png","mimetype":"image/png","size":134347,"key":"7V1EVxorTWXM87AqUTxb_ac2af834-a599-4dbd-b4c0-a925b981f206.png","isWriteable":false}
+				// aws url: http://s3.amazonaws.com/seo-vietnam/7V1EVxorTWXM87AqUTxb_ac2af834-a599-4dbd-b4c0-a925b981f206.png
 				console.log("Store successful:", JSON.stringify(InkBlob));
 			}, function(FPError) {
 				console.log(FPError.toString());

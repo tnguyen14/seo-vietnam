@@ -7,7 +7,7 @@
 	</ul>
 	<div class="form-container">
 		<div class="form">
-			{{#with user}}
+			{{#with app}}
 				{{> personal-info}}
 				{{> education}}
 				{{> qualifications}}
@@ -27,17 +27,15 @@
 <template name="personal-info">
 	<form id="personal-info" name="personal-info" class="fragment" method="post" action="">
 	<h2>Personal Information</h2>
-		<div class="form-group">
-			<label for="firstname" class="control-label">First Name</label>
-			<input type="text" name="firstname" class="form-control" placeholder="Tri" value="{{firstname}}" />
-		</div>
-		<div class="form-group">
-			<label for="lastname" class="control-label">Last Name</label>
-			<input type="text" name="lastname" class="form-control" placeholder="Nguyen" value="{{lastname}}" />
-		</div>
-		<div class="form-group">
-			<label for="middlename" class="control-label">Middle Name</label>
-			<input type="text" name="middlename" class="form-control" placeholder="Thi Phuoc" value="{{middlename}}" />
+		<div class="form-group" name="name">
+			<label for="first" class="control-label">First Name</label>
+			<input type="text" name="first" class="form-control" placeholder="Tri" value="{{firstname}}" />
+
+			<label for="last" class="control-label">Last Name</label>
+			<input type="text" name="last" class="form-control" placeholder="Nguyen" value="{{lastname}}" />
+
+			<label for="middle" class="control-label">Middle Name</label>
+			<input type="text" name="middle" class="form-control" placeholder="Thi Phuoc" value="{{middlename}}" />
 		</div>
 		<div class="form-group">
 			<label for="citizenship" class="control-label">Citizenship</label>
@@ -80,24 +78,24 @@
 	<form id="qualifications" name="qualifications" class="fragment form-horitzontal" method="post" action="">
 	<h2>Qualifications</h2>
 
+		<div class="form-group" name="language">
 			{{#each languages}}
-			<div class="form-group">
-				<label for="language-{{slug}}" class="control-label">Fluency in {{name}}</label>
-				<select class="form-control" id="language-{{slug}}" name="language-{{slug}}">
+				<label for="{{slug}}" class="control-label">Fluency in {{name}}</label>
+				<select class="form-control" id="{{slug}}" name="{{slug}}">
 					<option value="none">None</option>
 					<option value="fluent">Fluent</option>
 				</select>
-			</div>
 			{{/each}}
+		</div>
 
-		<div class="form-group">
+		<div class="form-group" name="sat">
 			<h3>SAT Scores</h3>
-			<label for="sat-writing">Writing</label>
-			<input type="number" name="sat-writing"/>
-			<label for="sat-reading">Reading</label>
-			<input type="number" name="sat-reading"/>
-			<label for="sat-math">Math</label>
-			<input type="number" name="sat-math"/>
+			<label for="writing">Writing</label>
+			<input type="number" name="writing"/>
+			<label for="reading">Reading</label>
+			<input type="number" name="reading"/>
+			<label for="math">Math</label>
+			<input type="number" name="math"/>
 		</div>
 	</form>
 </template>

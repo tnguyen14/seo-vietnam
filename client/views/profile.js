@@ -4,7 +4,6 @@ var userId, user, name, email;
 
 function user() {
 	var userId = Session.get('userId');
-	console.log(userId);
 	return Applications.findOne({user: userId});;
 }
 
