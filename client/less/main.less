@@ -1,16 +1,8 @@
 @import "public/bower_components/bootstrap/less/bootstrap.less";
-@import "public/bower_components/bootstrap-glyphicons/less/bootstrap-glyphicons.less";
 @import "mixins.lessimport";
 
-// Import glyphicon fonts
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.eot');
-  src: url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.eot?#iefix') format('embedded-opentype'),
-       url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.woff') format('woff'),
-       url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.ttf') format('truetype'),
-       url('/bower_components/bootstrap-glyphicons/fonts/glyphiconshalflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
+// fix glyphicon path
+@icon-font-path: "/bower_components/bootstrap/fonts/";
 
 .btn {
 	.caret {
