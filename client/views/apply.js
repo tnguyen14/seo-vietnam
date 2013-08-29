@@ -2,6 +2,7 @@ Meteor.subscribe('colleges');
 Meteor.subscribe('majors');
 Meteor.subscribe('languages');
 Meteor.subscribe('industries');
+Meteor.subscribe('functions');
 Meteor.subscribe('countries');
 Meteor.subscribe('fake-users');
 Meteor.subscribe('applications');
@@ -40,11 +41,6 @@ Template.apply.fragments = function() {
 
 Template.apply.app = function() {
 	var userId = Session.get("userId");
-	console.log(userId);
-	if (Applications.find({'user': userId}).count() === 0 ){
-		console.log('creating new user');
-		//Applications.insert({'user': userId});
-	}
 	return Applications.findOne({'user': userId});
 }
 
@@ -62,15 +58,12 @@ var save = function(object) {
 	var userId = Session.get("userId"),
 		appId = Applications.findOne({'user': userId})._id;
 
-	console.log(object);
 	Applications.update(appId, {$set: object});
 }
 
 var saveInputs = function() {
 	var current = Session.get('applySection'),
 		group = {};
-
-	console.log('saving inputs for ' + current);
 
 	$('.form-group', $('#' + current)).each(function() {
 		var field = {};
@@ -102,7 +95,6 @@ var saveInputs = function() {
 
 var navigate = function() {
 	var to = Session.get('applySection');
-	console.log('navingating to ' + to);
 	if (!to) {
 		to = "personal-info";
 		Session.set('applySection', to);
@@ -141,7 +133,6 @@ var navigate = function() {
 }
 
 Template.apply.rendered = function() {
-	// reset
 	navigate();
 	// use bootstrap-select
 	// $('.selectpicker').selectpicker();
@@ -239,6 +230,13 @@ Template.professional.helpers({
 });
 
 // Template Variables
+Template.apply.currentSection = function() {
+	if (Session.get('applySection')) {
+		return Session.get('applySection');
+	} else {
+		return structure[0].name;
+	}
+}
 Template.education.colleges = function() {
 	return Colleges.find();
 }
@@ -253,6 +251,9 @@ Template.qualifications.languages = function() {
 
 Template.professional.industries = function() {
 	return Industries.find();
+}
+Template.professional.functions = function() {
+	return Functions.find();
 }
 Template['personal-info'].countries = function() {
 	return Countries.find();

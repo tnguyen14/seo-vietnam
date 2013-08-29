@@ -8,14 +8,7 @@
 	<div class="form-container">
 		<div class="form">
 			{{#with app}}
-				{{> personal-info}}
-				{{> education}}
-				{{> qualifications}}
-				{{> professional}}
-				{{> passion}}
-				{{> community}}
-				{{> leadership}}
-				{{> resume}}
+				{{renderPage currentSection}}
 			{{/with}}
 		</div>
 	</div>
@@ -29,13 +22,13 @@
 	<h2>Personal Information</h2>
 		<div class="form-group" name="name">
 			<label for="first" class="control-label">First Name</label>
-			<input type="text" name="first" class="form-control" placeholder="Tri" value="{{firstname}}" />
+			<input type="text" name="first" class="form-control" placeholder="Tri" value="{{name.first}}" />
 
 			<label for="last" class="control-label">Last Name</label>
-			<input type="text" name="last" class="form-control" placeholder="Nguyen" value="{{lastname}}" />
+			<input type="text" name="last" class="form-control" placeholder="Nguyen" value="{{name.last}}" />
 
 			<label for="middle" class="control-label">Middle Name</label>
-			<input type="text" name="middle" class="form-control" placeholder="Thi Phuoc" value="{{middlename}}" />
+			<input type="text" name="middle" class="form-control" placeholder="Thi Phuoc" value="{{name.middle}}" />
 		</div>
 		<div class="form-group">
 			<label for="citizenship" class="control-label">Citizenship</label>
@@ -105,7 +98,6 @@
 		<h2>Professional Interests</h2>
 		<div class="form-group">
 			<label class="control-label">Industries</label>
-
 			{{#each industries}}
 			<div class="checkbox">
 				<label>
@@ -117,7 +109,13 @@
 		</div>
 		<div class="form-group">
 			<label for="functions" class="control-label">Functions</label>
-			<select class="form-control" name="functions">
+			{{#each functions}}
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="functions" value="{{slug}}" {{checked slug ../functions}}>{{name}}
+				</label>
+			</div>
+			{{/each}}
 			</select>
 		</div>
 	</form>

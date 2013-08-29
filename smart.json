@@ -1,6 +1,7 @@
 {
   "packages": {
     "momentjs": {},
-    "router": {}
+    "router": {},
+    "transitioner": {}
   }
 }

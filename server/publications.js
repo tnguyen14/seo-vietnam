@@ -18,6 +18,11 @@ Meteor.publish('industries', function(){
 	return Industries.find();
 });
 
+Meteor.publish('functions', function(){
+	return Functions.find();
+});
+
+
 Meteor.publish('applications', function(){
 	return Applications.find({});
 });

@@ -73,6 +73,28 @@ Meteor.startup(function () {
 			slug: "nonprofit"
 		});
 	}
+	if (Functions.find().count() === 0) {
+		Functions.insert({
+			name: "Communication",
+			slug: "communication"
+		});
+		Functions.insert({
+			name: "Finance",
+			slug: "finance"
+		});
+		Functions.insert({
+			name: "Marketing",
+			slug: "marketing"
+		});
+		Functions.insert({
+			name: "Operation",
+			slug: "operation"
+		});
+		Functions.insert({
+			name: "Technology",
+			slug: "technology"
+		});
+	}
 	if (Meteor.users.find().count() === 0) {
 		FakeUsers.remove({});
 		FakeUsers.insert({

@@ -2,7 +2,7 @@
 	<div class="profile">
 		<h1>Your Profile</h1>
 		{{#with user}}
-			<h2>{{name}}</h2>
+			<h2>{{displayname}}</h2>
 			<div class="field-group">
 			<label for="email">Email</label>
 			{{email}}
@@ -18,16 +18,16 @@
 			<div class="field-group">
 				<h4>SAT</h4>
 				<label for="sat-writing">Writing</label>
-				{{sat-writing}}
+				{{sat.writing}}
 				<label for="sat-reading">Reading</label>
-				{{sat-reading}}
+				{{sat.reading}}
 				<label for="sat-math">Math</label>
-				{{sat-math}}
+				{{sat.math}}
 			</div>
 			<div class="field-group">
 				<label for="industries">Industries</label>
 				{{#each industries}}
-					{{this}}
+					{{getIndustryName this}}
 				{{/each}}
 			</div>
 		{{/with}}
