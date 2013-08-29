@@ -10,3 +10,8 @@ Handlebars.registerHelper("debug", function(stuff){
 });
 
 Session.set("userId", 1);
+
+// Ink filepicker
+// https://developers.inkfilepicker.com/docs/web/
+
+filepicker.setKey('AgUpiTHwT3q7FAiauT4TQz');

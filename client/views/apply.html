@@ -15,6 +15,7 @@
 				{{> passion}}
 				{{> community}}
 				{{> leadership}}
+				{{> resume}}
 			{{/with}}
 		</div>
 	</div>
@@ -110,7 +111,7 @@
 			{{#each industries}}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="industries" value="{{slug}}" {{checked slug ../industries}} {{debug ../industries}}>{{name}}
+					<input type="checkbox" name="industries" value="{{slug}}" {{checked slug ../industries}}>{{name}}
 				</label>
 			</div>
 			{{/each}}
@@ -153,6 +154,17 @@
 			<label for="essay-leadership" class="control-label">Are you more of a leader or a follower? Why do you think so?</label>
 			<textarea name="essay-leadership" class="form-control">{{essay-leadership}}</textarea>
 			<span class="counter" id="leadership-counter"></span><span> words remaining</span>
+		</div>
+	</form>
+</template>
+
+<template name="resume">
+	<form id="resume" name="resume" class="fragment" method="post" action="">
+		<h2>Resume</h2>
+		<div class="form-group">
+			<label for="file-resume" class="control-label">Please upload your resume</label>
+			<input type='file' name="file-resume" id="file-resume">
+			<button id="resume-submit">Submit</button>
 		</div>
 	</form>
 </template>

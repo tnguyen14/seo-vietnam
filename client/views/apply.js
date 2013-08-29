@@ -28,6 +28,9 @@ var structure = [
 	}, {
 		index: 7,
 		name: 'leadership'
+	}, {
+		index: 8,
+		name: 'resume'
 	}
 ];
 
@@ -134,7 +137,7 @@ Template.apply.rendered = function() {
 		countType: 'words',
 		maxCount: 500
 	});
-}
+};
 
 //Template Events
 Template.apply.events = {
@@ -177,6 +180,25 @@ Template.apply.events = {
 	}
 };
 
+Template.resume.events = {
+	'click #resume-submit': function(e) {
+		e.preventDefault();
+		var fileInput = document.getElementById("file-resume");
+		if (!fileInput.value) {
+			console.log("Choose a resume to store to S3");
+		} else {
+			filepicker.store(fileInput, {
+				location: 'S3'
+			},function(InkBlob){
+				console.log("Store successful:", JSON.stringify(InkBlob));
+			}, function(FPError) {
+				console.log(FPError.toString());
+			}, function(progress) {
+				console.log("Loading: "+progress+"%");
+			});
+		}
+	}
+}
 // Template Helpers
 Template.education.helpers({
 	'selected': function(slug, value) {
