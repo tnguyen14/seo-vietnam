@@ -58,7 +58,7 @@
 	<h2>Education</h2>
 		<div class="form-group">
 			<label for="college" class="control-label">College/ University</label>
-			<select class="selectpicker" id="college" name="college" placeholder="Select a College/ University">
+			<select class="form-control" id="college" name="college" placeholder="Select a College/ University">
 			{{#each colleges}}
 				<option value="{{slug}}" {{selected slug ../college}}>{{name}}</option>
 			{{/each}}
@@ -76,13 +76,13 @@
 </template>
 
 <template name="qualifications">
-	<form id="qualifications" name="qualifications" class="fragment" method="post" action="">
+	<form id="qualifications" name="qualifications" class="fragment form-horitzontal" method="post" action="">
 	<h2>Qualifications</h2>
 
 			{{#each languages}}
 			<div class="form-group">
 				<label for="language-{{slug}}" class="control-label">Fluency in {{name}}</label>
-				<select class="selectpicker" id="language-{{slug}}" name="language-{{slug}}">
+				<select class="form-control" id="language-{{slug}}" name="language-{{slug}}">
 					<option value="none">None</option>
 					<option value="fluent">Fluent</option>
 				</select>
