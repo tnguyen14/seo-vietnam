@@ -4,7 +4,8 @@
   "dependencies": {
     "bootstrap": "~3.0.0",
     "bootstrap-select": "*",
-    "jquery-simply-countable": "git@github.com:aaronrussell/jquery-simply-countable.git#~0.5.0"
+    "jquery-simply-countable": "git@github.com:aaronrussell/jquery-simply-countable.git#~0.5.0",
+    "jquery.validation": "~1.11.1"
   },
   "ignore": [
     "**/.*",

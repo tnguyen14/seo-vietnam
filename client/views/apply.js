@@ -7,10 +7,14 @@ Meteor.subscribe('countries');
 Meteor.subscribe('fake-users');
 Meteor.subscribe('applications');
 
-var structure = [
+var applySections = [
 	{
 		index: 1,
-		name: 'personal-info'
+		name: 'personal-info',
+		validate: {
+			first: "required",
+			last: "required"
+		}
 	}, {
 		index: 2,
 		name: 'education'
@@ -36,7 +40,7 @@ var structure = [
 ];
 
 Template.apply.fragments = function() {
-	return structure;
+	return applySections;
 }
 
 var getIndex = function(el, array) {
@@ -114,12 +118,12 @@ var navigate = function() {
 		});
 
 	// $(".fragment").removeClass('current prev next');
-	// // iterate through structure to find index
-	// var toIndex = getIndex(to, structure),
+	// // iterate through applySections to find index
+	// var toIndex = getIndex(to, applySections),
 	// 	prevDisabled = (toIndex === 0) ? 'disabled' : false;
 	// $('.prev-fragment').attr('disabled', prevDisabled);
 
-	// structure.forEach(function(element, index) {
+	// applySections.forEach(function(element, index) {
 	// 	var $el = $("#" + element.name);
 	// 	if (index > toIndex) {
 	// 		$el.addClass('next');
@@ -129,13 +133,14 @@ var navigate = function() {
 	// 		$el.addClass('current');
 	// 	}
 	// });
-	// var prevIndex = (toIndex === 0) ? structure.length -1 : toIndex -1,
-	// 	nextIndex = (toIndex === structure.length -1) ? 0 : toIndex + 1;
-	// $("#" + structure[prevIndex].name).addClass('prev');
-	// $("#" + structure[nextIndex].name).addClass('next');
+	// var prevIndex = (toIndex === 0) ? applySections.length -1 : toIndex -1,
+	// 	nextIndex = (toIndex === applySections.length -1) ? 0 : toIndex + 1;
+	// $("#" + applySections[prevIndex].name).addClass('prev');
+	// $("#" + applySections[nextIndex].name).addClass('next');
 	// $("#" + to).addClass('current');
 }
 
+// Rendered
 Template.apply.rendered = function() {
 	navigate();
 	// use bootstrap-select
@@ -158,13 +163,22 @@ Template.apply.rendered = function() {
 	});
 };
 
+Template['personal-info'].rendered = function() {
+	$("#personal-info").validate({
+		rules: {
+			first: "required",
+			last: "required"
+		}
+	});
+}
+
 //Template Events
 Template.apply.events = {
 	'click .prev-fragment': function(e) {
 		e.preventDefault();
 		var current = Session.get('applySection'),
-			currentIndex = getIndex(current, structure),
-			prev = (currentIndex === 0) ? current : structure[currentIndex-1].name;
+			currentIndex = getIndex(current, applySections),
+			prev = (currentIndex === 0) ? current : applySections[currentIndex-1].name;
 
 		saveInputs();
 
@@ -174,12 +188,16 @@ Template.apply.events = {
 	'click .next-fragment': function(e) {
 		e.preventDefault();
 		var current = Session.get('applySection'),
-			currentIndex = getIndex(current, structure);
+			currentIndex = getIndex(current, applySections)
 
+		// if form validation failes, don't do anything
+		if (!$('#' + current).valid()) {
+			return;
+		}
 		saveInputs();
 		// not yet at the last fragment
-		if (currentIndex + 1 < structure.length) {
-			var next = structure[currentIndex+1].name;
+		if (currentIndex + 1 < applySections.length) {
+			var next = applySections[currentIndex+1].name;
 			Meteor.Router.to('/apply/' + next);
 		// completed!
 		} else {
@@ -238,7 +256,7 @@ Template.apply.currentSection = function() {
 	if (Session.get('applySection')) {
 		return Session.get('applySection');
 	} else {
-		return structure[0].name;
+		return applySections[0].name;
 	}
 }
 Template.apply.app = function() {
