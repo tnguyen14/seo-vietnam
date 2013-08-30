@@ -39,11 +39,6 @@ Template.apply.fragments = function() {
 	return structure;
 }
 
-Template.apply.app = function() {
-	var userId = Session.get("userId");
-	return Applications.findOne({'user': userId});
-}
-
 var getIndex = function(el, array) {
 	var i = -1;
 	array.forEach(function(element, index) {
@@ -54,43 +49,52 @@ var getIndex = function(el, array) {
 	return i;
 }
 
-var save = function(object) {
-	var userId = Session.get("userId"),
-		appId = Applications.findOne({'user': userId})._id;
+var collectInputs = function(ctx) {
+	var field = {};
+	$('input[type="text"], input[type="number"], textarea, select', ctx).each(function(){
+		var name = $(this).attr('name'),
+			value = $(this).val();
+		field[name] = value;
+	});
 
-	Applications.update(appId, {$set: object});
-}
+	// checkboxes are saved as array of values
+	$('input[type="checkbox"]:checked', ctx).each(function(){
+		var name = $(this).attr('name'),
+			value = $(this).val();
+		field[name] = field[name] || [];
+		field[name].push(value);
+	});
 
-var saveInputs = function() {
-	var current = Session.get('applySection'),
-		group = {};
+	return field;
+};
 
-	$('.form-group', $('#' + current)).each(function() {
-		var field = {};
-		$('input[type="text"], input[type="number"], textarea, select', this).each(function(){
-			var name = $(this).attr('name'),
-				value = $(this).val();
-			field[name] = value;
-		});
-
-		// checkboxes are saved as array of values
-		$('input[type="checkbox"]:checked').each(function(){
-			var name = $(this).attr('name'),
-				value = $(this).val();
-			field[name] = field[name] || [];
-			field[name].push(value);
-		});
-
-		var name = $(this).attr('name');
+var saveFormGroups = function(ctx, collection, _id) {
+	$('.form-group', $(ctx)).each(function() {
+		var group = {},
+			field = collectInputs(this),
+			name = $(this).attr('name');
 		if (name) {
 			group[name] = field;
 		} else {
 			group = field;
 		}
-
-		save(group);
-
+		collection.update(_id, {$set: group});
 	});
+};
+
+var saveInputs = function() {
+	var current = Session.get('applySection'),
+		userId = Session.get("userId"),
+		appId = Applications.findOne({'user': userId})._id;
+
+
+	// save personal info to User
+	if (current === 'personal-info') {
+		saveFormGroups('#' + current, FakeUsers, userId);
+		return;
+	}
+
+	saveFormGroups('#' + current, Applications, appId);
 }
 
 var navigate = function() {
@@ -109,27 +113,27 @@ var navigate = function() {
 			}
 		});
 
-	$(".fragment").removeClass('current prev next');
-	// iterate through structure to find index
-	var toIndex = getIndex(to, structure),
-		prevDisabled = (toIndex === 0) ? 'disabled' : false;
-	$('.prev-fragment').attr('disabled', prevDisabled);
+	// $(".fragment").removeClass('current prev next');
+	// // iterate through structure to find index
+	// var toIndex = getIndex(to, structure),
+	// 	prevDisabled = (toIndex === 0) ? 'disabled' : false;
+	// $('.prev-fragment').attr('disabled', prevDisabled);
 
-	structure.forEach(function(element, index) {
-		var $el = $("#" + element.name);
-		if (index > toIndex) {
-			$el.addClass('next');
-		} else if (index < toIndex) {
-			$el.addClass('prev');
-		} else {
-			$el.addClass('current');
-		}
-	});
-	var prevIndex = (toIndex === 0) ? structure.length -1 : toIndex -1,
-		nextIndex = (toIndex === structure.length -1) ? 0 : toIndex + 1;
-	$("#" + structure[prevIndex].name).addClass('prev');
-	$("#" + structure[nextIndex].name).addClass('next');
-	$("#" + to).addClass('current');
+	// structure.forEach(function(element, index) {
+	// 	var $el = $("#" + element.name);
+	// 	if (index > toIndex) {
+	// 		$el.addClass('next');
+	// 	} else if (index < toIndex) {
+	// 		$el.addClass('prev');
+	// 	} else {
+	// 		$el.addClass('current');
+	// 	}
+	// });
+	// var prevIndex = (toIndex === 0) ? structure.length -1 : toIndex -1,
+	// 	nextIndex = (toIndex === structure.length -1) ? 0 : toIndex + 1;
+	// $("#" + structure[prevIndex].name).addClass('prev');
+	// $("#" + structure[nextIndex].name).addClass('next');
+	// $("#" + to).addClass('current');
 }
 
 Template.apply.rendered = function() {
@@ -236,6 +240,16 @@ Template.apply.currentSection = function() {
 	} else {
 		return structure[0].name;
 	}
+}
+Template.apply.app = function() {
+	var userId = Session.get("userId");
+	return Applications.findOne({'user': userId});
+}
+
+
+Template['personal-info'].user = function() {
+	var userId = Session.get("userId");
+	return FakeUsers.findOne({'_id': userId});
 }
 Template.education.colleges = function() {
 	return Colleges.find();

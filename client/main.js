@@ -9,7 +9,7 @@ Handlebars.registerHelper("debug", function(stuff){
 	console.log(stuff);
 });
 
-Session.set("userId", 1);
+Session.set("userId", "1");
 
 // Ink filepicker
 // https://developers.inkfilepicker.com/docs/web/

@@ -4,10 +4,14 @@ Meteor.subscribe('industries');
 
 Template.profile.helpers({
 	user: function(){
-		return Applications.findOne({user: Session.get('userId')});
+		return FakeUsers.findOne({_id: Session.get('userId')});
 	},
 	displayname: function() {
 		return this.name.first + " " + this.name.last;
+	},
+	app: function() {
+		return Applications.findOne({user: Session.get('userId')});
+
 	},
 	college: function() {
 		return Colleges.findOne({slug: this.college}).name;
@@ -21,7 +25,3 @@ Template.profile.helpers({
 		return industry.name;
 	}
 });
-
-Template.profile.colleges = function() {
-	return Colleges.find();
-}

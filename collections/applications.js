@@ -7,4 +7,4 @@ Applications.allow({
 	update: function(userId) {
 		return true;
 	}
-})
+});

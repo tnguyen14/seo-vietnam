@@ -1,7 +1,5 @@
 Meteor.startup(function () {
 	// start with some dummy colleges
-	Colleges.remove({});
-	Majors.remove({});
 	if (Colleges.find().count() === 0) {
 		Colleges.insert({
 			name: "Wheaton College",
@@ -96,10 +94,9 @@ Meteor.startup(function () {
 		});
 	}
 	if (Meteor.users.find().count() === 0) {
-		FakeUsers.remove({});
-		FakeUsers.insert({
-			_id: "1",
-			name: "Tri Nguyen"
-		});
+		// FakeUsers.remove({});
+		// FakeUsers.insert({
+		// 	_id: "1",
+		// });
 	}
 });

@@ -20,28 +20,30 @@
 <template name="personal-info">
 	<form id="personal-info" name="personal-info" class="fragment" method="post" action="">
 	<h2>Personal Information</h2>
-		<div class="form-group" name="name">
-			<label for="first" class="control-label">First Name</label>
-			<input type="text" name="first" class="form-control" placeholder="Tri" value="{{name.first}}" />
+		{{#with user}}
+			<div class="form-group" name="name">
+				<label for="first" class="control-label">First Name</label>
+				<input type="text" name="first" class="form-control" placeholder="Tri" value="{{name.first}}" />
 
-			<label for="last" class="control-label">Last Name</label>
-			<input type="text" name="last" class="form-control" placeholder="Nguyen" value="{{name.last}}" />
+				<label for="last" class="control-label">Last Name</label>
+				<input type="text" name="last" class="form-control" placeholder="Nguyen" value="{{name.last}}" />
 
-			<label for="middle" class="control-label">Middle Name</label>
-			<input type="text" name="middle" class="form-control" placeholder="Thi Phuoc" value="{{name.middle}}" />
-		</div>
-		<div class="form-group">
-			<label for="citizenship" class="control-label">Citizenship</label>
-			<select name="citizenship" class="form-control">
-			{{#each countries}}
-				<option>{{name}}</option>
-			{{/each}}
-			</select>
-		</div>
-		<div class="form-group">
-			<label for="tel" class="control-label">Phone number</label>
-			<input type="tel" name="tel" class="form-control" placeholder="+84 934 132313"/>
-		</div>
+				<label for="middle" class="control-label">Middle Name</label>
+				<input type="text" name="middle" class="form-control" placeholder="Thi Phuoc" value="{{name.middle}}" />
+			</div>
+			<div class="form-group">
+				<label for="citizenship" class="control-label">Citizenship</label>
+				<select name="citizenship" class="form-control">
+				{{#each countries}}
+					<option>{{name}}</option>
+				{{/each}}
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="tel" class="control-label">Phone number</label>
+				<input type="tel" name="tel" class="form-control" placeholder="+84 934 132313"/>
+			</div>
+		{{/with}}
 	</form>
 </template>
 
@@ -84,11 +86,11 @@
 		<div class="form-group" name="sat">
 			<h3>SAT Scores</h3>
 			<label for="writing">Writing</label>
-			<input type="number" name="writing"/>
+			<input type="number" name="writing" value="{{sat.writing}}"/>
 			<label for="reading">Reading</label>
-			<input type="number" name="reading"/>
+			<input type="number" name="reading" value="{{sat.reading}}"/>
 			<label for="math">Math</label>
-			<input type="number" name="math"/>
+			<input type="number" name="math" value="{{sat.math}}"/>
 		</div>
 	</form>
 </template>
