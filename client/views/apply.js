@@ -164,10 +164,20 @@ Template.apply.rendered = function() {
 };
 
 Template['personal-info'].rendered = function() {
+	var error = 'has-error',
+		valid = 'has-success';
+
 	$("#personal-info").validate({
 		rules: {
 			first: "required",
 			last: "required"
+		},
+		errorClass: 'error-label control-label',
+		highlight: function(element, errorClass, validClass) {
+			$(element).parent('.field-group').removeClass(valid).addClass(error);
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parent('.field-group').removeClass(error).addClass(valid);
 		}
 	});
 }
