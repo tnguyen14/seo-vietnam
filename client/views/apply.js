@@ -233,21 +233,16 @@ Template.apply.events = {
 	'click .fragment-control.next': function(e) {
 		e.preventDefault();
 		var current = Session.get('applySection'),
-			currentIndex = getIndex(current)
+			currentIndex = getIndex(current),
+			ext = applySections[currentIndex+1].name;
 
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
 			return;
 		}
 		saveInputs();
-		// not yet at the last fragment
-		if (currentIndex + 1 < applySections.length) {
-			var next = applySections[currentIndex+1].name;
-			Meteor.Router.to('/apply/' + next);
-		// completed!
-		} else {
-			Meteor.Router.to('/completed');
-		}
+
+		Meteor.Router.to('/apply/' + next);
 	},
 	'click .pagination li': function(e) {
 		saveInputs();
@@ -302,7 +297,7 @@ Template.resume.events = {
 	'click #app-submit': function(e) {
 		// check app ready one more time
 		if (appReady()) {
-			Meteor.Router.to('/profile');
+			Meteor.Router.to('/completed');
 		} else {
 			console.log("Unable to submit application. Your application is still incomplete");
 		}

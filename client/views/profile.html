@@ -13,6 +13,8 @@
 			<div class="field-group">
 				<label for="college">College/ University</label>
 				{{college}}
+			</div>
+			<div class="field-group">
 				<label for="major">Major</label>
 				{{major}}
 			</div>
@@ -27,10 +29,16 @@
 			</div>
 			<div class="field-group">
 				<label for="industries">Industries</label>
+				<ul>
 				{{#each industries}}
+					<li>
 					{{getIndustryName this}}
+					</li>
 				{{/each}}
+				</ul>
 			</div>
 		{{/with}}
+
+		<button class="btn btn-info">Edit your application</button>
 	</div>
 </template>
