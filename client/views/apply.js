@@ -127,35 +127,11 @@ var navigate = function() {
 	} else if (toIndex === applySections.length - 1) {
 		$(".fragment-control.next").addClass('hidden');
 	}
-
-	// $(".fragment").removeClass('current prev next');
-	// // iterate through applySections to find index
-	// var toIndex = getIndex(to, applySections),
-	// 	prevDisabled = (toIndex === 0) ? 'disabled' : false;
-	// $('.prev-fragment').attr('disabled', prevDisabled);
-
-	// applySections.forEach(function(element, index) {
-	// 	var $el = $("#" + element.name);
-	// 	if (index > toIndex) {
-	// 		$el.addClass('next');
-	// 	} else if (index < toIndex) {
-	// 		$el.addClass('prev');
-	// 	} else {
-	// 		$el.addClass('current');
-	// 	}
-	// });
-	// var prevIndex = (toIndex === 0) ? applySections.length -1 : toIndex -1,
-	// 	nextIndex = (toIndex === applySections.length -1) ? 0 : toIndex + 1;
-	// $("#" + applySections[prevIndex].name).addClass('prev');
-	// $("#" + applySections[nextIndex].name).addClass('next');
-	// $("#" + to).addClass('current');
 }
 
 // Rendered
 Template.apply.rendered = function() {
 	navigate();
-	// use bootstrap-select
-	// $('.selectpicker').selectpicker();
 
 	$("#passion textarea").simplyCountable({
 		counter: '#passion-counter',
@@ -188,7 +164,7 @@ Template.apply.rendered = function() {
 	});
 };
 
-Template['personal-info'].rendered = function() {
+Template['personal-info'].rendered = function() {g
 	$("#personal-info").validate({
 		rules: {
 			first: "required",
@@ -242,21 +218,37 @@ Template.apply.events = {
 Template.resume.events = {
 	'click #resume-submit': function(e) {
 		e.preventDefault();
-		var fileInput = document.getElementById("file-resume");
-		if (!fileInput.value) {
-			console.log("Choose a resume to store to S3");
-		} else {
+		var $form = $("#resume");
+			fileInput = document.getElementById("file-resume"),
+			$submit = $("#resume-submit"),
+			$label = $submit.siblings(".control-label");
+
+		$form.validate({
+			rules: {
+				'file-resume': {
+					required: true
+				}
+			}
+		});
+
+		if ($form.valid()) {
 			filepicker.store(fileInput, {
 				location: 'S3'
 			},function(InkBlob){
 				// successful response
 				// {"url":"https://www.filepicker.io/api/file/5TEGc0A4RPWNcvTtxyYs","filename":"ac2af834-a599-4dbd-b4c0-a925b981f206.png","mimetype":"image/png","size":134347,"key":"7V1EVxorTWXM87AqUTxb_ac2af834-a599-4dbd-b4c0-a925b981f206.png","isWriteable":false}
 				// aws url: http://s3.amazonaws.com/seo-vietnam/7V1EVxorTWXM87AqUTxb_ac2af834-a599-4dbd-b4c0-a925b981f206.png
-				console.log("Store successful:", JSON.stringify(InkBlob));
+				console.log('Store successful:', JSON.stringify(InkBlob));
+				$submit.removeClass('btn-default btn-primary btn-danger').addClass('btn-success').html("Success!");
+				$label.html('Thank you for uploading your resume!');
 			}, function(FPError) {
 				console.log(FPError.toString());
+				$submit.removeClass('btn-default btn-primary btn-success').addClass('btn-danger').html("Failed!");
+				$label.html('There has been an error uploading your file (' +  FPError.toString() + '). Please try again.');
 			}, function(progress) {
-				console.log("Loading: "+progress+"%");
+				console.log('Loading: ' + progress + '%');
+				$submit.removeClass('btn-default btn-success btn-danger').addClass('btn-primary').html(progress + "%");
+				$label.html('Uploading...');
 			});
 		}
 	}

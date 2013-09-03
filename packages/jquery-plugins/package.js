@@ -5,6 +5,8 @@ Package.describe({
 Package.on_use(function(api) {
 	// simply countable
 	api.add_files(['../../public/bower_components/jquery-simply-countable/jquery.simplyCountable.js'], 'client');
+	// jquery validate
 	api.add_files(['../../public/bower_components/jquery.validation/jquery.validate.js'], 'client');
+	api.add_files(['../../public/bower_components/jquery.validation/additional-methods.js'], 'client');
 
 });
