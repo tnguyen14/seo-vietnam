@@ -30,10 +30,16 @@
 	}
 }
 
-.prev-fragment,
-.next-fragment {
+.fragment-control {
 	.hide-text();
 	cursor: pointer;
+	&.next {
+		right: 0;
+		.glyphicon {
+			right: 0.75em;
+			left: auto;
+		}
+	}
 	.glyphicon {
 		color: @gray;
 		font-size: 4rem;
@@ -45,13 +51,6 @@
 		&:hover {
 			background: rgba(0,0,0,0.15);
 		}
-	}
-}
-.next-fragment {
-	right: 0;
-	.glyphicon {
-		right: 0.75em;
-		left: auto;
 	}
 }
 

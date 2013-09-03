@@ -43,9 +43,9 @@ Template.apply.fragments = function() {
 	return applySections;
 }
 
-var getIndex = function(el, array) {
+var getIndex = function(el) {
 	var i = -1;
-	array.forEach(function(element, index) {
+	applySections.forEach(function(element, index) {
 		if (el === element.name) {
 			i = index;
 		}
@@ -107,6 +107,7 @@ var navigate = function() {
 		to = "personal-info";
 		Session.set('applySection', to);
 	}
+
 	// add active class
 	$(".pagination li")
 		.removeClass('active')
@@ -116,6 +117,16 @@ var navigate = function() {
 				$(this).addClass('active');
 			}
 		});
+
+	// selectively hide fragment controls for first and last fragments
+	$(".fragment-control").removeClass('hidden');
+	var toIndex = getIndex(to);
+	if (toIndex === 0) {
+		console.log('first fragment');
+		$(".fragment-control.prev").addClass('hidden');
+	} else if (toIndex === applySections.length - 1) {
+		$(".fragment-control.next").addClass('hidden');
+	}
 
 	// $(".fragment").removeClass('current prev next');
 	// // iterate through applySections to find index
@@ -161,17 +172,12 @@ Template.apply.rendered = function() {
 		countType: 'words',
 		maxCount: 500
 	});
-};
 
-Template['personal-info'].rendered = function() {
+	// defaults for jquery validator
 	var error = 'has-error',
 		valid = 'has-success';
 
-	$("#personal-info").validate({
-		rules: {
-			first: "required",
-			last: "required"
-		},
+	$.validator.setDefaults({
 		errorClass: 'error-label control-label',
 		highlight: function(element, errorClass, validClass) {
 			$(element).parent('.field-group').removeClass(valid).addClass(error);
@@ -180,14 +186,23 @@ Template['personal-info'].rendered = function() {
 			$(element).parent('.field-group').removeClass(error).addClass(valid);
 		}
 	});
+};
+
+Template['personal-info'].rendered = function() {
+	$("#personal-info").validate({
+		rules: {
+			first: "required",
+			last: "required"
+		}
+	});
 }
 
 //Template Events
 Template.apply.events = {
-	'click .prev-fragment': function(e) {
+	'click .fragment-control.prev': function(e) {
 		e.preventDefault();
 		var current = Session.get('applySection'),
-			currentIndex = getIndex(current, applySections),
+			currentIndex = getIndex(current),
 			prev = (currentIndex === 0) ? current : applySections[currentIndex-1].name;
 
 		saveInputs();
@@ -195,10 +210,10 @@ Template.apply.events = {
 		// navigate away!
 		Meteor.Router.to('/apply/' + prev);
 	},
-	'click .next-fragment': function(e) {
+	'click .fragment-control.next': function(e) {
 		e.preventDefault();
 		var current = Session.get('applySection'),
-			currentIndex = getIndex(current, applySections)
+			currentIndex = getIndex(current)
 
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
@@ -215,6 +230,7 @@ Template.apply.events = {
 		}
 	},
 	'click .pagination li': function(e) {
+		saveInputs();
 		// `this` is the context of of these li's
 		var to = this.name;
 		// Session.set('applySection', to);
