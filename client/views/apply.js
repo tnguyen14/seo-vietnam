@@ -69,24 +69,34 @@ var collectInputs = function(ctx) {
 		field[name].push(value);
 	});
 
+	$('input[type="file"]', ctx).each(function(){
+		var name = $(this).attr('name'),
+			value = {};
+		value.url = $(this).data('url');
+		value.key = $(this).data('awskey');
+		console.log(value);
+		field[name] = value;
+	})
+
 	return field;
 };
 
-var saveFormGroups = function(ctx, collection, _id) {
+var saveFormGroups = function(ctx, collection, _id, cb) {
 	$('.form-group', $(ctx)).each(function() {
 		var group = {},
 			field = collectInputs(this),
 			name = $(this).attr('name');
+		console.log(field);
 		if (name) {
 			group[name] = field;
 		} else {
 			group = field;
 		}
-		collection.update(_id, {$set: group});
+		collection.update(_id, {$set: group}, cb);
 	});
 };
 
-var saveInputs = function() {
+var saveInputs = function(cb) {
 	var current = Session.get('applySection'),
 		userId = Session.get("userId"),
 		appId = Applications.findOne({'user': userId})._id;
@@ -94,11 +104,11 @@ var saveInputs = function() {
 
 	// save personal info to User
 	if (current === 'personal-info') {
-		saveFormGroups('#' + current, FakeUsers, userId);
+		saveFormGroups('#' + current, FakeUsers, userId, cb);
 		return;
 	}
 
-	saveFormGroups('#' + current, Applications, appId);
+	saveFormGroups('#' + current, Applications, appId, cb);
 }
 
 var navigate = function() {
@@ -127,6 +137,33 @@ var navigate = function() {
 	} else if (toIndex === applySections.length - 1) {
 		$(".fragment-control.next").addClass('hidden');
 	}
+}
+
+var currentApp = function() {
+	var userId = Session.get("userId");
+	return Applications.findOne({'user': userId});
+}
+// Check whether application is ready for submit
+var appReady = function(){
+	var app = currentApp(),
+		required = ['college', 'major', 'essay-community', 'essay-leadership', 'essay-passion'],
+		empty = [];
+	_.each(required, function(field){
+		if (app[field] === '') {
+			console.log(field);
+			empty.push(field);
+		}
+	});
+
+	if (empty.length) {
+		console.log('appl is incomplete');
+		console.log(empty);
+		return false;
+	} else {
+		console.log('app is complete');
+		return true;
+	}
+
 }
 
 // Rendered
@@ -164,14 +201,21 @@ Template.apply.rendered = function() {
 	});
 };
 
-Template['personal-info'].rendered = function() {g
+Template['personal-info'].rendered = function() {
 	$("#personal-info").validate({
 		rules: {
 			first: "required",
 			last: "required"
 		}
 	});
-}
+};
+
+Template.resume.rendered = function() {
+	// testing
+	if (appReady()) {
+		$("#app-submit").removeClass("hidden");
+	}
+};
 
 //Template Events
 Template.apply.events = {
@@ -239,8 +283,11 @@ Template.resume.events = {
 				// {"url":"https://www.filepicker.io/api/file/5TEGc0A4RPWNcvTtxyYs","filename":"ac2af834-a599-4dbd-b4c0-a925b981f206.png","mimetype":"image/png","size":134347,"key":"7V1EVxorTWXM87AqUTxb_ac2af834-a599-4dbd-b4c0-a925b981f206.png","isWriteable":false}
 				// aws url: http://s3.amazonaws.com/seo-vietnam/7V1EVxorTWXM87AqUTxb_ac2af834-a599-4dbd-b4c0-a925b981f206.png
 				console.log('Store successful:', JSON.stringify(InkBlob));
-				$submit.removeClass('btn-default btn-primary btn-danger').addClass('btn-success').html("Success!");
-				$label.html('Thank you for uploading your resume!');
+				$(fileInput).data('url', InkBlob.url).data('awskey', InkBlob.key);
+				saveInputs(function(){
+					$submit.removeClass('btn-default btn-primary btn-danger').addClass('btn-success').html("Success!");
+					$label.html('Thank you for uploading your resume!');
+				});
 			}, function(FPError) {
 				console.log(FPError.toString());
 				$submit.removeClass('btn-default btn-primary btn-success').addClass('btn-danger').html("Failed!");
@@ -278,8 +325,7 @@ Template.apply.currentSection = function() {
 	}
 }
 Template.apply.app = function() {
-	var userId = Session.get("userId");
-	return Applications.findOne({'user': userId});
+	return currentApp();
 }
 
 
