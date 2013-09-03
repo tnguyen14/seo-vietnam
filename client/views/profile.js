@@ -1,6 +1,14 @@
 Meteor.subscribe('applications');
 Meteor.subscribe('industries');
 
+// get name from slug
+var getName = function(slug, collection) {
+	var doc = _.find(collection.find().fetch(),
+		function(d){
+			return d.slug === slug;
+		});
+	return doc.name;
+};
 
 Template.profile.helpers({
 	user: function(){
@@ -17,11 +25,6 @@ Template.profile.helpers({
 		return Colleges.findOne({slug: this.college}).name;
 	},
 	getIndustryName: function(slug) {
-		var industry = _.find(Industries.find().fetch(),
-			function(ind){
-				return ind.slug === slug;
-		});
-
-		return industry.name;
-	}
+		return getName(slug, Industries);
+	},
 });
