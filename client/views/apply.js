@@ -298,6 +298,14 @@ Template.resume.events = {
 				$label.html('Uploading...');
 			});
 		}
+	},
+	'click #app-submit': function(e) {
+		// check app ready one more time
+		if (appReady()) {
+			Meteor.Router.to('/profile');
+		} else {
+			console.log("Unable to submit application. Your application is still incomplete");
+		}
 	}
 }
 // Template Helpers
