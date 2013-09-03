@@ -53,64 +53,6 @@ var getIndex = function(el) {
 	return i;
 }
 
-var collectInputs = function(ctx) {
-	var field = {};
-	$('input[type="text"], input[type="number"], textarea, select', ctx).each(function(){
-		var name = $(this).attr('name'),
-			value = $(this).val();
-		field[name] = value;
-	});
-
-	// checkboxes are saved as array of values
-	$('input[type="checkbox"]:checked', ctx).each(function(){
-		var name = $(this).attr('name'),
-			value = $(this).val();
-		field[name] = field[name] || [];
-		field[name].push(value);
-	});
-
-	$('input[type="file"]', ctx).each(function(){
-		var name = $(this).attr('name'),
-			value = {};
-		value.url = $(this).data('url');
-		value.key = $(this).data('awskey');
-		console.log(value);
-		field[name] = value;
-	})
-
-	return field;
-};
-
-var saveFormGroups = function(ctx, collection, _id, cb) {
-	$('.form-group', $(ctx)).each(function() {
-		var group = {},
-			field = collectInputs(this),
-			name = $(this).attr('name');
-		console.log(field);
-		if (name) {
-			group[name] = field;
-		} else {
-			group = field;
-		}
-		collection.update(_id, {$set: group}, cb);
-	});
-};
-
-var saveInputs = function(cb) {
-	var current = Session.get('applySection'),
-		userId = Session.get("userId"),
-		appId = Applications.findOne({'user': userId})._id;
-
-
-	// save personal info to User
-	if (current === 'personal-info') {
-		saveFormGroups('#' + current, FakeUsers, userId, cb);
-		return;
-	}
-
-	saveFormGroups('#' + current, Applications, appId, cb);
-}
-
 var navigate = function() {
 	var to = Session.get('applySection');
 	if (!to) {
@@ -132,7 +74,6 @@ var navigate = function() {
 	$(".fragment-control").removeClass('hidden');
 	var toIndex = getIndex(to);
 	if (toIndex === 0) {
-		console.log('first fragment');
 		$(".fragment-control.prev").addClass('hidden');
 	} else if (toIndex === applySections.length - 1) {
 		$(".fragment-control.next").addClass('hidden');
@@ -234,7 +175,7 @@ Template.apply.events = {
 		e.preventDefault();
 		var current = Session.get('applySection'),
 			currentIndex = getIndex(current),
-			ext = applySections[currentIndex+1].name;
+			next = applySections[currentIndex+1].name;
 
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {

@@ -1,5 +1,8 @@
 Meteor.subscribe('applications');
 Meteor.subscribe('industries');
+Meteor.subscribe('majors');
+Meteor.subscribe('languages');
+Meteor.subscribe('functions');
 
 // get name from slug
 var getName = function(slug, collection) {
@@ -27,4 +30,30 @@ Template.profile.helpers({
 	getIndustryName: function(slug) {
 		return getName(slug, Industries);
 	},
+	getFunctionName: function(slug) {
+		return getName(slug, Functions);
+	},
+	getMajorName: function(slug) {
+		return getName(slug, Majors)
+	},
+	displayLanguage: function(proficiency) {
+		var html = '';
+		for (var lang in proficiency) {
+			if (proficiency.hasOwnProperty(lang)) {
+				// only display language with some proficiency
+				if (proficiency[lang] !== 'none') {
+					html += '<label for="' + lang + '">' + getName(lang, Languages) + '</label>';
+					html += proficiency[lang];
+				}
+			}
+		}
+		return html;
+	}
 });
+
+Template.profile.events = {
+	'click #edit-app': function(e) {
+		e.preventDefault();
+		Meteor.Router.to('/apply');
+	}
+}

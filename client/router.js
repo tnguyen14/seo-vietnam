@@ -5,6 +5,7 @@ apply = function(id) {
 
 Meteor.Router.add({
 	'/': 'login',
+	'/login': 'login',
 	'/apply': apply,
 	'/apply/:id': apply,
 	'/completed': 'completed',

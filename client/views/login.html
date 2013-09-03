@@ -1,15 +1,21 @@
 <template name="login">
 	<h1>Start your application process with us today</h1>
-	<div class="login">
-		<label for="email">Your email</label>
-		<input type="email" name="email"/>
-		<label for="password">Password</label>
-		<input type="password" name="password"/>
-		<button type="submit" class="btn btn-primary" id="login">Log In</button>
-	</div>
+	<form class="login">
+		<div class="form-group">
+			<label for="email">Your email</label>
+			<input type="email" name="email"/>
+			<label for="password">Password</label>
+			<input type="password" name="password"/>
+		</div>
+		<input type="submit" class="btn btn-primary" id="login" value="Log In"/>
+	</form>
 
 	<p>If you're new, enter your email address to start</p>
-	<label for="email">Your email</label>
-	<input type="email" name="email"/>
-	<button type="submit" class="btn btn-success" id="start">Start</button>
+	<form class="register">
+		<div class="form-group">
+			<label for="email">Your email</label>
+			<input type="email" name="email"/>
+		</div>
+		<input type="submit" class="btn btn-success" id="start" value="Start">
+	</form>
 </template>
