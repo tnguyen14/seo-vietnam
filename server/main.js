@@ -93,10 +93,9 @@ Meteor.startup(function () {
 			slug: "technology"
 		});
 	}
-	if (Meteor.users.find().count() === 0) {
-		// FakeUsers.remove({});
-		// FakeUsers.insert({
-		// 	_id: "1",
-		// });
+	if (FakeUsers.find().count() === 0) {
+		FakeUsers.insert({
+			_id: "1",
+		});
 	}
 });
