@@ -12,3 +12,5 @@ jquery-plugins
 momentjs
 page-js-ie-support
 router
+accounts-password
+accounts-ui
