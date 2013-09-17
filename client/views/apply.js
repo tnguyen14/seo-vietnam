@@ -4,7 +4,6 @@ Meteor.subscribe('languages');
 Meteor.subscribe('industries');
 Meteor.subscribe('functions');
 Meteor.subscribe('countries');
-Meteor.subscribe('fake-users');
 Meteor.subscribe('applications');
 
 var applySections = [
@@ -188,6 +187,16 @@ Template.apply.events = {
 		// Session.set('applySection', to);
 		Meteor.Router.to('/apply/' + to);
 		navigate();
+	},
+	'click #logout': function(e) {
+		e.preventDefault();
+		Meteor.logout(function(err) {
+			if (err) {
+				console.log(err);
+			} else {
+				Meteor.Router.to('/');
+			}
+		});
 	}
 };
 
@@ -268,11 +277,6 @@ Template.apply.app = function() {
 	return currentApp();
 }
 
-
-Template['personal-info'].user = function() {
-	var userId = Session.get("userId");
-	return FakeUsers.findOne({'_id': userId});
-}
 Template.education.colleges = function() {
 	return Colleges.find();
 }

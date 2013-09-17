@@ -11,3 +11,17 @@ Meteor.Router.add({
 	'/completed': 'completed',
 	'/profile': 'profile'
 });
+
+Meteor.Router.filters({
+	'checkLoggedIn': function(page) {
+		if (Meteor.loggingIn()) {
+			return 'loading';
+		} else if (Meteor.user()) {
+			return page;
+		} else {
+			return 'login';
+		}
+	}
+});
+
+Meteor.Router.filter('checkLoggedIn', {except: 'login'});

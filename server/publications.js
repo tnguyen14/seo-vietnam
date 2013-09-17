@@ -26,7 +26,3 @@ Meteor.publish('functions', function(){
 Meteor.publish('applications', function(){
 	return Applications.find({});
 });
-
-Meteor.publish('fake-users', function(){
-	return FakeUsers.find();
-});
