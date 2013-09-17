@@ -2,7 +2,7 @@
 
 collectInputs = function(ctx) {
 	var field = {};
-	$('input[type="text"], input[type="number"], input[type="email"], textarea, select', ctx).each(function(){
+	$('input[type="text"], input[type="number"], input[type="email"], input[type="tel"], textarea, select', ctx).each(function(){
 		var name = $(this).attr('name'),
 			value = $(this).val();
 		field[name] = value;
@@ -43,15 +43,17 @@ saveFormGroups = function(ctx, collection, _id, cb) {
 
 saveInputs = function(cb) {
 	var current = Session.get('applySection'),
-		userId = Session.get("userId"),
+		userId = Meteor.userId(),
 		appId = Applications.findOne({'user': userId})._id;
 
-
-	// save personal info to User
-	if (current === 'personal-info') {
-		saveFormGroups('#' + current, FakeUsers, userId, cb);
+	if (!userId) {
+		console.log('no user found');
 		return;
 	}
-
-	saveFormGroups('#' + current, Applications, appId, cb);
+	// save personal info to User
+	if (current === 'personal-info') {
+		saveFormGroups('#' + current, Meteor.users, userId, cb);
+	} else {
+		saveFormGroups('#' + current, Applications, appId, cb);
+	}
 }

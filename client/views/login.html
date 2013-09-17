@@ -1,21 +1,27 @@
 <template name="login">
 	<h1>Start your application process with us today</h1>
-	<form class="login">
+	<form id="register">
 		<div class="form-group">
 			<label for="email">Your email</label>
-			<input type="email" name="email"/>
-			<label for="password">Password</label>
-			<input type="password" name="password"/>
+			<input type="email" name="email" class="login-email"/>
 		</div>
-		<input type="submit" class="btn btn-primary" id="login" value="Log In"/>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" name="password" class="login-password"/>
+		</div>
+		<input type="submit" class="btn btn-success" id="start-button" value="Start">
 	</form>
 
-	<h2>If you're new, enter your email address to start</h2>
-	<form class="register">
+	<h2>If you already have an account with us, log in below</h2>
+	<form id="login">
 		<div class="form-group">
 			<label for="email">Your email</label>
-			<input type="email" name="email"/>
+			<input type="email" name="email" class="login-email"/>
 		</div>
-		<input type="submit" class="btn btn-success" id="start" value="Start">
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" name="password" class="login-password"/>
+		</div>
+		<input type="submit" class="btn btn-primary" id="login-button" value="Log In"/>
 	</form>
 </template>

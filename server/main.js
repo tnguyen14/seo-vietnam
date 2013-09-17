@@ -93,9 +93,4 @@ Meteor.startup(function () {
 			slug: "technology"
 		});
 	}
-	if (FakeUsers.find().count() === 0) {
-		FakeUsers.insert({
-			_id: "1",
-		});
-	}
 });

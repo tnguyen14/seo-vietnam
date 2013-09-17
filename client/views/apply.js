@@ -10,11 +10,7 @@ Meteor.subscribe('applications');
 var applySections = [
 	{
 		index: 1,
-		name: 'personal-info',
-		validate: {
-			first: "required",
-			last: "required"
-		}
+		name: 'personal-info'
 	}, {
 		index: 2,
 		name: 'education'
@@ -81,7 +77,7 @@ var navigate = function() {
 }
 
 var currentApp = function() {
-	var userId = Session.get("userId");
+	var userId = Meteor.userId();
 	return Applications.findOne({'user': userId});
 }
 // Check whether application is ready for submit
