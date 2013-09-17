@@ -37,6 +37,7 @@ saveFormGroups = function(ctx, collection, _id, cb) {
 		} else {
 			group = field;
 		}
+		console.log(group);
 		collection.update(_id, {$set: group}, cb);
 	});
 };

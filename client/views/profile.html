@@ -1,7 +1,7 @@
 <template name="profile">
 	<div class="profile">
 		<h1>Your Profile</h1>
-		{{#with user}}
+		{{#with currentUser}}
 			<h2>{{displayname}}</h2>
 			<div class="field-group">
 			<label for="email">Email</label>

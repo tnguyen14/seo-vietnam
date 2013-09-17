@@ -14,15 +14,14 @@ var getName = function(slug, collection) {
 };
 
 Template.profile.helpers({
-	user: function(){
-		return FakeUsers.findOne({_id: Session.get('userId')});
-	},
 	displayname: function() {
-		return this.name.first + " " + this.name.last;
+		return this.profile.name.first + " " + this.profile.name.last;
+	},
+	email: function() {
+		return this.emails[0].address;
 	},
 	app: function() {
-		return Applications.findOne({user: Session.get('userId')});
-
+		return Applications.findOne({user: Meteor.userId()});
 	},
 	college: function() {
 		return Colleges.findOne({slug: this.college}).name;
