@@ -76,8 +76,19 @@ var navigate = function() {
 }
 
 var currentApp = function() {
-	var userId = Meteor.userId();
-	return Applications.findOne({'user': userId});
+	var userId = Meteor.userId(),
+	 	appCursor = Applications.find({"user": userId});
+	if (appCursor.count() === 0) {
+		Applications.insert({"user": userId}, function(err, _id) {
+			if (!err) {
+				return Applications.findOne({"_id": _id});
+			}
+		});
+	} else if (appCursor.count() > 1){
+		// TODO: handle when there are duplicate applications for a user
+	} else {
+		return appCursor.fetch();
+	}
 }
 // Check whether application is ready for submit
 var appReady = function(){

@@ -12,23 +12,24 @@ Handlebars.registerHelper("debug", function(stuff){
 });
 
 Handlebars.registerHelper("isEmpty", function(thing, options) {
-	var isEmpty;
+	var empty;
 	if (!thing && thing !== 0) {
-		isEmpty = true;
+		empty = true;
 	} else if (isArray(thing) && thing.length === 0) {
-		isEmpty = true;
+		empty = true;
 	} else if (typeof thing === 'object') {
+		empty = true;
 		for (var key in thing) {
 			if (hasOwnProperty.call(thing, key)) {
-				isEmpty = false;
+				empty = false;
 			}
 		}
-		isEmpty = true;
+
 	} else {
-		isEmpty = false;
+		empty = false;
 	}
 
-	if (isEmpty) {
+	if (empty) {
 		return options.fn(this);
 	} else {
 		return options.inverse(this);
