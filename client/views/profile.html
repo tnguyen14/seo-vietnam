@@ -66,6 +66,18 @@
 				<label for="essay-leadership">Are you more of a leader or a follower? Why do you think so?</label>
 				<div>{{essay-leadership}}</div>
 			</div>
+
+			<h3>Essays</h3>
+			<div class="field-group">
+				<label for="resume">Resume</label>
+				{{debug file-resume}}
+				{{#isEmpty file-resume}}
+					<span>You have not uploaded your resume yet.</span>
+				{{else}}
+					<a href="{{file-resume.url}}" class="btn">View your uploaded resume</a>
+				{{/isEmpty}}
+
+			</div><!-- .field-group -->
 		{{/with}}
 
 		<button class="btn btn-info" id="edit-app">Edit your application</button>

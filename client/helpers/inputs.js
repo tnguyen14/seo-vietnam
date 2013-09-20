@@ -16,6 +16,7 @@ collectInputs = function(ctx) {
 		field[name].push(value);
 	});
 
+	// resume file
 	$('input[type="file"]', ctx).each(function(){
 		var name = $(this).attr('name'),
 			value = {};
