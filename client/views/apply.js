@@ -28,6 +28,16 @@ var applySections = [
 	}
 ];
 
+$.validator.setDefaults({
+	errorClass: 'error-label control-label',
+	highlight: function(element, errorClass, validClass) {
+		$(element).parent('.field-group').removeClass('has-success').addClass('has-error');
+	},
+	unhighlight: function(element, errorClass, validClass) {
+		$(element).parent('.field-group').removeClass('has-error').addClass('has-success');
+	}
+});
+
 Template.apply.fragments = function() {
 	return applySections;
 }
@@ -133,20 +143,6 @@ Template.apply.rendered = function() {
 		maxCount: 500
 	});
 
-	// defaults for jquery validator
-	var error = 'has-error',
-		valid = 'has-success';
-
-	$.validator.setDefaults({
-		errorClass: 'error-label control-label',
-		highlight: function(element, errorClass, validClass) {
-			$(element).parent('.field-group').removeClass(valid).addClass(error);
-		},
-		unhighlight: function(element, errorClass, validClass) {
-			$(element).parent('.field-group').removeClass(error).addClass(valid);
-		}
-	});
-
 	var $submitButton = $('#app-submit');
 	if (Session.get('applySection') === 'resume') {
 		$submitButton.removeClass('hidden');
@@ -188,9 +184,18 @@ Template.apply.events = {
 		Meteor.Router.to('/apply/' + next);
 	},
 	'click .pagination li': function(e) {
-		saveInputs();
+		e.preventDefault();
 		// `this` is the context of of these li's
-		var to = this.name;
+		var current = Session.get('applySection'),
+			to = this.name;
+
+		// if form validation failes, don't do anything
+		if (!$('#' + current).valid()) {
+			return;
+		}
+
+		saveInputs();
+
 		// Session.set('applySection', to);
 		Meteor.Router.to('/apply/' + to);
 		navigate();
