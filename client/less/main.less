@@ -20,13 +20,6 @@
 	.fragment {
 		position: absolute;
 		width: 100%;
-		// left: 100%;
-		// &.current {
-		// 	left: 0;
-		// }
-		// &.prev {
-		// 	left: -100%;
-		// }
 	}
 }
 
@@ -70,6 +63,35 @@
 		}
 	}
 }
-// input[type=text], textarea {
-// 	.glow-input();
-// }
+
+.login {
+	margin: 0 auto 1em;
+	width: 100%;
+	@media (min-width: 37.5em) {
+		width: 50%;
+	}
+	label {
+		display: block;
+		font-size: 1.2em;
+	}
+	.error {
+		font-style: italic;
+		font-weight: normal;
+		.text-danger;
+	}
+	input[type="email"],
+	input[type="password"] {
+		padding: 0.5em;
+		width: 100%;
+	}
+	.alert {
+		display: none;
+	}
+}
+.page-header {
+	line-height: 1.4;
+}
+
+.logout {
+	.pull-right();
+}

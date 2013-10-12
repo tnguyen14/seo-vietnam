@@ -85,6 +85,7 @@ var currentApp = function() {
 			}
 		});
 	} else if (appCursor.count() > 1){
+		console.log('apps found: ' + appCursor.count());
 		// TODO: handle when there are duplicate applications for a user
 	} else {
 		return appCursor.fetch();

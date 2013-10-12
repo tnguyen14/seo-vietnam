@@ -31,7 +31,8 @@ Template.login.events = {
 				password: password
 			}, function(err) {
 				if (err) {
-					console.log(err.message);
+					$('.alert', $form).show().alert().find('.message').html(err.reason);
+					console.log(err);
 					return ;
 				}
 				Applications.insert({
@@ -61,11 +62,16 @@ Template.login.events = {
 				password = $(".login-password", $form).val().trim();
 			Meteor.loginWithPassword(email, password, function(err) {
 				if (err) {
-					console.log(err.message);
+					$('.alert', $form).show().alert().find('.message').html(err.reason);
+					console.log(err);
 					return ;
 				}
 				Meteor.Router.to('/apply');
 			});
 		}
+	},
+	"click .close": function(e) {
+		e.preventDefault();
+		$(e.target).parent('.alert').hide();
 	}
 }

@@ -1,5 +1,6 @@
 <template name="profile">
 	<div class="profile">
+		{{> logout}}
 		<h1>Your Profile</h1>
 		{{#with currentUser}}
 			<h2>{{displayname}}</h2>

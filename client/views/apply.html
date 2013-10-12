@@ -1,8 +1,6 @@
 <template name="apply">
 	<h1>Your Application</h1>
-	<div class="pull-right">
-		<button id="logout" class="btn">Log Out</button>
-	</div>
+	{{> logout}}
 	<ul class="pagination">
 		{{#each fragments}}
 			<li data-name="{{name}}"><a href="{{name}}">{{index}}</a></li>
