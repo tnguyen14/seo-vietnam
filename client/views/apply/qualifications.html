@@ -14,12 +14,18 @@
 
 		<div class="form-group" name="sat">
 			<h3>SAT Scores</h3>
-			<label for="writing">Writing</label>
-			<input type="number" name="writing" value="{{sat.writing}}"/>
-			<label for="reading">Reading</label>
-			<input type="number" name="reading" value="{{sat.reading}}"/>
-			<label for="math">Math</label>
-			<input type="number" name="math" value="{{sat.math}}"/>
+			<div class="field-group">
+				<label for="writing">Writing</label>
+				<input type="text" name="writing" value="{{sat.writing}}"/>
+			</div>
+			<div class="field-group">
+				<label for="reading">Reading</label>
+				<input type="text" name="reading" value="{{sat.reading}}"/>
+			</div>
+			<div class="field-group">
+				<label for="math">Math</label>
+				<input type="text" name="math" value="{{sat.math}}"/>
+			</div>
 		</div>
 	</form>
 </template>
