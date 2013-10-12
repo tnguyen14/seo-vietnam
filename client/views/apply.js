@@ -1,9 +1,3 @@
-Meteor.subscribe('colleges');
-Meteor.subscribe('majors');
-Meteor.subscribe('languages');
-Meteor.subscribe('industries');
-Meteor.subscribe('functions');
-Meteor.subscribe('countries');
 Meteor.subscribe('applications');
 
 var applySections = [
@@ -75,10 +69,38 @@ var navigate = function() {
 	}
 }
 
-var currentApp = function() {
+// Check whether application is ready for submit
+var appReady = function(){
+	var required = [
+			'college',
+			'major',
+			'essay-community',
+			'essay-leadership',
+			'essay-passion'
+		],
+		currentApp = getCurrentApp(),
+		empty = [];
+	_.each(required, function(field){
+		if (!currentApp[field]) {
+			empty.push(field);
+		}
+	});
+
+	if (empty.length) {
+		console.log('app is incomplete');
+		console.log(empty);
+		return false;
+	} else {
+		console.log('app is complete');
+		return true;
+	}
+};
+
+var getCurrentApp = function() {
 	var userId = Meteor.userId(),
 	 	appCursor = Applications.find({"user": userId});
 	if (appCursor.count() === 0) {
+		console.log('inserting new app');
 		Applications.insert({"user": userId}, function(err, _id) {
 			if (!err) {
 				return Applications.findOne({"_id": _id});
@@ -88,31 +110,13 @@ var currentApp = function() {
 		console.log('apps found: ' + appCursor.count());
 		// TODO: handle when there are duplicate applications for a user
 	} else {
-		return appCursor.fetch();
+		// cursor fetch returns an array
+		return appCursor.fetch()[0];
 	}
 }
-// Check whether application is ready for submit
-var appReady = function(){
-	var app = currentApp(),
-		required = ['college', 'major', 'essay-community', 'essay-leadership', 'essay-passion'],
-		empty = [];
-	_.each(required, function(field){
-		if (app[field] === '') {
-			console.log(field);
-			empty.push(field);
-		}
-	});
 
-	if (empty.length) {
-		console.log('appl is incomplete');
-		console.log(empty);
-		return false;
-	} else {
-		console.log('app is complete');
-		return true;
-	}
-
-}
+// Not sure why this is put here
+// var currentApp = getCurrentApp();
 
 // Rendered
 Template.apply.rendered = function() {
@@ -147,21 +151,17 @@ Template.apply.rendered = function() {
 			$(element).parent('.field-group').removeClass(error).addClass(valid);
 		}
 	});
-};
 
-Template['personal-info'].rendered = function() {
-	$("#personal-info").validate({
-		rules: {
-			first: "required",
-			last: "required"
+	var $submitButton = $('#app-submit');
+	if (Session.get('applySection') === 'resume') {
+		$submitButton.removeClass('hidden');
+		if (appReady()) {
+			$submitButton.removeClass('disabled');
+		} else {
+			$submitButton.addClass('disabled');
 		}
-	});
-};
-
-Template.resume.rendered = function() {
-	// testing
-	if (appReady()) {
-		$("#app-submit").removeClass("hidden");
+	} else {
+		$submitButton.addClass('hidden');
 	}
 };
 
@@ -209,73 +209,12 @@ Template.apply.events = {
 				Meteor.Router.to('/');
 			}
 		});
+	},
+	'click #app-save': function(e) {
+		e.preventDefault();
+		saveInputs();
 	}
 };
-
-Template.resume.events = {
-	'click #resume-submit': function(e) {
-		e.preventDefault();
-		var $form = $("#resume");
-			fileInput = document.getElementById("file-resume"),
-			$submit = $("#resume-submit"),
-			$label = $submit.siblings(".control-label");
-
-		$form.validate({
-			rules: {
-				'file-resume': {
-					required: true
-				}
-			}
-		});
-
-		if ($form.valid()) {
-			filepicker.store(fileInput, {
-				location: 'S3'
-			},function(InkBlob){
-				// successful response
-				// {"url":"https://www.filepicker.io/api/file/5TEGc0A4RPWNcvTtxyYs","filename":"ac2af834-a599-4dbd-b4c0-a925b981f206.png","mimetype":"image/png","size":134347,"key":"7V1EVxorTWXM87AqUTxb_ac2af834-a599-4dbd-b4c0-a925b981f206.png","isWriteable":false}
-				// aws url: http://s3.amazonaws.com/seo-vietnam/7V1EVxorTWXM87AqUTxb_ac2af834-a599-4dbd-b4c0-a925b981f206.png
-				console.log('Store successful:', JSON.stringify(InkBlob));
-				$(fileInput).data('url', InkBlob.url).data('awskey', InkBlob.key);
-				saveInputs(function(){
-					$submit.removeClass('btn-default btn-primary btn-danger').addClass('btn-success').html("Success!");
-					$label.html('Thank you for uploading your resume!');
-				});
-			}, function(FPError) {
-				console.log(FPError.toString());
-				$submit.removeClass('btn-default btn-primary btn-success').addClass('btn-danger').html("Failed!");
-				$label.html('There has been an error uploading your file (' +  FPError.toString() + '). Please try again.');
-			}, function(progress) {
-				console.log('Loading: ' + progress + '%');
-				$submit.removeClass('btn-default btn-success btn-danger').addClass('btn-primary').html(progress + "%");
-				$label.html('Uploading...');
-			});
-		}
-	},
-	'click #app-submit': function(e) {
-		// check app ready one more time
-		if (appReady()) {
-			Meteor.Router.to('/completed');
-		} else {
-			console.log("Unable to submit application. Your application is still incomplete");
-		}
-	}
-}
-// Template Helpers
-Template.education.helpers({
-	'selected': function(slug, value) {
-		if (slug === value) {
-			return 'selected';
-		}
-	}
-});
-Template.professional.helpers({
-	'checked': function (slug, values) {
-		if (_.contains(values, slug)) {
-			return 'checked';
-		}
-	}
-});
 
 // Template Variables
 Template.apply.currentSection = function() {
@@ -286,27 +225,5 @@ Template.apply.currentSection = function() {
 	}
 }
 Template.apply.app = function() {
-	return currentApp();
-}
-
-Template.education.colleges = function() {
-	return Colleges.find();
-}
-
-Template.education.majors = function() {
-	return Majors.find();
-}
-
-Template.qualifications.languages = function() {
-	return Languages.find();
-}
-
-Template.professional.industries = function() {
-	return Industries.find();
-}
-Template.professional.functions = function() {
-	return Functions.find();
-}
-Template['personal-info'].countries = function() {
-	return Countries.find();
+	return getCurrentApp();
 }

@@ -1,0 +1,25 @@
+<template name="qualifications">
+	<form id="qualifications" name="qualifications" class="fragment form-horitzontal" method="post" action="">
+	<h2>Qualifications</h2>
+
+		<div class="form-group" name="language">
+			{{#each languages}}
+				<label for="{{slug}}" class="control-label">Fluency in {{name}}</label>
+				<select class="form-control" id="{{slug}}" name="{{slug}}">
+					<option value="none">None</option>
+					<option value="fluent">Fluent</option>
+				</select>
+			{{/each}}
+		</div>
+
+		<div class="form-group" name="sat">
+			<h3>SAT Scores</h3>
+			<label for="writing">Writing</label>
+			<input type="number" name="writing" value="{{sat.writing}}"/>
+			<label for="reading">Reading</label>
+			<input type="number" name="reading" value="{{sat.reading}}"/>
+			<label for="math">Math</label>
+			<input type="number" name="math" value="{{sat.math}}"/>
+		</div>
+	</form>
+</template>

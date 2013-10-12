@@ -1,0 +1,27 @@
+<template name="professional">
+	<form id="professional" name="professional" class="fragment" method="post" action="">
+		<h2>Professional Interests</h2>
+		<div class="form-group">
+			<label class="control-label">Industries</label>
+			{{#each industries}}
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="industries" value="{{slug}}" {{checked slug ../industries}}>{{name}}
+				</label>
+			</div>
+			{{/each}}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="functions" class="control-label">Functions</label>
+			{{#each functions}}
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="functions" value="{{slug}}" {{checked slug ../functions}}>{{name}}
+				</label>
+			</div>
+			{{/each}}
+			</select>
+		</div>
+	</form>
+</template>

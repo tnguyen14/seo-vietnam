@@ -9,40 +9,79 @@
 		margin-top: 8px;
 	}
 }
+
+// apply layout
+@single-column-width: 50em;
+.main-container {
+	.clearfix();
+	margin: 1em auto;
+	position: relative;
+	width: 95%;
+	@media (min-width: @single-column-width) {
+		width: 80%;
+	}
+}
 .form-container {
 	overflow: hidden;
-	height: 50em;
+	// height: 30em;
 	margin: 0 auto;
-	width: 90%;
+	width: 100%;
 }
 .form {
+	.clearfix();
 	position: relative;
 	.fragment {
-		position: absolute;
 		width: 100%;
 	}
 }
 
 .fragment-control {
-	.hide-text();
+	.text-hide();
 	cursor: pointer;
-	&.next {
-		right: 0;
-		.glyphicon {
-			right: 0.75em;
-			left: auto;
-		}
-	}
 	.glyphicon {
 		color: @gray;
 		font-size: 4rem;
-		left: 0.75em;
 		line-height: 3;
-		padding: 1em 2%;
-		position: absolute;
-		top: 40%;
+		padding: 0 0.2em;
 		&:hover {
-			background: rgba(0,0,0,0.15);
+			color: #000;
+		}
+		@media (min-width: @single-column-width) {
+			padding-top: 1em;
+			padding-bottom: 1em;
+		}
+	}
+	.icon-wrap {
+		position: relative;
+		@media (min-width: @single-column-width) {
+			position: absolute;
+			top: 40%;
+			left: 0;
+		}
+	}
+	&.prev {
+		.icon-wrap {
+			float: left;
+		}
+		.glyphicon {
+			@media (min-width: @single-column-width) {
+				left: -120%;
+			}
+
+		}
+	}
+	&.next {
+		.icon-wrap {
+			float: right;
+			@media (min-width: @single-column-width) {
+				right: 0;
+				left: auto;
+			}
+		}
+		.glyphicon {
+			@media (min-width: @single-column-width) {
+				right: -120%;
+			}
 		}
 	}
 }
@@ -94,4 +133,13 @@
 
 .logout {
 	.pull-right();
+}
+
+// Resume
+.app-actions {
+	.pull-right();
+	margin-top: 2em;
+	#app-submit {
+		margin-left: 1em;
+	}
 }

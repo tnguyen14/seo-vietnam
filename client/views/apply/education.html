@@ -1,0 +1,21 @@
+<template name="education">
+	<form id="education" name="education" class="fragment" method="post" action="">
+	<h2>Education</h2>
+		<div class="form-group">
+			<label for="college" class="control-label">College/ University</label>
+			<select class="form-control" id="college" name="college" placeholder="Select a College/ University">
+			{{#each colleges}}
+				<option value="{{slug}}" {{selected slug ../college}}>{{name}}</option>
+			{{/each}}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="major" class="control-label">Major</label>
+			<select class="form-control" name="major" placeholder="Select a Major">
+			{{#each majors}}
+				<option value="{{slug}}">{{name}}</option>
+			{{/each}}
+			</select>
+		</div>
+	</form>
+</template>
