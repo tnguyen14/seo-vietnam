@@ -34,7 +34,10 @@ Template.login.events = {
 				password = $(".login-password", $form).val().trim();
 			Accounts.createUser({
 				email: email,
-				password: password
+				password: password,
+				profile: {
+					roles: ['applicant']
+				}
 			}, function(err) {
 				if (err) {
 					$('.alert', $form).show().alert().find('.message').html(err.reason);
@@ -68,6 +71,7 @@ Template.login.events = {
 				password = $(".login-password", $form).val().trim();
 			Meteor.loginWithPassword(email, password, function(err) {
 				if (err) {
+					console.log($('.alert', $form).find('.message'));
 					$('.alert', $form).show().alert().find('.message').html(err.reason);
 					console.log(err);
 					return ;
