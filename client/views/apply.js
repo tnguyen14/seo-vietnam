@@ -101,22 +101,17 @@ var getCurrentApp = function() {
 	 	appCursor = Applications.find({"user": userId});
 	if (appCursor.count() === 0) {
 		console.log('inserting new app');
-		Applications.insert({"user": userId}, function(err, _id) {
-			if (!err) {
-				return Applications.findOne({"_id": _id});
-			}
-		});
+		var appId = newApplication();
+		return Applications.findOne({"_id": appId});
 	} else if (appCursor.count() > 1){
 		console.log('apps found: ' + appCursor.count());
-		// TODO: handle when there are duplicate applications for a user
+		return Applications.findOne({"_id": appId});
+		// @TODO: handle when there are duplicate applications for a user
 	} else {
 		// cursor fetch returns an array
 		return appCursor.fetch()[0];
 	}
 }
-
-// Not sure why this is put here
-// var currentApp = getCurrentApp();
 
 // Rendered
 Template.apply.rendered = function() {

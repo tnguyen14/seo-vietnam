@@ -44,9 +44,7 @@ Template.login.events = {
 					console.log(err);
 					return ;
 				}
-				Applications.insert({
-					user: Meteor.userId()
-				});
+				newApplication();
 				Meteor.Router.to('/apply');
 			});
 		}

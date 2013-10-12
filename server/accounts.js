@@ -10,10 +10,9 @@ Accounts.onCreateUser(function (options, user) {
 	//   },
 	//   emails: [ { address: 'tringuyenduy@gmail.com', verified: false } ]
 	// }
-	console.log(options);
-	console.log(user);
+
 	// initiate an empty profile object
-	user.profile = {};
+	if (!user.profile) user.profile = {};
 
 	// add roles
 	user.roles = [];
