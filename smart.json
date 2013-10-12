@@ -2,6 +2,7 @@
   "packages": {
     "momentjs": {},
     "router": {},
-    "transitioner": {}
+    "transitioner": {},
+    "roles": {}
   }
 }
