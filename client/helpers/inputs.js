@@ -5,6 +5,7 @@ collectInputs = function(ctx) {
 	$('input[type="text"], input[type="number"], input[type="email"], input[type="tel"], textarea, select', ctx).each(function(){
 		var name = $(this).attr('name'),
 			value = $(this).val();
+		value = html_entity_encode(value);
 		field[name] = value;
 	});
 
@@ -12,6 +13,7 @@ collectInputs = function(ctx) {
 	$('input[type="checkbox"]:checked', ctx).each(function(){
 		var name = $(this).attr('name'),
 			value = $(this).val();
+		value = html_entity_encode(value);
 		field[name] = field[name] || [];
 		field[name].push(value);
 	});
