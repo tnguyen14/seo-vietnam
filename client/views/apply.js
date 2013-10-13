@@ -110,9 +110,9 @@ var getCurrentApp = function() {
 	var userId = Meteor.userId(),
 	 	appCursor = Applications.find({"user": userId});
 	if (appCursor.count() === 0) {
-		console.log('inserting new app');
-		var appId = newApplication();
-		return Applications.findOne({"_id": appId});
+		console.log('no application found');
+		$('.form-container').append('<label class="error-label>No application found.</label>');
+		return ;
 	} else if (appCursor.count() > 1){
 		console.log('apps found: ' + appCursor.count());
 		return Applications.findOne({"_id": appId});
