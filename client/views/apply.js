@@ -158,7 +158,7 @@ Template.apply.rendered = function() {
 
 //Template Events
 Template.apply.events = {
-	'click .fragment-control.prev': function(e) {
+	'click .fragment-control.prev .glyphicon': function(e) {
 		e.preventDefault();
 		var current = Session.get('applySection'),
 			currentIndex = getIndex(current),
@@ -169,7 +169,7 @@ Template.apply.events = {
 		// navigate away!
 		Meteor.Router.to('/apply/' + prev);
 	},
-	'click .fragment-control.next': function(e) {
+	'click .fragment-control.next .glyphicon': function(e) {
 		e.preventDefault();
 		var current = Session.get('applySection'),
 			currentIndex = getIndex(current),
