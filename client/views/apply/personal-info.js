@@ -1,4 +1,4 @@
-Meteor.subscribe('countries');
+Meteor.subscribe('information');
 
 Template['personal-info'].rendered = function() {
 	$("#personal-info").validate({
@@ -10,5 +10,5 @@ Template['personal-info'].rendered = function() {
 };
 
 Template['personal-info'].countries = function() {
-	return Countries.find();
+	return Information.find({category: 'country'}).fetch()[0].values;
 }

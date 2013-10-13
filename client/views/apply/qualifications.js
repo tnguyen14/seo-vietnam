@@ -1,4 +1,4 @@
-Meteor.subscribe('languages');
+Meteor.subscribe('information');
 
 Template.qualifications.rendered = function() {
 	$("#qualifications").validate({
@@ -20,5 +20,5 @@ Template.qualifications.rendered = function() {
 };
 
 Template.qualifications.languages = function() {
-	return Languages.find();
+	return Information.find({category: 'language'}).fetch()[0].values;
 };

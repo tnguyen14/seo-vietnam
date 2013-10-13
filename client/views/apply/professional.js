@@ -1,5 +1,4 @@
-Meteor.subscribe('industries');
-Meteor.subscribe('functions');
+Meteor.subscribe('information');
 
 Template.professional.helpers({
 	'checked': function (slug, values) {
@@ -10,8 +9,8 @@ Template.professional.helpers({
 });
 
 Template.professional.industries = function() {
-	return Industries.find();
+	return Information.find({category: 'industry'}).fetch()[0].values;
 };
-Template.professional.functions = function() {
-	return Functions.find();
+Template.professional.professions = function() {
+	return Information.find({category: 'profession'}).fetch()[0].values;
 };

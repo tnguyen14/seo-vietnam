@@ -12,7 +12,7 @@
 		<div class="add-own-content">
 			<p>Not found your college? <a href="#" class="add">Add your own</a>.</p>
 			<div class="add-content-wrap hidden">
-				<input type="text" name="add-content" data-collection="Colleges"/>
+				<input type="text" name="add-college" data-category="college"/>
 				<button class="btn btn-default add-content-button">+</button>
 			</div>
 		</div>
@@ -23,6 +23,13 @@
 				<option value="{{slug}}">{{name}}</option>
 			{{/each}}
 			</select>
+		</div>
+		<div class="add-own-content">
+			<p>Not found your major? <a href="#" class="add">Add your own</a>.</p>
+			<div class="add-content-wrap hidden">
+				<input type="text" name="add-major" data-category="major"/>
+				<button class="btn btn-default add-content-button">+</button>
+			</div>
 		</div>
 	</form>
 </template>

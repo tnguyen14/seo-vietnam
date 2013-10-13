@@ -1,96 +1,136 @@
 Meteor.startup(function () {
 	// start with some dummy colleges
-	if (Colleges.find().count() === 0) {
-		Colleges.insert({
-			name: "Wheaton College",
-			slug: "wheatonma"
-		});
-		Colleges.insert({
-			name: "New York University",
-			slug: "nyu"
-		});
-		Colleges.insert({
-			name: "Stonehill College",
-			slug: "stonehill"
+	if (Information.find({category: 'college'}).count() === 0) {
+		Information.insert({
+			category: 'college',
+			values: [
+				{
+					name: "Wheaton College",
+					slug: "wheatonma"
+				},
+				{
+					name: "New York University",
+					slug: "nyu"
+				},
+				{
+					name: "Stonehill College",
+					slug: "stonehill"
+				}
+			]
 		});
 	}
+
 	// and some majors too
-	if (Majors.find().count() === 0) {
-		Majors.insert({
-			name: "Computer Science",
-			slug: "cs"
-		});
-		Majors.insert({
-			name: "Philosophy",
-			slug: "philosophy"
-		});
-		Majors.insert({
-			name: "Psychology",
-			slug: "psychology"
-		});
-	}
-	if (Languages.find().count() === 0) {
-		Languages.insert({
-			name: "Vietnamese",
-			slug: "vietnamese"
-		});
-		Languages.insert({
-			name: "English",
-			slug: "english"
+	if (Information.find({category: 'major'}).count() === 0) {
+		Information.insert({
+			category: 'major',
+			values: [
+				{
+					name: "Economics",
+					slug: "economics"
+				},
+				{
+					name: "Computer Science",
+					slug: "computer-science"
+				},
+				{
+					name: "Psychology",
+					slug: "psychology"
+				}
+			]
 		});
 	}
-	if (Countries.find().count() === 0) {
-		Countries.insert({
-			name: "Vietnam",
-			slug: "vietnam"
-		});
-		Countries.insert({
-			name: "United States",
-			slug: "us"
-		});
-	}
-	if (Industries.find().count() === 0) {
-		Industries.insert({
-			name: "Finance",
-			slug: "finance"
-		});
-		Industries.insert({
-			name: "Civil Engineering",
-			slug: "civil-engineering"
-		});
-		Industries.insert({
-			name: "Computer Engineering",
-			slug: "computer-engineering"
-		});
-		Industries.insert({
-			name: "Retail",
-			slug: "retail"
-		});
-		Industries.insert({
-			name: "Non-Profit",
-			slug: "nonprofit"
+
+	if (Information.find({category: 'language'}).count() === 0) {
+		Information.insert({
+			category: 'language',
+			values: [
+				{
+					name: "Vietnamese",
+					slug: "vietnamese"
+				},
+				{
+					name: "English",
+					slug: "english"
+				},
+				{
+					name: "French",
+					slug: "french"
+				}
+			]
 		});
 	}
-	if (Functions.find().count() === 0) {
-		Functions.insert({
-			name: "Communication",
-			slug: "communication"
-		});
-		Functions.insert({
-			name: "Finance",
-			slug: "finance"
-		});
-		Functions.insert({
-			name: "Marketing",
-			slug: "marketing"
-		});
-		Functions.insert({
-			name: "Operation",
-			slug: "operation"
-		});
-		Functions.insert({
-			name: "Technology",
-			slug: "technology"
+
+	if (Information.find({category: 'country'}).count() === 0) {
+		Information.insert({
+			category: 'country',
+			values: [
+				{
+					name: "Vietnam",
+					slug: "vietnam"
+				},
+				{
+					name: "United States",
+					slug: "us"
+				},
+				{
+					name: "Singapore",
+					slug: "singapore"
+				}
+			]
 		});
 	}
+
+	if (Information.find({category: 'industry'}).count() === 0) {
+		Information.insert({
+			category: 'industry',
+			values: [
+				{
+					name: "Finance",
+					slug: "finance"
+				},
+				{
+					name: "Civil Engineering",
+					slug: "civil-engineering"
+				},
+				{
+					name: "Computer Engineering",
+					slug: "computer-engineering"
+				}, {
+					name: "Retail",
+					slug: "retail"
+				}, {
+					name: "Non-Profit",
+					slug: "nonprofit"
+				}
+			]
+		});
+	}
+
+	if (Information.find({category: 'profession'}).count() === 0) {
+		Information.insert({
+			category: 'profession',
+			values: [
+				{
+					name: "Communication",
+					slug: "communication"
+				},
+				{
+					name: "Finance",
+					slug: "finance"
+				},
+				{
+					name: "Marketing",
+					slug: "marketing"
+				}, {
+					name: "Operations",
+					slug: "operations"
+				}, {
+					name: "Information Technology",
+					slug: "it"
+				}
+			]
+		});
+	}
+
 });
