@@ -29,31 +29,24 @@ Template.education.events = {
 			newInfo = {
 				name: html_entity_encode(value),
 				slug: slug
-			},
-			colleges = Information.find({category: 'college'}).fetch()[0].values,
-			exists = false;
-
-		for (var i = 0, len = colleges.length; i < len; i++) {
-			if (colleges[i].slug === slug) {
-				exists = true;
-				break;
-			}
-		}
-		if (exists) {
-			$wrap.append('<label class="error-label">This college already exists. Please try again.</label>');
-		} else {
-			$wrap.remove('.error-label');
-			Meteor.call('addInfo', category, newInfo, function(err, added) {
+			};
+		$wrap.remove('.error-label');
+		Meteor.call('addInfo', category, newInfo, Meteor.userId(), function(err, added) {
+			if (err) {
+				$wrap.append('<label class="error-label">' + err.reason + ' </label>');
+			} else {
 				if (added) {
+					$wrap.remove('.error-label')
 					$input.val('');
-					$wrap.append('<label class="success">Added!</label>');
+					$wrap.append('<label class="success-label">Added!</label>');
+					// @TODO: this doesn't matter, as when the data changes, the template is refreshed.
+					// Find another way to notify changes
 					setTimeout(function() {
-						$('.success').fadeOut(500).remove();
+						$('.success-label').fadeOut(1000).remove();
 					}, 3000);
 				}
-
-			});
-		}
+			}
+		});
 	}
 }
 

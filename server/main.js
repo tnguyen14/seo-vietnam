@@ -1,24 +1,36 @@
+var _addInfo = function (category, doc, userId) {
+	var currentValues = Information.find({category: category}).fetch()[0].values;
+	// This is a slow way to do it
+	_.each(currentValues, function(value) {
+		if (doc.slug === value.slug || doc.name === value.name) {
+			throw new Meteor.Error(400, 'This document already exists.');
+			return false;
+		}
+	})
+	_.extend(doc, {addedBy: userId});
+	Information.update(
+		{ category: category },
+		{ $addToSet: { values: doc } }
+	);
+	return true;
+}
+
+Meteor.methods({
+	'addInfo': _addInfo
+});
+
 Meteor.startup(function () {
-	// start with some dummy colleges
-	if (Information.find({category: 'college'}).count() === 0) {
-		Information.insert({
-			category: 'college',
-			values: [
-				{
-					name: "Wheaton College",
-					slug: "wheatonma"
-				},
-				{
-					name: "New York University",
-					slug: "nyu"
-				},
-				{
-					name: "Stonehill College",
-					slug: "stonehill"
-				}
-			]
-		});
-	}
+	var colleges = JSON.parse(Assets.getText('college.json')).values;
+	_.each(colleges, function(college) {
+		if (!college.slug) {
+			college.slug = slugify(college.name);
+		}
+		try {
+			_addInfo('college', college, 0);
+		} catch (e) {
+			// console.log(e);
+		}
+	});
 
 	// and some majors too
 	if (Information.find({category: 'major'}).count() === 0) {
