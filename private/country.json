@@ -1,0 +1,10 @@
+{
+	"values": [
+		{"name": "Vietnam", "dialing-code": "84"},
+		{"name": "United States", "dialing-code": "1"},
+		{"name": "United Kingdom", "dialing-code": "44"},
+		{"name": "Australia", "dialing-code": "61"},
+		{"name": "Singapore", "dialing-code": "65"},
+		{"name": "Canada", "dialing-code": "1"}
+	]
+}

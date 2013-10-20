@@ -1,0 +1,20 @@
+{
+	"values": [
+		{"name": "Accounting"},
+		{"name": "Actuarial Science"},
+		{"name": "Business Administration"},
+		{"name": "Computer Science"},
+		{"name": "Economics"},
+		{"name": "Engineering"},
+		{"name": "Finance/Banking"},
+		{"name": "International Business"},
+		{"name": "International Economics"},
+		{"name": "International Relations"},
+		{"name": "Management"},
+		{"name": "Marketing"},
+		{"name": "Mathematics"},
+		{"name": "Philosophy and Social Science"},
+		{"name": "Political Science"},
+		{"name": "Public Policy"}
+	]
+}
