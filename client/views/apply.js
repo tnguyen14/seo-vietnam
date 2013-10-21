@@ -108,6 +108,9 @@ var appReady = function(){
 
 // Rendered
 Template.apply.rendered = function() {
+	if (!Meteor.user()) {
+		Meteor.Router.to('/login');
+	}
 	navigate();
 
 	$("#passion textarea").simplyCountable({
@@ -247,5 +250,11 @@ Template.apply.currentSection = function() {
 	}
 }
 Template.apply.app = function() {
+	var app = currentApp();
+	if (app) {
+		return app;
+	} else {
+		throw new Error(400, 'No Application Found');
+	}
 	return currentApp();
 }
