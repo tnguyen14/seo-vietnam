@@ -12,8 +12,11 @@
 			{{/each}}
 			</select>
 		</div>
+		{{#with 'industry'}}
+			{{> add-own-content}}
+		{{/with}}
 		<div class="form-group">
-			<label for="professions" class="control-label">Functions</label>
+			<label for="professions" class="control-label">Professions</label>
 			{{#each professions}}
 			<div class="checkbox">
 				<label>
@@ -23,5 +26,8 @@
 			{{/each}}
 			</select>
 		</div>
+		{{#with 'profession'}}
+			{{> add-own-content}}
+		{{/with}}
 	</form>
 </template>

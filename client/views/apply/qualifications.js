@@ -1,4 +1,5 @@
 Meteor.subscribe('information');
+Meteor.subscribe('applications');
 
 Template.qualifications.rendered = function() {
 	$("#qualifications").validate({
@@ -18,6 +19,15 @@ Template.qualifications.rendered = function() {
 		}
 	})
 };
+
+Template.qualifications.helpers({
+	'language-checked': function (slug, level) {
+		var languages =  currentApp().language;
+		if (_.contains(languages[slug], level)) {
+			return 'checked';
+		}
+	}
+});
 
 Template.qualifications.languages = function() {
 	return Information.find({category: 'language'}).fetch()[0].values;

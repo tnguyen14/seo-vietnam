@@ -3,12 +3,26 @@
 	<h2>Qualifications</h2>
 
 		<div class="form-group" name="language">
+			<h3>Language Proficiency</h3>
+			<label class="control-label">
+				Fluent in
+			</label>
 			{{#each languages}}
-				<label for="{{slug}}" class="control-label">Fluency in {{name}}</label>
-				<select class="form-control" id="{{slug}}" name="{{slug}}">
-					<option value="none">None</option>
-					<option value="fluent">Fluent</option>
-				</select>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="{{slug}}" value="fluent" {{language-checked slug 'fluent'}}>{{name}}
+					</label>
+				</div>
+			{{/each}}
+			<label class="control-label">
+				Basic understanding in
+			</label>
+			{{#each languages}}
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="{{slug}}" value="basic" {{language-checked slug 'basic'}}>{{name}}
+					</label>
+				</div>
 			{{/each}}
 		</div>
 

@@ -4,32 +4,26 @@
 		<div class="form-group">
 			<label for="college" class="control-label">College/ University</label>
 			<select class="form-control" id="college" name="college" placeholder="Select a College/ University">
+				<option value="">Select a College/ University</option>
 			{{#each colleges}}
 				<option value="{{slug}}" {{selected slug ../college}}>{{name}}</option>
 			{{/each}}
 			</select>
 		</div>
-		<div class="add-own-content">
-			<p>Not found your college? <a href="#" class="add">Add your own</a>.</p>
-			<div class="add-content-wrap hidden">
-				<input type="text" name="add-college" data-category="college"/>
-				<button class="btn btn-default add-content-button">+</button>
-			</div>
-		</div>
+		{{#with 'college'}}
+			{{> add-own-content}}
+		{{/with}}
 		<div class="form-group">
 			<label for="major" class="control-label">Major</label>
 			<select class="form-control" name="major" placeholder="Select a Major">
+				<option value="">Select a Major</option>
 			{{#each majors}}
 				<option value="{{slug}}">{{name}}</option>
 			{{/each}}
 			</select>
 		</div>
-		<div class="add-own-content">
-			<p>Not found your major? <a href="#" class="add">Add your own</a>.</p>
-			<div class="add-content-wrap hidden">
-				<input type="text" name="add-major" data-category="major"/>
-				<button class="btn btn-default add-content-button">+</button>
-			</div>
-		</div>
+		{{#with 'major'}}
+			{{> add-own-content}}
+		{{/with}}
 	</form>
 </template>

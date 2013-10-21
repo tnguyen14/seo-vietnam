@@ -10,3 +10,20 @@ newApplication = function () {
 	});
 	return appId;
 }
+
+currentApp = function() {
+	var userId = Meteor.userId(),
+	 	appCursor = Applications.find({"user": userId});
+	if (appCursor.count() === 0) {
+		console.log('no application found');
+		$('.form-container').append('<label class="error-label>No application found.</label>');
+		return ;
+	} else if (appCursor.count() > 1){
+		console.log('apps found: ' + appCursor.count());
+		return Applications.findOne({"_id": appId});
+		// @TODO: handle when there are duplicate applications for a user
+	} else {
+		// cursor fetch returns an array
+		return appCursor.fetch()[0];
+	}
+}

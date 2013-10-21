@@ -88,10 +88,10 @@ var appReady = function(){
 			'essay-leadership',
 			'essay-passion'
 		],
-		currentApp = getCurrentApp(),
+		app = currentApp(),
 		empty = [];
 	_.each(required, function(field){
-		if (!currentApp[field]) {
+		if (!app[field]) {
 			empty.push(field);
 		}
 	});
@@ -105,23 +105,6 @@ var appReady = function(){
 		return true;
 	}
 };
-
-var getCurrentApp = function() {
-	var userId = Meteor.userId(),
-	 	appCursor = Applications.find({"user": userId});
-	if (appCursor.count() === 0) {
-		console.log('no application found');
-		$('.form-container').append('<label class="error-label>No application found.</label>');
-		return ;
-	} else if (appCursor.count() > 1){
-		console.log('apps found: ' + appCursor.count());
-		return Applications.findOne({"_id": appId});
-		// @TODO: handle when there are duplicate applications for a user
-	} else {
-		// cursor fetch returns an array
-		return appCursor.fetch()[0];
-	}
-}
 
 // Rendered
 Template.apply.rendered = function() {
@@ -213,6 +196,45 @@ Template.apply.events = {
 	'click #app-save': function(e) {
 		e.preventDefault();
 		saveInputs();
+	},
+	// add own content
+	'click .add-own-content .add': function(e) {
+		e.preventDefault();
+		$(e.target).closest('.add-own-content').find('.add-content-wrap').toggleClass('hidden');
+	},
+	'click .add-content-button': function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		var $wrap = $(e.target).closest('.add-content-wrap');
+			$input = $('input', $wrap),
+			value = $input.val().trim(),
+			category = $input.data('category'),
+			newInfo = {
+				name: html_entity_encode(value),
+				slug: slugify(value)
+			};
+
+		// quit if nothing is entered
+		if (value === '') {
+			return;
+		}
+
+		Meteor.call('addInfo', category, newInfo, Meteor.userId(), function(err, added) {
+			if (err) {
+				$wrap.append('<label class="error-label">' + err.reason + ' </label>');
+			} else {
+				if (added) {
+					$wrap.remove('.error-label')
+					$input.val('');
+					$wrap.append('<label class="success-label">Added!</label>');
+					// @TODO: this doesn't matter, as when the data changes, the template is refreshed.
+					// Find another way to notify changes
+					setTimeout(function() {
+						$('.success-label').fadeOut(1000).remove();
+					}, 3000);
+				}
+			}
+		});
 	}
 };
 
@@ -225,5 +247,5 @@ Template.apply.currentSection = function() {
 	}
 }
 Template.apply.app = function() {
-	return getCurrentApp();
+	return currentApp();
 }
