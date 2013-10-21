@@ -8,8 +8,12 @@
 		{{#with currentUser}}
 			<h1 class="title">{{displayname}}</h1>
 			<div class="field-group">
-			<label for="email">Email</label>
-			<div class="value">{{email}}</div>
+				<label for="email">Email</label>
+				<div class="value">{{email}}</div>
+			</div>
+			<div class="field-group">
+				<label for="phone">Phone Number</label>
+				<div class="value">{{profile.phone.dialing-code}} {{profile.phone.number}}</div>
 			</div>
 		{{/with}}
 		{{#with app}}

@@ -21,13 +21,24 @@
 				<label for="citizenship" class="control-label">Citizenship</label>
 				<select name="profile.citizenship" class="form-control">
 				{{#each countries}}
-					<option>{{name}}</option>
+					<option value={{slug}} {{selected slug ../citizenship}}>{{name}}</option>
 				{{/each}}
 				</select>
 			</div>
-			<div class="form-group">
-				<label for="tel" class="control-label">Phone number</label>
-				<input type="tel" name="profile.phone" class="form-control" placeholder="+84 934 132313" value="{{phone}}"/>
+			<div class="form-group phone" name="profile.phone">
+				<label class="control-label">Phone number</label>
+				<select class="form-control" name="dialing-code">
+					{{#each countries}}
+						<option value="{{dialing-code}}" {{selected dialing-code ../phone.dialing-code}}>{{dialing-code}}
+							({{#if dialing-region}}
+								{{dialing-region}}
+							{{else}}
+								{{name}}
+							{{/if}})
+						</option>
+					{{/each}}
+				</select>
+				<input type="tel" name="number" class="form-control" placeholder="" value="{{phone.number}}"/>
 			</div>
 		{{/with}}
 	</form>

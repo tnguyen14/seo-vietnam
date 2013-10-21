@@ -5,7 +5,6 @@ collectInputs = function(ctx) {
 	$('input[type="text"], input[type="number"], input[type="email"], input[type="tel"], textarea, select', ctx).each(function(){
 		var name = $(this).attr('name'),
 			value = $(this).val().trim();
-		console.log(value);
 		value = html_entity_encode(value);
 		// convert to array if name already exists
 		if (field[name]) {
@@ -38,7 +37,7 @@ collectInputs = function(ctx) {
 	return field;
 };
 
-saveFormGroups = function(ctx, collection, _id, cb) {
+saveFormGroups = function(ctx, collection, _id) {
 	$('.form-group', $(ctx)).each(function() {
 		var group = {},
 			field = collectInputs(this),
@@ -48,14 +47,14 @@ saveFormGroups = function(ctx, collection, _id, cb) {
 		} else {
 			group = field;
 		}
-		collection.update(_id, {$set: group}, cb);
+		collection.update(_id, {$set: group});
 	});
 };
 
-saveInputs = function(cb) {
+saveInputs = function() {
 	var current = Session.get('applySection'),
 		userId = Meteor.userId(),
-		appId = Applications.findOne({'user': userId})._id;
+		appId = currentApp()._id;
 
 	if (!userId) {
 		console.log('no user found');
@@ -63,8 +62,8 @@ saveInputs = function(cb) {
 	}
 	// save personal info to User
 	if (current === 'personal-info') {
-		saveFormGroups('#' + current, Meteor.users, userId, cb);
+		saveFormGroups('#' + current, Meteor.users, userId);
 	} else {
-		saveFormGroups('#' + current, Applications, appId, cb);
+		saveFormGroups('#' + current, Applications, appId);
 	}
 }

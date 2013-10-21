@@ -20,6 +20,11 @@ Handlebars.registerHelper('checked', function (slug, values) {
 		return 'checked';
 	}
 });
+Handlebars.registerHelper('selected', function(slug, value) {
+	if (slug === value) {
+		return 'selected';
+	}
+});
 
 Handlebars.registerHelper('isEmpty', function(thing, options) {
 	var empty;
