@@ -4,7 +4,8 @@ collectInputs = function(ctx) {
 	var field = {};
 	$('input[type="text"], input[type="number"], input[type="email"], input[type="tel"], textarea, select', ctx).each(function(){
 		var name = $(this).attr('name'),
-			value = $(this).val();
+			value = $(this).val().trim();
+		console.log(value);
 		value = html_entity_encode(value);
 		// convert to array if name already exists
 		if (field[name]) {

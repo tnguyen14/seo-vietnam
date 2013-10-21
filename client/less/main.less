@@ -91,9 +91,27 @@ input {
 	padding: 0.5em;
 }
 
-select.form-control {
+.form-group {
+	label {
+		display: block;
+	}
+	.clearfix();
+	.checkbox {
+		margin-top: 0.5em;
+		+ .checkbox {
+			margin-top: 0.5em;
+		}
+		@media (min-width: 30em) {
+			float: left;
+			width: 50%;
+		}
+	}
+}
+.form-control {
 	margin-bottom: 1em;
-	width: 70%;
+	@media ( min-width: 48.75em) {
+		width: 70%;
+	}
 }
 
 .field-group {
@@ -132,11 +150,28 @@ select.form-control {
 }
 
 .profile {
+	.title {
+		margin-bottom: 1em;
+		padding-bottom: 0.5em;
+		border-bottom: 1px solid #000;
+	}
+	.section-title {
+		margin-bottom: 1em;
+	}
 	.edit {
 		color: rgb(84,84,84);
 		cursor: pointer;
 		&:hover {
 			color: black;
+		}
+	}
+	.field-group {
+		label {
+			width: 8rem;
+		}
+		.value {
+			display: inline-block;
+			padding-left: 10rem;
 		}
 	}
 	.list-group {
@@ -147,6 +182,16 @@ select.form-control {
 			&:last-of-type:after {
 				content: '';
 			}
+		}
+	}
+	.essay {
+		label {
+			width: 100%;
+		}
+		.value {
+			display: block;
+			padding: 0;
+			width: 100%;
 		}
 	}
 }

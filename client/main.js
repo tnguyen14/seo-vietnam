@@ -11,6 +11,9 @@ Handlebars.registerHelper('debug', function(stuff){
 	console.log(stuff);
 });
 
+Handlebars.registerHelper('text', function(string) {
+	return nl2br(html_entity_decode(string));
+})
 // checkbox checked
 Handlebars.registerHelper('checked', function (slug, values) {
 	if (_.contains(values, slug)) {
