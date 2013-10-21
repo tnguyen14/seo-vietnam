@@ -91,6 +91,11 @@ input {
 	padding: 0.5em;
 }
 
+select.form-control {
+	margin-bottom: 1em;
+	width: 70%;
+}
+
 .field-group {
 	margin-bottom: 1em;
 }
@@ -114,6 +119,14 @@ input {
 	.text-success();
 }
 
+.add-field {
+	font-weight: 700;
+	font-size: 1.2em;
+	&:hover {
+		text-decoration: none;
+	}
+}
+
 .add-own-content {
 	margin-bottom: 2em;
 }
@@ -124,6 +137,16 @@ input {
 		cursor: pointer;
 		&:hover {
 			color: black;
+		}
+	}
+	.list-group {
+		.list-item {
+			&:after {
+				content: ', ';
+			}
+			&:last-of-type:after {
+				content: '';
+			}
 		}
 	}
 }

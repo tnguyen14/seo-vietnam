@@ -6,6 +6,13 @@ collectInputs = function(ctx) {
 		var name = $(this).attr('name'),
 			value = $(this).val();
 		value = html_entity_encode(value);
+		// convert to array if name already exists
+		if (field[name]) {
+			if (! _.isArray(field[name])){
+				field[name] = [field[name]];
+			}
+			field[name].push(value);
+		}
 		field[name] = value;
 	});
 

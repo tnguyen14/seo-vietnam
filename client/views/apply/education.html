@@ -14,13 +14,14 @@
 			{{> add-own-content}}
 		{{/with}}
 		<div class="form-group">
-			<label for="major" class="control-label">Major</label>
-			<select class="form-control" name="major" placeholder="Select a Major">
-				<option value="">Select a Major</option>
+			<label for="major" class="control-label">Major(s)</label>
 			{{#each majors}}
-				<option value="{{slug}}">{{name}}</option>
+				<div class="checkbox">
+				<label>
+					<input type="checkbox" name="major" value="{{slug}}" {{checked slug ../major}}>{{name}}
+				</label>
+			</div>
 			{{/each}}
-			</select>
 		</div>
 		{{#with 'major'}}
 			{{> add-own-content}}

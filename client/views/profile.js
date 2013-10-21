@@ -24,14 +24,28 @@ Template.profile.helpers({
 	app: function () {
 		return Applications.findOne({user: Meteor.userId()});
 	},
-	getName: _getName,
+	getValue: function (field) {
+		var html = '',
+			value = currentApp()[field];
+		if (_.isArray(value)) {
+			html += '<span class="list-group">';
+			_.each(value, function(val) {
+				html+= '<span class="list-item">' + _getName(field, val) + '</span>';
+			});
+			html += '</span>'
+		} else {
+			html = _getName(field, value);
+		}
+		return html;
+	},
 	getLanguage: function (language, level) {
-		var html = '';
+		var html = '<span class="list-group">';
 		_.each(language, function(fluency, lang) {
 			if (_.contains(fluency, level)) {
-				html += '<li>' + _getName('language', lang) + '</li>';
+				html += '<span class="list-item">' + _getName('language', lang) + '</span>';
 			}
 		});
+		html += '</span>';
 		return html;
 	}
 });

@@ -9,8 +9,12 @@ Template.education.helpers({
 	}
 });
 
-Template.education.rendered = function() {
-
+Template.education.events = {
+	'click .add-field': function(e) {
+		e.preventDefault();
+		var $wrap = $(e.target).closest('.form-group');
+		$wrap.append(Template['major']);
+	}
 }
 
 Template.education.majors = function() {

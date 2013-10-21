@@ -1,17 +1,24 @@
 var isArray = Array.isArray;
 
-Handlebars.registerHelper("isEqual", function(a, b, options){
+Handlebars.registerHelper('isEqual', function(a, b, options){
 	if (a === b) {
 		return options.fn(this);
 	}
 	return options.inverse(this);
 });
 
-Handlebars.registerHelper("debug", function(stuff){
+Handlebars.registerHelper('debug', function(stuff){
 	console.log(stuff);
 });
 
-Handlebars.registerHelper("isEmpty", function(thing, options) {
+// checkbox checked
+Handlebars.registerHelper('checked', function (slug, values) {
+	if (_.contains(values, slug)) {
+		return 'checked';
+	}
+});
+
+Handlebars.registerHelper('isEmpty', function(thing, options) {
 	var empty;
 	if (!thing && thing !== 0) {
 		empty = true;
