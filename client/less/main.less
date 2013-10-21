@@ -158,12 +158,18 @@ input {
 	.section-title {
 		margin-bottom: 1em;
 	}
-	.edit {
-		color: rgb(84,84,84);
-		cursor: pointer;
-		&:hover {
-			color: black;
+	.actions {
+		.clearfix();
+		@media (min-width: 40em) {
+			float: right;
 		}
+	}
+	.edit {
+		float: left;
+		margin-right: 1em;
+	}
+	.logout {
+		float: left;
 	}
 	.field-group {
 		label {
@@ -224,7 +230,7 @@ input {
 }
 
 .logout {
-	.pull-right();
+	float: right;
 }
 
 // Resume

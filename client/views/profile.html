@@ -1,6 +1,9 @@
 <template name="profile">
 	<div class="profile">
-		{{> logout}}
+		<div class="actions">
+			<button class="btn btn-primary edit" id="edit-app">Edit your application</button>
+			{{> logout}}
+		</div><!-- .actions -->
 
 		{{#with currentUser}}
 			<h1 class="title">{{displayname}}</h1>
@@ -69,20 +72,14 @@
 				<div class="value">{{{text essay-leadership}}}</div>
 			</div>
 
-			<h3 class="section-title">Essays</h3>
+			<h3 class="section-title">Resume</h3>
 			<div class="field-group">
-				<label for="resume">Resume</label>
-				<div class="value">
 				{{#isEmpty file-resume}}
 					You have not uploaded your resume yet.
 				{{else}}
 					<a href="{{file-resume.url}}" class="btn">View your uploaded resume</a>
 				{{/isEmpty}}
-				</div>
-
 			</div>
 		{{/with}}
-
-		<button class="btn btn-info" id="edit-app">Edit your application</button>
 	</div>
 </template>
