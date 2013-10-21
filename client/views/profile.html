@@ -13,11 +13,11 @@
 			<h3>Education</h3>
 			<div class="field-group">
 				<label for="college">College/ University</label>
-				{{college}}
+				{{getName 'college' college}}
 			</div>
 			<div class="field-group">
 				<label for="major">Major</label>
-				{{getMajorName major}}
+				{{getName 'major' major}}
 			</div>
 			<h3>Qualifications</h3>
 			<div class="field-group">
@@ -31,25 +31,29 @@
 			</div>
 			<div class="field-group">
 				<h4>Language Proficiency</h4>
-				{{{displayLanguage language}}}
+				<strong>Fluent in</strong>
+				{{{getLanguage language 'fluent'}}}
+				<strong>Basic understanding in</strong>
+				{{{getLanguage language 'basic'}}}
+
 			</div>
 			<h3>Professional Interests</h3>
 			<div class="field-group">
-				<label for="industries">Industries</label>
+				<label for="industry">Industries</label>
 				<ul>
-				{{#each industries}}
+				{{#each industry}}
 					<li>
-					{{getIndustryName this}}
+					{{getName 'industry' this}}
 					</li>
 				{{/each}}
 				</ul>
 			</div>
 			<div class="field-group">
-				<label for="functions">Functions</label>
+				<label for="profession">Professions</label>
 				<ul>
-				{{#each functions}}
+				{{#each profession}}
 					<li>
-					{{getFunctionName this}}
+					{{getName 'profession' this}}
 					</li>
 				{{/each}}
 				</ul>

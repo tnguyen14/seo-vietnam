@@ -1,51 +1,37 @@
 Meteor.subscribe('applications');
-Meteor.subscribe('industries');
-Meteor.subscribe('majors');
-Meteor.subscribe('languages');
-Meteor.subscribe('functions');
+Meteor.subscribe('information');
 
-// get name from slug
-var getName = function(slug, collection) {
-	var doc = _.find(collection.find().fetch(),
+var _getName = function (category, value) {
+	if (!value) {
+		return;
+	}
+	var doc = _.find(Information.find({category: category}).fetch()[0].values,
 		function(d){
-			return d.slug === slug;
+			return d.slug === value;
 		});
-	return doc.name;
+	if (doc) {
+		return doc.name;
+	}
 };
 
 Template.profile.helpers({
-	displayname: function() {
+	displayname: function () {
 		return this.profile.name.first + " " + this.profile.name.last;
 	},
-	email: function() {
+	email: function () {
 		return this.emails[0].address;
 	},
-	app: function() {
+	app: function () {
 		return Applications.findOne({user: Meteor.userId()});
 	},
-	college: function() {
-		return Colleges.findOne({slug: this.college}).name;
-	},
-	getIndustryName: function(slug) {
-		return getName(slug, Industries);
-	},
-	getFunctionName: function(slug) {
-		return getName(slug, Functions);
-	},
-	getMajorName: function(slug) {
-		return getName(slug, Majors)
-	},
-	displayLanguage: function(proficiency) {
+	getName: _getName,
+	getLanguage: function (language, level) {
 		var html = '';
-		for (var lang in proficiency) {
-			if (proficiency.hasOwnProperty(lang)) {
-				// only display language with some proficiency
-				if (proficiency[lang] !== 'none') {
-					html += '<label for="' + lang + '">' + getName(lang, Languages) + '</label>';
-					html += proficiency[lang];
-				}
+		_.each(language, function(fluency, lang) {
+			if (_.contains(fluency, level)) {
+				html += '<li>' + _getName('language', lang) + '</li>';
 			}
-		}
+		});
 		return html;
 	}
 });

@@ -6,7 +6,7 @@
 			{{#each industries}}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="industries" value="{{slug}}" {{checked slug ../industries}}>{{name}}
+					<input type="checkbox" name="industry" value="{{slug}}" {{checked slug ../industry}}>{{name}}
 				</label>
 			</div>
 			{{/each}}
@@ -16,11 +16,11 @@
 			{{> add-own-content}}
 		{{/with}}
 		<div class="form-group">
-			<label for="professions" class="control-label">Professions</label>
+			<label for="profession" class="control-label">Professions</label>
 			{{#each professions}}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="professions" value="{{slug}}" {{checked slug ../professions}}>{{name}}
+					<input type="checkbox" name="profession" value="{{slug}}" {{checked slug ../profession}}>{{name}}
 				</label>
 			</div>
 			{{/each}}
