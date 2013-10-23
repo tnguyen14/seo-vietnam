@@ -1,16 +1,21 @@
 var _addInfo = function (category, doc, userId) {
-	var currentValues = Information.find({category: category}).fetch()[0].values;
-	// This is a slow way to do it
-	_.each(currentValues, function(value) {
-		if (doc.slug === value.slug || doc.name === value.name) {
-			throw new Meteor.Error(400, 'This document already exists.');
-			return false;
-		}
-	})
+	var currentCursor = Information.find({category: category});
+	if ( currentCursor.count() > 0 ) {
+		var currentValues = currentCursor.fetch()[0].values;
+		// This is a slow way to do it
+		_.each(currentValues, function(value) {
+			if (doc.slug === value.slug || doc.name === value.name) {
+				throw new Meteor.Error(400, 'This document already exists.');
+				return false;
+			}
+		});
+	}
+
 	_.extend(doc, {addedBy: userId});
 	Information.update(
 		{ category: category },
-		{ $addToSet: { values: doc } }
+		{ $addToSet: { values: doc } },
+		{ upsert: true }
 	);
 	return true;
 }

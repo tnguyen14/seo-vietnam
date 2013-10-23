@@ -30,5 +30,5 @@ Template.qualifications.helpers({
 });
 
 Template.qualifications.languages = function() {
-	return Information.find({category: 'language'}).fetch()[0].values;
+	return getInfo('language');
 };
