@@ -250,11 +250,12 @@ Template.apply.currentSection = function() {
 	}
 }
 Template.apply.app = function() {
-	var app = currentApp();
-	if (app) {
-		return app;
-	} else {
-		throw new Error(400, 'No Application Found');
+	var app;
+	try {
+		app = currentApp();
+	} catch (e) {
+		console.log(e);
+		$('.form-container').append('<label class="error-label>' + e.reason + '</label>');
 	}
-	return currentApp();
+	return app;
 }

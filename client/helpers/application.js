@@ -16,7 +16,7 @@ currentApp = function() {
 	 	appCursor = Applications.find({"user": userId});
 	if (appCursor.count() === 0) {
 		console.log('no application found');
-		$('.form-container').append('<label class="error-label>No application found.</label>');
+		throw new Error(400, 'No Application Found');
 		return ;
 	} else if (appCursor.count() > 1){
 		console.log('apps found: ' + appCursor.count());
