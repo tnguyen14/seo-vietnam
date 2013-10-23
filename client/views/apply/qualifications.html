@@ -1,5 +1,5 @@
 <template name="qualifications">
-	<form id="qualifications" name="qualifications" class="fragment form-horitzontal" method="post" action="">
+	<form id="qualifications" name="qualifications" class="fragment form-horitzontal qualifications" method="post" action="">
 	<h2>Qualifications</h2>
 
 		<div class="form-group" name="language">
@@ -26,8 +26,9 @@
 			{{/each}}
 		</div>
 
-		<div class="form-group" name="sat">
-			<h3>SAT Scores</h3>
+		<h3>Standardized Test Scores</h3>
+		<div class="form-group sat" name="sat">
+			<h4>SAT</h4>
 			<div class="field-group">
 				<label for="writing">Writing</label>
 				<input type="text" name="writing" value="{{sat.writing}}"/>
@@ -39,6 +40,25 @@
 			<div class="field-group">
 				<label for="math">Math</label>
 				<input type="text" name="math" value="{{sat.math}}"/>
+			</div>
+		</div>
+		<div class="form-group others">
+			<h4>Others</h4>
+			<div class="field-group">
+				<label for="toefl">TOEFL</label>
+				<input type="text" name="toefl" value="{{toefl}}" />
+			</div>
+			<div class="field-group">
+				<label for="ielts">IEFLTS</label>
+				<input type="text" name="ielts" value="{{ielts}}" />
+			</div>
+			<div class="field-group">
+				<label for="gre">GRE</label>
+				<input type="text" name="gre" value="{{gre}}" />
+			</div>
+			<div class="field-group">
+				<label for="gmat">GMAT</label>
+				<input type="text" name="gmat" value="{{gmat}}" />
 			</div>
 		</div>
 	</form>

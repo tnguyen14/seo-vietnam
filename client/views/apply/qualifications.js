@@ -23,7 +23,7 @@ Template.qualifications.rendered = function() {
 Template.qualifications.helpers({
 	'language-checked': function (slug, level) {
 		var languages =  currentApp().language;
-		if (_.contains(languages[slug], level)) {
+		if (languages && _.contains(languages[slug], level)) {
 			return 'checked';
 		}
 	}
