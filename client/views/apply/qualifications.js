@@ -15,6 +15,22 @@ Template.qualifications.rendered = function() {
 			math: {
 				number: true,
 				range: [0, 800]
+			},
+			toefl: {
+				number: true,
+				range: [0, 120]
+			},
+			ielts: {
+				number: true,
+				range: [0, 9]
+			},
+			gre: {
+				number: true,
+				range: [0, 6]
+			},
+			gmat: {
+				number: true,
+				range: [200, 800]
 			}
 		}
 	})

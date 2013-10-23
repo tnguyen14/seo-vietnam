@@ -12,6 +12,9 @@ Handlebars.registerHelper('debug', function(stuff){
 });
 
 Handlebars.registerHelper('text', function(string) {
+	if (!string) {
+		return;
+	}
 	return nl2br(html_entity_decode(string));
 })
 // checkbox checked
