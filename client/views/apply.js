@@ -156,20 +156,12 @@ Template.apply.rendered = function() {
 	}
 	navigate();
 
-	$("#passion textarea").simplyCountable({
-		counter: '#passion-counter',
-		countType: 'words',
-		maxCount: 500
-	});
-	$("#community textarea").simplyCountable({
-		counter: '#community-counter',
-		countType: 'words',
-		maxCount: 500
-	});
-	$("#leadership textarea").simplyCountable({
-		counter: '#leadership-counter',
-		countType: 'words',
-		maxCount: 500
+	$('.essay').each(function() {
+		$(this).find('textarea').simplyCountable({
+			counter: $('.counter', this),
+			countType: 'words',
+			maxCount: 500
+		});
 	});
 
 	var $submitButton = $('#app-submit');
