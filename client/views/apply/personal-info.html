@@ -30,11 +30,7 @@
 				<select class="form-control" name="dialing-code">
 					{{#each countries}}
 						<option value="{{dialing-code}}" {{selected dialing-code ../phone.dialing-code}}>{{dialing-code}}
-							({{#if dialing-region}}
-								{{dialing-region}}
-							{{else}}
-								{{name}}
-							{{/if}})
+							({{name}})
 						</option>
 					{{/each}}
 				</select>

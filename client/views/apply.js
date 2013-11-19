@@ -106,6 +106,49 @@ var appReady = function(){
 	}
 };
 
+// Add notifications
+// valid context: success, info, warning, danger
+var notify = function(message, context, dismissable, auto) {
+	if (!message) {
+		return ;
+	}
+	var html = '<div class="alert ';
+	if (_.contains(['success', 'info', 'warning', 'danger'], context)) {
+		html += 'alert-' + context;
+	}
+	html += '"">';
+
+	if (dismissable) {
+		html += '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
+	}
+
+	html += message + '</div>';
+
+	var $notification = $(html).appendTo('.notifications');
+
+	if (auto) {
+		setTimeout(function() {
+			$notification.fadeOut(1000, function(){
+				$(this).remove();
+			});
+		}, 3000);
+		return;
+	} else {
+		return $notification;
+	}
+}
+
+// Clear all notifications of a particular class
+// default to '.alert'
+// accepted type: success, info, warning, danger
+var clearNotifications = function(type) {
+	var alerts = '.alert';
+	if (_.contains(['success', 'info', 'warning', 'danger'], type)) {
+		alerts += '-' + type;
+	}
+	$('.notifications').find(alerts).remove();
+}
+
 // Rendered
 Template.apply.rendered = function() {
 	if (!Meteor.user()) {
@@ -199,6 +242,7 @@ Template.apply.events = {
 	'click #app-save': function(e) {
 		e.preventDefault();
 		saveInputs();
+		notify('The application is saved successfully.', 'success', true, true);
 	},
 	// add own content
 	'click .add-own-content .add': function(e) {
@@ -224,17 +268,12 @@ Template.apply.events = {
 
 		Meteor.call('addInfo', category, newInfo, Meteor.userId(), function(err, added) {
 			if (err) {
-				$wrap.append('<label class="error-label">' + err.reason + ' </label>');
+				notify(err.reason, 'danger', true);
 			} else {
 				if (added) {
-					$wrap.remove('.error-label')
 					$input.val('');
-					$wrap.append('<label class="success-label">Added!</label>');
-					// @TODO: this doesn't matter, as when the data changes, the template is refreshed.
-					// Find another way to notify changes
-					setTimeout(function() {
-						$('.success-label').fadeOut(1000).remove();
-					}, 3000);
+					clearNotifications('danger');
+					notify('Successfully added your option.', 'success', true);
 				}
 			}
 		});
