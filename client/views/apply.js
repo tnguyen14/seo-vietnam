@@ -37,6 +37,9 @@ $.validator.setDefaults({
 		$(element).parent('.field-group').removeClass('has-error').addClass('has-success');
 	}
 });
+$.validator.addMethod("maxWord", function(value, element, params) {
+	return this.optional(element) || $.trim(value).split(/\s+/).length <= params;
+}, 'Word limit exceeded.');
 
 Template.apply.fragments = function() {
 	return applySections;
@@ -156,6 +159,7 @@ Template.apply.rendered = function() {
 	}
 	navigate();
 
+	// essay counter
 	$('.essay').each(function() {
 		$(this).find('textarea').simplyCountable({
 			counter: $('.counter', this),
@@ -233,6 +237,12 @@ Template.apply.events = {
 	},
 	'click #app-save': function(e) {
 		e.preventDefault();
+		var current = Session.get('applySection');
+
+		if (!$('#' + current).valid()) {
+			return;
+		}
+
 		saveInputs();
 		notify('The application is saved successfully.', 'success', true, true);
 	},
