@@ -260,7 +260,9 @@ Template.apply.events = {
 			category = $input.data('category'),
 			newInfo = {
 				name: html_entity_encode(value),
-				slug: slugify(value)
+				slug: slugify(value),
+				addedBy: Meteor.userId(),
+				verified: false
 			};
 
 		// quit if nothing is entered
@@ -268,7 +270,7 @@ Template.apply.events = {
 			return;
 		}
 
-		Meteor.call('addInfo', category, newInfo, Meteor.userId(), function(err, added) {
+		Meteor.call('addInfo', category, newInfo, function(err, added) {
 			if (err) {
 				notify(err.reason, 'danger', true);
 			} else {

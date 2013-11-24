@@ -1,4 +1,7 @@
-var _addInfo = function (category, doc, userId) {
+// Add a document to the Information collection
+// @param category (string): name of the category for the doc to be inserted
+// @param doc (object): the new document to be inserted
+var _addInfo = function (category, doc) {
 	var currentCursor = Information.find({category: category});
 	if ( currentCursor.count() > 0 ) {
 		var currentValues = currentCursor.fetch()[0].values;
@@ -11,7 +14,6 @@ var _addInfo = function (category, doc, userId) {
 		});
 	}
 
-	_.extend(doc, {addedBy: userId});
 	Information.update(
 		{ category: category },
 		{ $addToSet: { values: doc } },
@@ -20,14 +22,21 @@ var _addInfo = function (category, doc, userId) {
 	return true;
 }
 
+// Load default information from JSON file into the Information collection
+
 var _loadDefault = function(category) {
 	var data = JSON.parse(Assets.getText(category + '.json')).values;
 	_.each(data, function(d) {
+		// automatically generate slug
 		if (!d.slug) {
 			d.slug = slugify(d.name);
 		}
+		// add default userId and verify
+		_.extend(d, {addedBy: 0, verified: true});
+
+		// attempt to add document into Information collection
 		try {
-			_addInfo(category, d, 0);
+			_addInfo(category, d);
 		} catch (e) {
 			// console.log(e);
 		}
