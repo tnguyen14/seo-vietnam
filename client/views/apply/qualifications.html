@@ -4,24 +4,15 @@
 
 		<div class="form-group" name="language">
 			<h3>Language Proficiency</h3>
-			<label class="control-label">
-				Fluent in
-			</label>
 			{{#each languages}}
+				<label class="control-label">
+					{{name}}
+				</label>
 				<div class="checkbox">
-					<label>
-						<input type="checkbox" name="{{slug}}" value="fluent" {{language-checked slug 'fluent'}}>{{name}}
-					</label>
+					<label><input type="checkbox" name="{{slug}}" value="fluent" {{language-checked slug 'fluent'}}>Fluent</label>
 				</div>
-			{{/each}}
-			<label class="control-label">
-				Basic understanding in
-			</label>
-			{{#each languages}}
 				<div class="checkbox">
-					<label>
-						<input type="checkbox" name="{{slug}}" value="basic" {{language-checked slug 'basic'}}>{{name}}
-					</label>
+					<label><input type="checkbox" name="{{slug}}" value="basic" {{language-checked slug 'basic'}}>Basic Understanding</label>
 				</div>
 			{{/each}}
 		</div>
