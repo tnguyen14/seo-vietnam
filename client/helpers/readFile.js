@@ -7,8 +7,9 @@ readFile = function(file) {
 	}
 
 	// @TODO check for file types again here
-	if (file.size >= maxSize) {
+	if (file.size > maxSize) {
 		// @TODO add error handling for file that is too large
+		notify('Your file size must be 4MB or less.', 'warning', true);
 		return;
 	}
 
