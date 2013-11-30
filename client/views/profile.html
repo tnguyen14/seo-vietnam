@@ -12,15 +12,19 @@
 				<div class="value">{{email}}</div>
 			</div>
 			<div class="field-group">
+				<label for="country-residence">Country of Residence</label>
+				<div class="value">{{getName 'country' profile.country-residence}}</div>
+			</div>
+			<div class="field-group">
 				<label for="phone">Phone Number</label>
-				<div class="value">{{profile.phone.dialing-code}} {{profile.phone.number}}</div>
+				<div class="value">{{profile.phone}}</div>
 			</div>
 		{{/with}}
 		{{#with app}}
 			<h2 class="section-title">Education</h2>
 			<div class="field-group">
 				<label for="college">College/ University</label>
-				<div class="value">{{{getValue 'college'}}}</div>
+				<div class="value">{{getName 'college' college}}</div>
 			</div>
 			<div class="field-group">
 				<label for="major">Major</label>

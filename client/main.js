@@ -42,19 +42,12 @@ Handlebars.registerHelper('isEmpty', function(thing, options) {
 				empty = false;
 			}
 		}
-
 	} else {
 		empty = false;
 	}
-
 	if (empty) {
 		return options.fn(this);
 	} else {
 		return options.inverse(this);
 	}
 });
-
-// Ink filepicker
-// https://developers.inkfilepicker.com/docs/web/
-
-filepicker.setKey('AgUpiTHwT3q7FAiauT4TQz');

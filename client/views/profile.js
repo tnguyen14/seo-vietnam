@@ -24,17 +24,20 @@ Template.profile.helpers({
 	app: function () {
 		return Applications.findOne({user: Meteor.userId()});
 	},
-	getValue: function (field) {
+	getName: _getName,
+	getValue: function (field, category) {
 		var html = '',
-			value = currentApp()[field];
+			value = currentApp()[field],
+			category = _.isString(category) ? category : field;
 		if (_.isArray(value)) {
 			html += '<span class="list-group">';
 			_.each(value, function(val) {
-				html+= '<span class="list-item">' + _getName(field, val) + '</span>';
+				html+= '<span class="list-item">' + _getName(category, val) + '</span>';
 			});
 			html += '</span>'
 		} else {
-			html = _getName(field, value);
+			// default category to field name
+			html = _getName(category, value);
 		}
 		return html;
 	},
