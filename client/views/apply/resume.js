@@ -1,22 +1,15 @@
 Template.resume.events = {
-	'click #resume-submit': function(e) {
+	'click #remove-file': function(e) {
 		e.preventDefault();
-		var $form = $("#resume");
-			fileInput = document.getElementById("file-resume"),
-			$submit = $("#resume-submit"),
-			$label = $submit.siblings(".control-label");
-
-		$form.validate({
-			rules: {
-				'file-resume': {
-					required: true
-				}
-			}
+		Applications.update(currentApp()._id, {$set: {
+			'file-resume': {}
+		}});
+	},
+	'click #reupload': function(e) {
+		var resumeUpload = Meteor.render(function(){
+			return Template['resume-upload']();
 		});
-
-		if ($form.valid()) {
-			readFile(fileInput.files[0]);
-		}
+		$('.resume-uploaded').append(resumeUpload);
 	},
 	'click #app-submit': function(e) {
 		// check app ready one more time

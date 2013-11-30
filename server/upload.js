@@ -7,17 +7,23 @@ var client = s3.createClient({
 	bucket: 'seo-vietnam'
 });
 
-var saveUrl = function(url, userId) {
-	console.log('saving ' + url + ' to user ' + userId);
+var saveResume = function(fileName, fileUrl, userId) {
+	if (!userId) return;
 	Applications.update({'user': userId}, {
 		$set: {
-			'file-resume': url
+			'file-resume': {
+				name: fileName,
+				url: fileUrl
+			}
 		}
 	});
 }
 
 var uploadFile = function(localFile, cb) {
-	var uploader = client.upload(localFile, 'resume-uploads/' + localFile);
+	var headers = {
+		'x-amz-acl' : 'public-read'
+	}
+	var uploader = client.upload(localFile, 'resume-uploads/' + localFile, headers);
 	uploader.on('error', function(err) {
 		console.error("unable to upload:", err.stack);
 		cb(new Meteor.Error(400, 'Unable to upload: ' + err.stack));
@@ -37,7 +43,7 @@ var saveFile = function(blob, name, type) {
 	fs.writeFileSync(name, blob, {encoding: 'binary'});
 	var s3Url = uploadFileSync(name);
 	if (s3Url) {
-		saveUrl(s3Url, this.userId);
+		saveResume(name, s3Url, this.userId);
 	}
 }
 
