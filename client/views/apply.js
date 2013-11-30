@@ -41,10 +41,6 @@ $.validator.addMethod("maxWord", function(value, element, params) {
 	return this.optional(element) || $.trim(value).split(/\s+/).length <= params;
 }, 'Word limit exceeded.');
 
-Template.apply.fragments = function() {
-	return applySections;
-}
-
 var getIndex = function(el) {
 	var i = -1;
 	applySections.forEach(function(element, index) {
@@ -80,76 +76,6 @@ var navigate = function() {
 	} else if (toIndex === applySections.length - 1) {
 		$(".fragment-control.next").addClass('hidden');
 	}
-}
-
-// Check whether application is ready for submit
-var appReady = function(){
-	var required = [
-			'college',
-			'major',
-			'essay-community',
-			'essay-leadership',
-			'essay-passion'
-		],
-		app = currentApp(),
-		empty = [];
-	_.each(required, function(field){
-		if (!app[field]) {
-			empty.push(field);
-		}
-	});
-
-	if (empty.length) {
-		console.log('app is incomplete');
-		console.log(empty);
-		return false;
-	} else {
-		console.log('app is complete');
-		return true;
-	}
-};
-
-// Add notifications
-// valid context: success, info, warning, danger
-var notify = function(message, context, dismissable, auto) {
-	if (!message) {
-		return ;
-	}
-	var html = '<div class="alert ';
-	if (_.contains(['success', 'info', 'warning', 'danger'], context)) {
-		html += 'alert-' + context;
-	}
-	html += '"">';
-
-	if (dismissable) {
-		html += '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
-	}
-
-	html += message + '</div>';
-
-	var $notification = $(html).appendTo('.notifications');
-
-	if (auto) {
-		setTimeout(function() {
-			$notification.fadeOut(1000, function(){
-				$(this).remove();
-			});
-		}, 3000);
-		return;
-	} else {
-		return $notification;
-	}
-}
-
-// Clear all notifications of a particular class
-// default to '.alert'
-// accepted type: success, info, warning, danger
-var clearNotifications = function(type) {
-	var alerts = '.alert';
-	if (_.contains(['success', 'info', 'warning', 'danger'], type)) {
-		alerts += '-' + type;
-	}
-	$('.notifications').find(alerts).remove();
 }
 
 // Rendered
@@ -250,41 +176,15 @@ Template.apply.events = {
 	'click .add-own-content .add': function(e) {
 		e.preventDefault();
 		$(e.target).closest('.add-own-content').find('.add-content-wrap').toggleClass('hidden');
-	},
-	'click .add-content-button': function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		var $wrap = $(e.target).closest('.add-content-wrap');
-			$input = $('input', $wrap),
-			value = $input.val().trim(),
-			category = $input.data('category'),
-			newInfo = {
-				name: html_entity_encode(value),
-				slug: slugify(value),
-				addedBy: Meteor.userId(),
-				verified: false
-			};
-
-		// quit if nothing is entered
-		if (value === '') {
-			return;
-		}
-
-		Meteor.call('addInfo', category, newInfo, function(err, added) {
-			if (err) {
-				notify(err.reason, 'danger', true);
-			} else {
-				if (added) {
-					$input.val('');
-					clearNotifications('danger');
-					notify('Successfully added your option.', 'success', true);
-				}
-			}
-		});
 	}
 };
 
 // Template Variables
+
+Template.apply.fragments = function() {
+	return applySections;
+}
+
 Template.apply.currentSection = function() {
 	if (Session.get('applySection')) {
 		return Session.get('applySection');
@@ -292,6 +192,7 @@ Template.apply.currentSection = function() {
 		return applySections[0].name;
 	}
 }
+
 Template.apply.app = function() {
 	var app;
 	try {
