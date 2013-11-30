@@ -15,3 +15,11 @@ The proposed statuses an application can have include:
 - closed
 
 Information about the project, including scope, timeline, and structure are documented at the [Wiki pages](https://github.com/tnguyen14/seo-vietnam/wiki).
+
+### Required Information
+Currently, for each application, the required information are:
+- college
+- major
+- essay-community
+- essay-leadership
+- essay-passion
