@@ -23,3 +23,9 @@ Currently, for each application, the required information are:
 - essay-community
 - essay-leadership
 - essay-passion
+
+## Development
+### File upload
+UI feedback is currently a hack: it depends on the change in filename on the backend to refresh the page and thus remove any upload template.
+
+There should be a way to update the front end when file upload is complete.

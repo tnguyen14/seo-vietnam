@@ -16,7 +16,7 @@ var _getName = function (category, value) {
 
 Template.profile.helpers({
 	displayname: function () {
-		return this.profile.name.first + " " + this.profile.name.last;
+		return this.profile.name.first + ' ' + this.profile.name.last;
 	},
 	email: function () {
 		return this.emails[0].address;

@@ -39,6 +39,7 @@ var uploadFile = function(localFile, cb) {
 }
 
 var saveFile = function(blob, name, type) {
+	console.log(name);
 	var uploadFileSync = Meteor._wrapAsync(uploadFile);
 	fs.writeFileSync(name, blob, {encoding: 'binary'});
 	var s3Url = uploadFileSync(name);
