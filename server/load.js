@@ -8,7 +8,7 @@ var _addInfo = function (category, doc) {
 		// This is a slow way to do it
 		_.each(currentValues, function(value) {
 			if (doc.slug === value.slug || doc.name === value.name) {
-				throw new Meteor.Error(400, 'This document already exists.');
+				throw new Meteor.Error(400, "The document '" + doc.name + "' already exists.");
 				return false;
 			}
 		});
@@ -38,7 +38,7 @@ var _loadDefault = function(category) {
 		try {
 			_addInfo(category, d);
 		} catch (e) {
-			// console.log(e);
+			// console.log(e.message);
 		}
 	});
 }
