@@ -1,22 +1,5 @@
 <template name="login">
 	<h2 class="page-header">Start your application process with us today</h2>
-	<form class="login" id="register">
-		<div class="form-group">
-			<label for="email">Your email</label>
-			<input type="email" name="email" class="login-email"/>
-		</div>
-		<div class="form-group">
-			<label for="password">Password</label>
-			<input type="password" name="password" class="login-password"/>
-		</div>
-		<div class="alert alert-warning fade in">
-			<button type="button" class="close" aria-hidden="true">×</button>
-			<div class="message"></div>
-		</div>
-		<input type="submit" class="btn btn-success" id="start-button" value="Start">
-	</form>
-
-	<h2 class="page-header">If you already have an account with us, log in below</h2>
 	<form class="login" id="login">
 		<div class="form-group">
 			<label for="email">Your email</label>
@@ -30,6 +13,7 @@
 			<button type="button" class="close" aria-hidden="true">×</button>
 			<div class="message"></div>
 		</div>
-		<input type="submit" class="btn btn-primary" id="login-button" value="Log In"/>
+		<input type="submit" class="btn btn-success" id="register-button" value="Register">
+		<input type="submit" class="btn btn-primary" id="signin-button" value="Sign In"/>
 	</form>
 </template>

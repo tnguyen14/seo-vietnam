@@ -2,8 +2,7 @@
   "name": "seo-vietnam",
   "version": "0.0.1",
   "dependencies": {
-    "bootstrap": "~3.0.0",
-    "bootstrap-select": "*",
+    "bootstrap": "3.0.x",
     "jquery-simply-countable": "https://github.com/aaronrussell/jquery-simply-countable.git",
     "jquery.validation": "~1.11.1"
   },
