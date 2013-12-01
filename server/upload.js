@@ -1,11 +1,11 @@
 var s3 = Meteor.require('s3'),
-	fs = Npm.require('fs');
-
-var client = s3.createClient({
-	key: 'AKIAJKMWRVLM7K32FPMA',
-	secret: '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',
-	bucket: 'seo-vietnam'
-});
+	fs = Npm.require('fs'),
+	s3settings = {
+		key: process.env.S3_KEY || Meteor.settings.aws.s3key,
+		secret: process.env.S3_SECRET || Meteor.settings.aws.s3secret,
+		bucket: process.env.S3_BUCKET || Meteor.settings.aws.s3bucket
+	},
+	client = s3.createClient(s3settings);
 
 var saveResume = function(fileName, fileUrl, userId) {
 	if (!userId) return;
@@ -39,10 +39,10 @@ var uploadFile = function(localFile, cb) {
 }
 
 var saveFile = function(blob, name, type) {
-	console.log(name);
-	var uploadFileSync = Meteor._wrapAsync(uploadFile);
+	var uploadFileSync = Meteor._wrapAsync(uploadFile),
+		s3Url;
 	fs.writeFileSync(name, blob, {encoding: 'binary'});
-	var s3Url = uploadFileSync(name);
+	s3Url = uploadFileSync(name);
 	if (s3Url) {
 		saveResume(name, s3Url, this.userId);
 	}
