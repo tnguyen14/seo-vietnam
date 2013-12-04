@@ -18,17 +18,11 @@ newApplication = function (cb) {
 
 currentApp = function() {
 	var userId = Meteor.userId(),
-		app;
-	try {
-		Meteor.call('currentApp', userId, function(err, app) {
-			if (!err) {
-				Session.set('currentApp', app);
-			}
-		});
-	} catch(e) {
-		nofify(e.message, 'warning', true);
+		count = Applications.find({user: userId}).count();
+	if (count === 0) {
+		notify('No application found for this user.', 'warning', true, true);
 	}
-
+	return Applications.find({user:userId}).fetch()[0];
 }
 
 // Check whether application is ready for submit
@@ -40,8 +34,9 @@ appReady = function(){
 			'essay-leadership',
 			'essay-passion'
 		],
-		app = Session.get('currentApp'),
+		app = currentApp(),
 		empty = [];
+		console.log(app);
 	_.each(required, function(field){
 		if (!app[field]) {
 			empty.push(field);

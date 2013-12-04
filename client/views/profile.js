@@ -27,8 +27,14 @@ Template.profile.helpers({
 	getName: _getName,
 	getValue: function (field, category) {
 		var html = '',
-			value = Session.get('currentApp')[field],
-			category = _.isString(category) ? category : field;
+			app = currentApp(),
+			category = _.isString(category) ? category : field,
+			value;
+		if (!app) {
+			return;
+		}
+		value = app[field];
+
 		if (_.isArray(value)) {
 			html += '<span class="list-group">';
 			_.each(value, function(val) {

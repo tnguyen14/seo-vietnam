@@ -38,7 +38,11 @@ Template.qualifications.rendered = function() {
 
 Template.qualifications.helpers({
 	'language-checked': function (slug, level) {
-		var languages =  Session.get('currentApp').language;
+		var app = currentApp();
+		if (!app) {
+			return;
+		}
+		var languages =  app.language;
 		if (languages && _.contains(languages[slug], level)) {
 			return 'checked';
 		}

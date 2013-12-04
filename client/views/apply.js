@@ -85,6 +85,7 @@ Template.apply.rendered = function() {
 	}
 	navigate();
 
+	// initiate current app
 	currentApp();
 
 	// essay counter
@@ -196,5 +197,5 @@ Template.apply.currentSection = function() {
 }
 
 Template.apply.app = function() {
-	return Session.get('currentApp');
+	return currentApp();
 }

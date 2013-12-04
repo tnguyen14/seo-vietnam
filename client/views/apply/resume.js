@@ -1,7 +1,11 @@
 Template.resume.events = {
 	'click #remove-file': function(e) {
+		var app = currentApp();
+		if (!app) {
+			return;
+		}
 		e.preventDefault();
-		Applications.update(Session.get('currentApp')._id, {$set: {
+		Applications.update(app._id, {$set: {
 			'file-resume': {}
 		}});
 	},
