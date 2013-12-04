@@ -2,7 +2,11 @@ Meteor.subscribe('applications');
 Meteor.subscribe('information');
 
 var _getName = function (category, value) {
+	var count = Information.find({category: category}).count();
 	if (!value) {
+		return;
+	}
+	if (count === 0) {
 		return;
 	}
 	var doc = _.find(Information.find({category: category}).fetch()[0].values,
