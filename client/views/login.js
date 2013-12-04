@@ -42,11 +42,12 @@ Template.login.events = {
 			}
 		}, function(err) {
 			if (err) {
-				$('.alert', $form).show().alert().find('.message').html(err.reason);
+				notify(err.reason, 'warning', true);
 				return ;
 			}
-			newApplication();
-			Meteor.Router.to('/apply');
+			newApplication(function(){
+				Meteor.Router.to('/apply')
+			});
 		});
 	},
 	"click #signin-button": function(e) {
@@ -59,7 +60,7 @@ Template.login.events = {
 			password = $(".login-password", $form).val().trim();
 		Meteor.loginWithPassword(email, password, function(err) {
 			if (err) {
-				$('.alert', $form).show().alert().find('.message').html(err.reason);
+				notify(err.reason, 'warning', true);
 				return ;
 			}
 			Meteor.Router.to('/apply');

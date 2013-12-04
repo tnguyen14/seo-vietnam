@@ -17,7 +17,6 @@ notify = function(message, context, dismissable, auto) {
 	html += message + '</div>';
 
 	var $notification = $(html).appendTo('.notifications');
-
 	if (auto) {
 		setTimeout(function() {
 			$notification.fadeOut(1000, function(){

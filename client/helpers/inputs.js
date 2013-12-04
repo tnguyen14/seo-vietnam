@@ -54,7 +54,7 @@ saveFormGroups = function(ctx, collection, _id) {
 saveInputs = function() {
 	var current = Session.get('applySection'),
 		userId = Meteor.userId(),
-		appId = currentApp()._id;
+		appId = Session.get('currentApp')._id;
 
 	if (!userId) {
 		console.log('no user found');

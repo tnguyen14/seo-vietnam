@@ -85,6 +85,8 @@ Template.apply.rendered = function() {
 	}
 	navigate();
 
+	currentApp();
+
 	// essay counter
 	$('.essay').each(function() {
 		$(this).find('textarea').simplyCountable({
@@ -194,12 +196,5 @@ Template.apply.currentSection = function() {
 }
 
 Template.apply.app = function() {
-	var app;
-	try {
-		app = currentApp();
-	} catch (e) {
-		console.log(e);
-		$('.form-container').append('<label class="error-label>' + e.reason + '</label>');
-	}
-	return app;
+	return Session.get('currentApp');
 }
