@@ -2,13 +2,18 @@
 
 ##Architecture
 - [Meteor](http://meteor.com)
+- [AWS S3](http://aws.amazon.com/s3/)
+
+### Deployment
+See [deployment guide](deploy.md)
 
 ### Staging
-- A staging version of the app is hosted by Meteor at [http://seo-vietnam.meteor.com](http://seo-vietnam.meteor.com)
+A staging version of the app is hosted on Heroku at [http://seo-vietnam-staging.herokuapp.com](http://seo-vietnam-staging.herokuapp.com)
 
 ## User Application
 ### Status
 The proposed statuses an application can have include:
+
 - started
 - completed
 - graded
@@ -18,6 +23,7 @@ Information about the project, including scope, timeline, and structure are docu
 
 ### Required Information
 Currently, for each application, the required information are:
+
 - college
 - major
 - essay-community
