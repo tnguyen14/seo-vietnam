@@ -7,7 +7,7 @@ preserve-inputs
 less
 accounts-base
 standard-app-packages
-jquery-plugins
+bower-dependencies
 momentjs
 page-js-ie-support
 router
