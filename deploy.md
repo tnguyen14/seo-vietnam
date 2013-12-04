@@ -15,7 +15,12 @@ Use `heroku config:set KEY=VALUE --remote REMOTE_NAME` to set up environment var
 - `S3_BUCKET`
 - `ROOT_URL` (usually in the form `http://APP_NAME.herokuapp.com`)
 
-### Set up custom domain
+**Enable websockets**
+```sh
+$ heroku labs:enable websockets -a APP_NAME
+```
+
+### Set up custom domain (optional)
 Heroku guide for [adding custom domain](https://devcenter.heroku.com/articles/custom-domains)
 
 ## Use
