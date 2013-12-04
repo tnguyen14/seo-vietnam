@@ -7,7 +7,6 @@ preserve-inputs
 less
 accounts-base
 standard-app-packages
-bootstrap
 jquery-plugins
 momentjs
 page-js-ie-support
