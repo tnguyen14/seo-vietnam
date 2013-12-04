@@ -4,7 +4,8 @@ Template['resume-upload'].events = {
 		var $form = $("#resume");
 			fileInput = document.getElementById("file-resume"),
 			$submit = $("#resume-submit"),
-			$label = $submit.siblings(".control-label");
+			$label = $submit.siblings(".control-label"),
+			ladda = Ladda.create(e.target);
 
 		$form.validate({
 			rules: {
@@ -15,6 +16,7 @@ Template['resume-upload'].events = {
 		});
 
 		if ($form.valid()) {
+			ladda.start();
 			readFile(fileInput.files[0]);
 		}
 	}
