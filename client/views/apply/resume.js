@@ -20,7 +20,7 @@ Template.resume.events = {
 		if (appReady()) {
 			Meteor.Router.to('/completed');
 		} else {
-			console.log("Unable to submit application. Your application is still incomplete");
+			notify('Your application is incomplete.', 'warning', true, true);
 		}
 	}
 }

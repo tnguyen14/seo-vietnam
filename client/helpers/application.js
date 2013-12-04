@@ -36,7 +36,6 @@ appReady = function(){
 		],
 		app = currentApp(),
 		empty = [];
-		console.log(app);
 	_.each(required, function(field){
 		if (!app[field]) {
 			empty.push(field);
@@ -44,11 +43,9 @@ appReady = function(){
 	});
 
 	if (empty.length) {
-		console.log('app is incomplete');
 		console.log(empty);
 		return false;
 	} else {
-		console.log('app is complete');
 		return true;
 	}
 };
