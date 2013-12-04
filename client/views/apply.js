@@ -165,6 +165,14 @@ Template.apply.events = {
 		saveInputs();
 		notify('The application is saved successfully.', 'success', true, true);
 	},
+	'click #app-submit': function(e) {
+		// check app ready one more time
+		if (appReady()) {
+			Meteor.Router.to('/completed');
+		} else {
+			notify('Your application is incomplete.', 'warning', true, true);
+		}
+	},
 	// add own content
 	'click .add-own-content .add': function(e) {
 		e.preventDefault();

@@ -14,13 +14,5 @@ Template.resume.events = {
 			return Template['resume-upload']();
 		});
 		$('.resume-uploaded').append(resumeUpload);
-	},
-	'click #app-submit': function(e) {
-		// check app ready one more time
-		if (appReady()) {
-			Meteor.Router.to('/completed');
-		} else {
-			notify('Your application is incomplete.', 'warning', true, true);
-		}
 	}
 }
