@@ -154,16 +154,6 @@ Template.apply.events = {
 		Meteor.Router.to('/apply/' + to);
 		navigate();
 	},
-	'click #logout': function(e) {
-		e.preventDefault();
-		Meteor.logout(function(err) {
-			if (err) {
-				console.log(err);
-			} else {
-				Meteor.Router.to('/');
-			}
-		});
-	},
 	'click #app-save': function(e) {
 		e.preventDefault();
 		var current = Session.get('applySection');

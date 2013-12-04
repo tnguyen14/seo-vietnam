@@ -65,9 +65,5 @@ Template.login.events = {
 			}
 			Meteor.Router.to('/apply');
 		});
-	},
-	"click .close": function(e) {
-		e.preventDefault();
-		$(e.target).parent('.alert').hide();
 	}
 }
