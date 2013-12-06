@@ -105,10 +105,10 @@ Template.apply.events = {
 			currentIndex = getIndex(current),
 			prev = (currentIndex === 0) ? current : applySections[currentIndex-1].name;
 
-		saveInputs();
-
-		// navigate away!
-		Meteor.Router.to('/apply/' + prev);
+		saveInputs(function () {
+			// navigate away!
+			Meteor.Router.to('/apply/' + prev);
+		});
 	},
 	'click .fragment-control.next .glyphicon': function(e) {
 		e.preventDefault();
@@ -120,9 +120,10 @@ Template.apply.events = {
 		if (!$('#' + current).valid()) {
 			return;
 		}
-		saveInputs();
+		saveInputs(function () {
+			Meteor.Router.to('/apply/' + next);
+		});
 
-		Meteor.Router.to('/apply/' + next);
 	},
 	'click .pagination li': function(e) {
 		e.preventDefault();
@@ -135,11 +136,10 @@ Template.apply.events = {
 			return;
 		}
 
-		saveInputs();
-
-		// Session.set('applySection', to);
-		Meteor.Router.to('/apply/' + to);
-		navigate();
+		saveInputs(function () {
+			Meteor.Router.to('/apply/' + to);
+			navigate();
+		});
 	},
 	'click #app-save': function(e) {
 		e.preventDefault();
@@ -149,8 +149,12 @@ Template.apply.events = {
 			return;
 		}
 
-		saveInputs();
-		notify('The application is saved successfully.', 'success', true, true);
+		saveInputs(function () {
+			notify('The application is saved successfully.', 'success', true, true);
+		}, function(err) {
+			console.log(err);
+			notify('Failed to save your application.', 'warning', true);
+		});
 	},
 	'click #app-submit': function(e) {
 		e.preventDefault();

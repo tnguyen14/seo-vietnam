@@ -37,8 +37,18 @@ collectInputs = function(ctx) {
 	return field;
 };
 
-saveFormGroups = function(ctx, collection, _id) {
-	$('.form-group', $(ctx)).each(function() {
+// save inputs in the current section by groups
+// use jQuery Deferred success and failure callback styles
+saveInputs = function (doneCb, failCb) {
+	// save personal information to the user collection
+	var current = Session.get('applySection'),
+		$ctx = $('#' + current),
+		inputGroups = [],
+		docId = (current === 'personal-info') ? Meteor.userId() : currentApp()._id,
+		collection = (current === 'personal-info') ? Meteor.users : Applications;
+
+	// collect inputs in groups and save them to array
+	$('.form-group', $ctx).each(function () {
 		var group = {},
 			field = collectInputs(this),
 			name = $(this).attr('name');
@@ -47,23 +57,27 @@ saveFormGroups = function(ctx, collection, _id) {
 		} else {
 			group = field;
 		}
-		collection.update(_id, {$set: group});
+		inputGroups.push(group);
 	});
-};
 
-saveInputs = function() {
-	var current = Session.get('applySection'),
-		userId = Meteor.userId(),
-		appId = currentApp()._id;
+	// map inputGroups elements to function to save them to collection
+	// use jQuery promise to apply doneCb when all groups have been saved
+	$.when.apply($, $.map(inputGroups, function(group) {
+		var dfd = new jQuery.Deferred();
+		collection.update(docId, {$set: group}, function(err, res) {
+			// if there's no error, result is the number of documents affected
+			if (err) {
+				dfd.reject(err);
+			} else {
+				dfd.resolve();
+			}
+		});
+		return dfd.promise();
+	})).done(function() {
+		if (doneCb) doneCb();
+	}).fail(function(err) {
+		if (failCb) failCb(err);
+	});
 
-	if (!userId) {
-		console.log('no user found');
-		return;
-	}
-	// save personal info to User
-	if (current === 'personal-info') {
-		saveFormGroups('#' + current, Meteor.users, userId);
-	} else {
-		saveFormGroups('#' + current, Applications, appId);
-	}
+
 }
