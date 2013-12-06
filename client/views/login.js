@@ -63,7 +63,11 @@ Template.login.events = {
 				notify(err.reason, 'warning', true);
 				return ;
 			}
-			Meteor.Router.to('/apply');
+			if (currentApp().status === 'completed') {
+				Meteor.Router.to('/profile');
+			} else {
+				Meteor.Router.to('/apply');
+			}
 		});
 	}
 }
