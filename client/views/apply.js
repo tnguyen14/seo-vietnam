@@ -153,12 +153,22 @@ Template.apply.events = {
 		notify('The application is saved successfully.', 'success', true, true);
 	},
 	'click #app-submit': function(e) {
+		e.preventDefault();
+		var appId = currentApp()._id;
 		// check app ready one more time
 		if (appReady()) {
-			Meteor.Router.to('/completed');
+			Applications.update(appId, { $set: {
+				status: 'completed'
+			}}, function() {
+				Meteor.Router.to('/completed');
+			})
 		} else {
 			notify('Your application is incomplete.', 'warning', true, true);
 		}
+	},
+	'click #view-profile': function(e) {
+		e.preventDefault();
+		Meteor.Router.to('/profile');
 	},
 	// add own content
 	'click .add-own-content .add': function(e) {

@@ -1,13 +1,17 @@
 var isArray = Array.isArray;
 
-Handlebars.registerHelper('isEqual', function(a, b, options){
+// check if two parameters a and b are equivalent
+// this helper can be used with the block helper if
+// {{#if equal a b}}
+// {{/if}}
+Handlebars.registerHelper('equal', function(a, b) {
 	if (a === b) {
-		return options.fn(this);
+		return true;
 	}
-	return options.inverse(this);
+	return false;
 });
 
-Handlebars.registerHelper('debug', function(stuff){
+Handlebars.registerHelper('debug', function(stuff) {
 	console.log(stuff);
 });
 
