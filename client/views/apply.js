@@ -85,7 +85,7 @@ Template.apply.rendered = function() {
 	});
 
 	var $submitButton = $('#app-submit');
-	if (Session.get('applySection') === 'resume') {
+	if (Session.get('applySection') === 'files') {
 		$submitButton.removeClass('hidden');
 		if (appReady()) {
 			$submitButton.removeClass('disabled');

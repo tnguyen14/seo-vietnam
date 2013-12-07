@@ -29,15 +29,23 @@ currentApp = function() {
 appReady = function(){
 	var required = [
 			'college',
+			'graduation-date',
 			'major',
 			'essay-community',
 			'essay-leadership',
-			'essay-passion'
+			'essay-passion',
+			'files.resume'
 		],
 		app = currentApp(),
 		empty = [];
 	_.each(required, function(field){
-		if (!app[field]) {
+		// parse the dot notation
+		var value = app,
+			path = field.split('.');
+		while (path.length !== 0) {
+			value = value[path.shift()];
+		}
+		if (_.isEmpty(value)) {
 			empty.push(field);
 		}
 	});
