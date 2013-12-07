@@ -8,7 +8,8 @@ collectInputs = function(ctx) {
 		'input[type="email"]',
 		'input[type="tel"]',
 		'textarea',
-		'select'
+		'select',
+		'input[type="radio"]:checked'
 	].join(', '), ctx).each(function(){
 		var name = $(this).attr('name'),
 			value = $(this).val().trim();

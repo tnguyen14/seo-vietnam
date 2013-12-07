@@ -2,17 +2,20 @@
 	<form id="qualifications" name="qualifications" class="fragment form-horitzontal qualifications" method="post" action="">
 	<h2>Qualifications</h2>
 
-		<div class="form-group" name="language">
+		<div class="form-group languages" name="language">
 			<h3>Language Proficiency</h3>
 			{{#each languages}}
 				<label class="control-label">
 					{{name}}
 				</label>
-				<div class="checkbox">
-					<label><input type="checkbox" name="{{slug}}" value="fluent" {{language-checked slug 'fluent'}}>Fluent</label>
+				<div class="radio">
+					<label><input type="radio" name="{{slug}}" value="fluent" {{language-checked slug 'fluent'}}>Fluent</label>
 				</div>
-				<div class="checkbox">
-					<label><input type="checkbox" name="{{slug}}" value="basic" {{language-checked slug 'basic'}}>Basic Understanding</label>
+				<div class="radio">
+					<label><input type="radio" name="{{slug}}" value="intermediate" {{language-checked slug 'intermediate'}}>Intermediate</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="{{slug}}" value="basic" {{language-checked slug 'basic'}}>Basic Understanding</label>
 				</div>
 			{{/each}}
 		</div>

@@ -106,8 +106,22 @@ input {
 			width: 50%;
 		}
 	}
+
 }
 
+.languages {
+	.radio {
+		margin-top: 0.5em;
+		padding-left: 21px;
+		+ .radio {
+			margin-top: 0.5em;
+		}
+		@media (min-width: 40em) {
+			float: left;
+			width: 33.33333%;
+		}
+	}
+}
 .qualifications {
 	.sat,
 	.others {

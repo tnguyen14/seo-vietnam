@@ -42,8 +42,8 @@ Template.qualifications.helpers({
 		if (!app) {
 			return;
 		}
-		var languages =  app.language;
-		if (languages && _.contains(languages[slug], level)) {
+		var languages = app.language;
+		if (languages && languages[slug] === level) {
 			return 'checked';
 		}
 	}
