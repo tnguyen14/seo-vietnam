@@ -2,7 +2,14 @@
 
 collectInputs = function(ctx) {
 	var field = {};
-	$('input[type="text"], input[type="number"], input[type="email"], input[type="tel"], textarea, select', ctx).each(function(){
+
+	$(['input[type="text"]',
+		'input[type="number"]',
+		'input[type="email"]',
+		'input[type="tel"]',
+		'textarea',
+		'select'
+	].join(', '), ctx).each(function(){
 		var name = $(this).attr('name'),
 			value = $(this).val().trim();
 		value = html_entity_encode(value);
@@ -12,8 +19,9 @@ collectInputs = function(ctx) {
 				field[name] = [field[name]];
 			}
 			field[name].push(value);
+		} else {
+			field[name] = value;
 		}
-		field[name] = value;
 	});
 
 	// checkboxes are saved as array of values

@@ -1,5 +1,3 @@
-Meteor.subscribe('information');
-
 Template['personal-info'].rendered = function() {
 	$("#personal-info").validate({
 		rules: {

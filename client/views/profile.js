@@ -28,6 +28,9 @@ Template.profile.helpers({
 	app: function () {
 		return Applications.findOne({user: Meteor.userId()});
 	},
+	graduateYear: function(year) {
+		return year.substr(-2);
+	},
 	getName: _getName,
 	getValue: function (field, category) {
 		var html = '',

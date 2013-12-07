@@ -9,6 +9,8 @@
 				<option value="{{slug}}" {{selected slug ../college}}>{{name}}</option>
 			{{/each}}
 			</select>
+			<label for="graduation-date" class="control-label">Graduation Date (expected)</label>
+			<input type="number" name="graduation-date" placeholder="2014" value="{{graduation-date}}"/>
 		</div>
 		{{#with 'college'}}
 			{{> add-own-content}}
