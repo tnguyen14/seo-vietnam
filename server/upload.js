@@ -7,44 +7,39 @@ var s3 = Meteor.require('s3'),
 	},
 	client = s3.createClient(s3settings);
 
-var saveResume = function(fileName, fileUrl, userId) {
-	if (!userId) return;
-	Applications.update({'user': userId}, {
-		$set: {
-			'file-resume': {
-				name: fileName,
-				url: fileUrl
-			}
-		}
-	});
-}
-
-var uploadFile = function(localFile, cb) {
+var uploadFile = function(localFile, uploadFolder, cb) {
 	var headers = {
 		'x-amz-acl' : 'public-read'
 	}
-	var uploader = client.upload(localFile, 'resume-uploads/' + localFile, headers);
+	var uploader = client.upload(localFile, 'user-uploads/' + uploadFolder + '/' + localFile, headers);
 	uploader.on('error', function(err) {
 		console.error("unable to upload:", err.stack);
 		cb(new Meteor.Error(400, 'Unable to upload: ' + err.stack));
 	});
 	uploader.on('progress', function(amountDone, amountTotal) {
-		console.log("progress", amountDone, amountTotal);
+		// console.log("progress", amountDone, amountTotal);
 	});
 	uploader.on('end', function(url) {
 		console.log("file available at", url);
-	;	cb(null, url);
+		cb(null, url);
 	});
 // remove file after uploaded?
 }
 
-var saveFile = function(blob, name, type) {
+var saveFile = function(blob, name, folder, field) {
 	var uploadFileSync = Meteor._wrapAsync(uploadFile),
 		s3Url;
 	fs.writeFileSync(name, blob, {encoding: 'binary'});
-	s3Url = uploadFileSync(name);
+	s3Url = uploadFileSync(name, folder);
 	if (s3Url) {
-		saveResume(name, s3Url, this.userId);
+		var set = {};
+		set['files.' + field] = {
+			name: name,
+			url: s3Url
+		}
+		Applications.update({'user': this.userId}, {
+			$set: set
+		});
 	}
 }
 

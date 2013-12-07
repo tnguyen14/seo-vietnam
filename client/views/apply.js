@@ -24,7 +24,7 @@ var applySections = [
 		name: 'leadership'
 	}, {
 		index: 8,
-		name: 'resume'
+		name: 'files'
 	}
 ];
 

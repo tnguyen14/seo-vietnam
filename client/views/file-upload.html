@@ -1,0 +1,8 @@
+<template name="file-upload">
+	<div class="form-group field-group file-upload">
+		<label for="{{field}}" class="control-label">Please upload your {{label}}</label>
+		<input type='file' name="files.{{field}}" data-field="{{field}}" accept="application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+		<p class="help-block">Accepted file formats are: PDF, DOC, DOCX, TXT and RTF.</p>
+		<button class="btn btn-default ladda-button file-submit" data-style="expand-right" data-spinner-color="#428bca">Upload</button>
+	</div>
+</template>

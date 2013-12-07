@@ -63,12 +63,40 @@ Template.profile.helpers({
 		});
 		html += '</span>';
 		return html;
+	},
+	checkFile: function(field) {
+		console.log(this);
 	}
 });
 
 Template.profile.events = {
-	'click #edit-app': function(e) {
+	'click .edit-app': function(e) {
 		e.preventDefault();
 		Meteor.Router.to('/apply');
 	}
+}
+Template.profile.files = function(){
+	var files = this.files;
+	return [
+		{
+			label: 'resume',
+			field: 'resume',
+			file: files['resume']
+		},
+		{
+			label: 'cover letter',
+			field: 'cover-letter',
+			file: files['cover-letter']
+		},
+		{
+			label: 'transcript',
+			field: 'transcript',
+			file: files['transcript']
+		},
+		{
+			label: 'writing sample',
+			field: 'writing-sample',
+			file: files['writing-sample']
+		}
+	];
 }

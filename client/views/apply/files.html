@@ -1,0 +1,22 @@
+<template name="files">
+	<form id="files" class="fragment" method="post" action="">
+		<h2>Uploads</h2>
+		{{#each files}}
+			<div class="file">
+				<h3 class="file-label">{{label}}</h3>
+				{{#unless file.url}}
+					{{> file-upload}}
+				{{else}}
+					<div class="file-uploaded">
+						<label class="control-label">You have uploaded your {{label}}.</label>
+						<ul data-field="{{field}}">
+							<li><a class="" href="{{file.url}}">View uploaded file</a></li>
+							<li><a class="remove-file" data-field="{{field}}" href="#">Remove uploaded file</a></li>
+							<li><a class="reupload" data-field="{{field}}" href="#">Upload a different file</a></li>
+						</ul>
+					</div>
+				{{/unless}}
+			</div>
+		{{/each}}
+	</form>
+</template>
