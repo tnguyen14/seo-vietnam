@@ -157,17 +157,21 @@ Template.apply.events = {
 		});
 	},
 	'click #app-submit': function(e) {
+		var app = currentApp();
 		e.preventDefault();
-		var appId = currentApp()._id;
-
 		// check app ready one more time
 		if (appReady()) {
-			Applications.update(appId, { $set: {
-				status: 'completed',
-				timestamp.completedAt: new Date()
-			}}, function() {
-				Meteor.Router.to('/completed');
-			})
+			if (app.status !== 'completed') {
+				var appId = app._id,
+					set = {};
+				set.status = 'completed';
+				set.timestamp.completedAt = new Date();
+				Applications.update(appId, {$set: set}, function() {
+					Meteor.Router.to('/completed');
+				});
+			} else {
+				Meteor.Router.to('/profile');
+			}
 		} else {
 			notify('Your application is incomplete.', 'warning', true, true);
 		}

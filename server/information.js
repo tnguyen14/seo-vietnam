@@ -9,7 +9,7 @@ var _addInfo = function (category, doc) {
 		_.each(currentValues, function(value) {
 			// will not insert docs that have the same name or slug
 			// with ones that are already verified
-			if ((doc.slug === value.slug || doc.name === value.name ||) && value.verified === true) {
+			if ((doc.slug === value.slug || doc.name === value.name) && value.verified === true) {
 				throw new Meteor.Error(400, "The document '" + doc.name + "' already exists.");
 				return false;
 			}
