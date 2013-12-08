@@ -159,13 +159,12 @@ Template.apply.events = {
 	'click #app-submit': function(e) {
 		e.preventDefault();
 		var appId = currentApp()._id;
+
 		// check app ready one more time
 		if (appReady()) {
 			Applications.update(appId, { $set: {
 				status: 'completed',
-				timestamp: {
-					completedAt: new Date()
-				}
+				timestamp.completedAt: new Date()
 			}}, function() {
 				Meteor.Router.to('/completed');
 			})
