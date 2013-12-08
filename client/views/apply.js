@@ -162,7 +162,10 @@ Template.apply.events = {
 		// check app ready one more time
 		if (appReady()) {
 			Applications.update(appId, { $set: {
-				status: 'completed'
+				status: 'completed',
+				timestamp: {
+					completedAt: new Date()
+				}
 			}}, function() {
 				Meteor.Router.to('/completed');
 			})

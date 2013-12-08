@@ -4,7 +4,10 @@ var createApp = function (userId) {
 	if (count === 0) {
 		appId = Applications.insert({
 			user: userId,
-			status: 'started'
+			status: 'started',
+			timestamp: {
+				createdAt: new Date()
+			}
 		});
 	} else {
 		throw new Error(400, 'Application already exists for this user');
