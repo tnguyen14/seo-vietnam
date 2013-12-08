@@ -10,6 +10,12 @@ Package.on_use(function(api) {
 	api.add_files(['../../public/bower_components/jquery.validation/additional-methods.js'], 'client');
 	// bootstrap
 	api.add_files(['../../public/bower_components/bootstrap/dist/js/bootstrap.min.js'], 'client');
+	api.add_files([
+		'../../public/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot',
+		'../../public/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg',
+		'../../public/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',
+		'../../public/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff'
+	], 'client');
 	// ladda-bootstrap
 	api.add_files([
 		'../../public/bower_components/ladda-bootstrap/dist/ladda-themeless.min.css',
