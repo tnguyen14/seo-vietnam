@@ -1,7 +1,7 @@
 Template.community.rendered = function() {
 	$('#community').validate({
 		rules: {
-			'essay-community': {
+			'essay.community': {
 				maxWord: 500
 			}
 		}

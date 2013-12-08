@@ -33,16 +33,6 @@ collectInputs = function(ctx) {
 		field[name] = field[name] || [];
 		field[name].push(value);
 	});
-
-	// resume file
-	$('input[type="file"]', ctx).each(function(){
-		var name = $(this).attr('name'),
-			value = {};
-		value.url = $(this).data('url');
-		value.key = $(this).data('awskey');
-		field[name] = value;
-	})
-
 	return field;
 };
 

@@ -1,7 +1,7 @@
 Template.passion.rendered = function() {
 	$('#passion').validate({
 		rules: {
-			'essay-passion': {
+			'essay.passion': {
 				maxWord: 500
 			}
 		}
