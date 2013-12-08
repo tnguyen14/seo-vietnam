@@ -1,7 +1,7 @@
 <template name="files">
 	<form id="files" class="fragment" method="post" action="">
 		<h2>Uploads</h2>
-		{{#each files}}
+		{{#each uploads}}
 			<div class="file">
 				<h3 class="file-label">{{label}}</h3>
 				{{#unless file.url}}

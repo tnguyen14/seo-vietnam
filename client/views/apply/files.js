@@ -19,7 +19,7 @@ Template.files.events = {
 	}
 }
 
-Template.files.files = function(){
+Template.files.uploads = function(){
 	var files = this.files || {};
 	return [
 		{
