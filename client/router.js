@@ -1,4 +1,7 @@
 apply = function(id) {
+	if (!id) {
+		id = 'personal-info';
+	}
 	Session.set('applySection', id);
 	return 'apply';
 };

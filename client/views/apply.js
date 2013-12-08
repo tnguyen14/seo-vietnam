@@ -40,10 +40,6 @@ var getIndex = function(el) {
 
 var navigate = function() {
 	var to = Session.get('applySection');
-	if (!to) {
-		to = "personal-info";
-		Session.set('applySection', to);
-	}
 
 	// add active class
 	$(".pagination li")
@@ -67,14 +63,7 @@ var navigate = function() {
 
 // Rendered
 Template.apply.rendered = function() {
-	if (!Meteor.user()) {
-		Meteor.Router.to('/login');
-	}
 	navigate();
-
-	// initiate current app
-	currentApp();
-
 	// essay counter
 	$('.essay').each(function() {
 		$(this).find('textarea').simplyCountable({
@@ -130,7 +119,6 @@ Template.apply.events = {
 		// `this` is the context of of these li's
 		var current = Session.get('applySection'),
 			to = this.name;
-
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
 			return;
