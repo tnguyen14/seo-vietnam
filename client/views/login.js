@@ -59,6 +59,7 @@ Template.login.events = {
 		var email = $(".login-email", $form).val().trim(),
 			password = $(".login-password", $form).val().trim();
 		Meteor.loginWithPassword(email, password, function(err) {
+			clearNotifications();
 			if (err) {
 				notify(err.reason, 'warning', true);
 				return ;

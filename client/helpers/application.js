@@ -43,9 +43,10 @@ appReady = function(){
 		var value = app,
 			path = field.split('.');
 		while (path.length !== 0) {
-			if (value) {
-				value = value[path.shift()];
+			if (!value) {
+				break;
 			}
+			value = value[path.shift()];
 		}
 		if (_.isEmpty(value)) {
 			empty.push(field);
