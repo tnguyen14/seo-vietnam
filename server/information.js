@@ -57,7 +57,8 @@ Meteor.startup(function () {
 		'profession',
 		'industry',
 		'language',
-		'country'
+		'country',
+		'apply-sections'
 	].map(_loadDefault);
 
 });

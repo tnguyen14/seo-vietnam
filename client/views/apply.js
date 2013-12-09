@@ -1,69 +1,49 @@
-Meteor.subscribe('applications');
-
-var applySections = [
-	{
-		index: 1,
-		name: 'personal-info'
-	}, {
-		index: 2,
-		name: 'education'
-	}, {
-		index: 3,
-		name: 'qualifications'
-	}, {
-		index: 4,
-		name: 'professional'
-	}, {
-		index: 5,
-		name: 'passion'
-	}, {
-		index: 6,
-		name: 'community'
-	}, {
-		index: 7,
-		name: 'leadership'
-	}, {
-		index: 8,
-		name: 'files'
-	}
-];
-
-var getIndex = function(el) {
-	var i = -1;
-	applySections.forEach(function(element, index) {
-		if (el === element.name) {
-			i = index;
+var getIndex = function (section) {
+	var i,
+		sections = Session.get('applySections');
+	sections.forEach(function(element, index) {
+		if (section === element.name) {
+			i = element.index;
 		}
 	});
 	return i;
 }
 
-var navigate = function() {
-	var to = Session.get('applySection');
+// Rendered
+Template.apply.rendered = function() {
+	var sections = getInfo('apply-sections'),
+		current = Session.get('currentSection'),
+		$submitButton = $('#app-submit');
+	Session.set('applySections', sections);
 
 	// add active class
 	$(".pagination li")
 		.removeClass('active')
 		.each(function(){
-			var name = $(this).data('name');
-			if (name === to) {
+			if ($(this).data('name') === current) {
 				$(this).addClass('active');
 			}
 		});
 
+	$submitButton.addClass('hidden');
+
 	// selectively hide fragment controls for first and last fragments
 	$(".fragment-control").removeClass('hidden');
-	var toIndex = getIndex(to);
-	if (toIndex === 0) {
+	var currentIndex = getIndex(current);
+	if (currentIndex === 1) {
 		$(".fragment-control.prev").addClass('hidden');
-	} else if (toIndex === applySections.length - 1) {
-		$(".fragment-control.next").addClass('hidden');
 	}
-}
+	if (currentIndex === sections.length) {
+		$(".fragment-control.next").addClass('hidden');
+		// show submit button
+		$submitButton.removeClass('hidden');
+		if (appReady()) {
+			$submitButton.removeClass('disabled');
+		} else {
+			$submitButton.addClass('disabled');
+		}
+	}
 
-// Rendered
-Template.apply.rendered = function() {
-	navigate();
 	// essay counter
 	$('.essay').each(function() {
 		$(this).find('textarea').simplyCountable({
@@ -72,27 +52,16 @@ Template.apply.rendered = function() {
 			maxCount: 500
 		});
 	});
-
-	var $submitButton = $('#app-submit');
-	if (Session.get('applySection') === 'files') {
-		$submitButton.removeClass('hidden');
-		if (appReady()) {
-			$submitButton.removeClass('disabled');
-		} else {
-			$submitButton.addClass('disabled');
-		}
-	} else {
-		$submitButton.addClass('hidden');
-	}
 };
 
 //Template Events
 Template.apply.events = {
 	'click .fragment-control.prev .glyphicon': function(e) {
 		e.preventDefault();
-		var current = Session.get('applySection'),
+		var current = Session.get('currentSection'),
+			sections = Session.get('applySections'),
 			currentIndex = getIndex(current),
-			prev = (currentIndex === 0) ? current : applySections[currentIndex-1].name;
+			prev = (currentIndex === 1) ? current : sections[currentIndex-2].name;
 
 		saveInputs(function () {
 			// navigate away!
@@ -101,9 +70,10 @@ Template.apply.events = {
 	},
 	'click .fragment-control.next .glyphicon': function(e) {
 		e.preventDefault();
-		var current = Session.get('applySection'),
+		var current = Session.get('currentSection'),
+			sections = Session.get('applySections'),
 			currentIndex = getIndex(current),
-			next = applySections[currentIndex+1].name;
+			next = sections[currentIndex].name;
 
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
@@ -117,7 +87,7 @@ Template.apply.events = {
 	'click .pagination li': function(e) {
 		e.preventDefault();
 		// `this` is the context of of these li's
-		var current = Session.get('applySection'),
+		var current = Session.get('currentSection'),
 			to = this.name;
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
@@ -126,12 +96,11 @@ Template.apply.events = {
 
 		saveInputs(function () {
 			Meteor.Router.to('/apply/' + to);
-			navigate();
 		});
 	},
 	'click #app-save': function(e) {
 		e.preventDefault();
-		var current = Session.get('applySection');
+		var current = Session.get('currentSection');
 
 		if (!$('#' + current).valid()) {
 			return;
@@ -177,15 +146,12 @@ Template.apply.events = {
 // Template Variables
 
 Template.apply.fragments = function() {
-	return applySections;
+	console.log(new Date());
+	return getInfo('apply-sections');
 }
 
 Template.apply.currentSection = function() {
-	if (Session.get('applySection')) {
-		return Session.get('applySection');
-	} else {
-		return applySections[0].name;
-	}
+	return Session.get('currentSection');
 }
 
 Template.apply.app = function() {

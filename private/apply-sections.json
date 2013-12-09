@@ -1,0 +1,29 @@
+{
+	"values": [
+		{
+			"index": 1,
+			"name": "personal-info"
+		}, {
+			"index": 2,
+			"name": "education"
+		}, {
+			"index": 3,
+			"name": "qualifications"
+		}, {
+			"index": 4,
+			"name": "professional"
+		}, {
+			"index": 5,
+			"name": "passion"
+		}, {
+			"index": 6,
+			"name": "community"
+		}, {
+			"index": 7,
+			"name": "leadership"
+		}, {
+			"index": 8,
+			"name": "files"
+		}
+	]
+}
