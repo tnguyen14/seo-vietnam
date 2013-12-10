@@ -86,18 +86,12 @@
 				<div class="value">{{{getValue 'profession'}}}</div>
 			</div>
 			<h2 class="section-title">Essays</h2>
-			<div class="field-group essay">
-				<label for="essay-passion">Tell us about something you are passionate about</label>
-				<div class="value">{{{text essay.passion}}}</div>
-			</div>
-			<div class="field-group essay">
-				<label for="essay-community">Have you had any community-oriented experience that shaped your perspective?</label>
-				<div class="value">{{{text essay.community}}}</div>
-			</div>
-			<div class="field-group essay">
-				<label for="essay-leadership">Are you more of a leader or a follower? Why do you think so?</label>
-				<div class="value">{{{text essay.leadership}}}</div>
-			</div>
+			{{#each essays}}
+				<div class="field-group essay">
+					<label for="{{name}}">{{question}}</label>
+					<div class="value">{{getEssay ../essay id}}</div>
+				</div>
+			{{/each}}
 
 			<h3 class="section-title">Files</h3>
 			<ul>

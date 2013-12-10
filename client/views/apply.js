@@ -1,27 +1,14 @@
-var getCurrentSection = function () {
-	var currentName = Session.get('currentSection'),
-		sections = Session.get('applySections'),
-		section;
-
-	sections.forEach(function(element, index) {
-		if (currentName === element.name) {
-			section = element;
-		}
+var getSectionByName = function (name, sections) {
+	return _.find(sections, function(el) {
+		return name === el.name;
 	});
-	console.log(section);
-	return section;
-}
-
-Template.apply.created = function() {
-	console.log(this);
 }
 
 // Rendered
 Template.apply.rendered = function() {
-	var sections = getInfo('apply-sections'),
-		current = Session.get('currentSection'),
+	this.sections = getInfo('apply-sections');
+	var current = Session.get('currentSection'),
 		$submitButton = $('#app-submit');
-	Session.set('applySections', sections);
 	// add active class
 	$(".pagination li")
 		.removeClass('active')
@@ -44,14 +31,14 @@ Template.apply.rendered = function() {
 
 	// selectively hide fragment controls for first and last fragments
 	$(".fragment-control").removeClass('hidden');
-	var currentSection = getCurrentSection();
+	var currentSection = getSectionByName(current, this.sections);
 	if (!currentSection) {
 		return;
 	}
 	if (currentSection.index === 1) {
 		$(".fragment-control.prev").addClass('hidden');
 	}
-	if (currentSection.index === sections.length) {
+	if (currentSection.index === this.sections.length) {
 		$(".fragment-control.next").addClass('hidden');
 		// show submit button
 		$submitButton.removeClass('hidden');
@@ -65,24 +52,21 @@ Template.apply.rendered = function() {
 
 //Template Events
 Template.apply.events = {
-	'click .fragment-control.prev .glyphicon': function(e) {
+	'click .fragment-control.prev .glyphicon': function(e, t) {
 		e.preventDefault();
 		var current = Session.get('currentSection'),
-			sections = Session.get('applySections'),
-			currentSection = getCurrentSection(),
-			prev = (currentSection.index === 1) ? current : sections[currentSection.index-2].slug;
+			currentSection = getSectionByName(current, t.sections),
+			prev = t.sections[currentSection.index-2].slug;
 
 		saveInputs(function () {
-			// navigate away!
 			Meteor.Router.to('/apply/' + prev);
 		});
 	},
-	'click .fragment-control.next .glyphicon': function(e) {
+	'click .fragment-control.next .glyphicon': function(e, t) {
 		e.preventDefault();
 		var current = Session.get('currentSection'),
-			sections = Session.get('applySections'),
-			currentSection = getCurrentSection(),
-			next = sections[currentSection.index].slug;
+			currentSection = getSectionByName(current, t.sections),
+			next = t.sections[currentSection.index].slug;
 
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {

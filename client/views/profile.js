@@ -54,6 +54,9 @@ Template.profile.helpers({
 		}
 		return html;
 	},
+	getEssay: function (essays, id) {
+		return nl2br(html_entity_decode(essays[id]));
+	},
 	getLanguage: function (language, level) {
 		var html = '<span class="list-group">';
 		_.each(language, function(fluency, lang) {
@@ -69,12 +72,17 @@ Template.profile.helpers({
 	}
 });
 
+Template.profile.rendered = function () {
+	this.sections = getInfo('apply-sections');
+}
+
 Template.profile.events = {
 	'click .edit-app': function(e) {
 		e.preventDefault();
 		Meteor.Router.to('/apply');
 	}
 }
+
 Template.profile.files = function(){
 	var files = this.files;
 	return [
@@ -102,5 +110,7 @@ Template.profile.files = function(){
 }
 
 Template.profile.essays = function () {
-
+	return _.filter(getInfo('apply-sections'), function (sect) {
+		return sect.type === 'essay';
+	});
 }
