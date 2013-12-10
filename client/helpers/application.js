@@ -31,9 +31,10 @@ appReady = function(){
 			'college',
 			'graduation-date',
 			'major',
-			'essay-community',
-			'essay-leadership',
-			'essay-passion',
+			'essay-one',
+			'essay-two',
+			'essay-three',
+			'essay-four',
 			'files.resume'
 		],
 		app = currentApp(),
