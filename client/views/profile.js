@@ -100,3 +100,7 @@ Template.profile.files = function(){
 		}
 	];
 }
+
+Template.profile.essays = function () {
+
+}

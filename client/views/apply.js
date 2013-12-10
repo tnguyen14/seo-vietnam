@@ -1,12 +1,19 @@
-var getIndex = function (section) {
-	var i,
-		sections = Session.get('applySections');
+var getCurrentSection = function () {
+	var currentName = Session.get('currentSection'),
+		sections = Session.get('applySections'),
+		section;
+
 	sections.forEach(function(element, index) {
-		if (section === element.name) {
-			i = element.index;
+		if (currentName === element.name) {
+			section = element;
 		}
 	});
-	return i;
+	console.log(section);
+	return section;
+}
+
+Template.apply.created = function() {
+	console.log(this);
 }
 
 // Rendered
@@ -15,7 +22,6 @@ Template.apply.rendered = function() {
 		current = Session.get('currentSection'),
 		$submitButton = $('#app-submit');
 	Session.set('applySections', sections);
-
 	// add active class
 	$(".pagination li")
 		.removeClass('active')
@@ -27,13 +33,25 @@ Template.apply.rendered = function() {
 
 	$submitButton.addClass('hidden');
 
+	// essay counter
+	$('.essay').each(function() {
+		$(this).find('textarea').simplyCountable({
+			counter: $('.counter', this),
+			countType: 'words',
+			maxCount: 500
+		});
+	});
+
 	// selectively hide fragment controls for first and last fragments
 	$(".fragment-control").removeClass('hidden');
-	var currentIndex = getIndex(current);
-	if (currentIndex === 1) {
+	var currentSection = getCurrentSection();
+	if (!currentSection) {
+		return;
+	}
+	if (currentSection.index === 1) {
 		$(".fragment-control.prev").addClass('hidden');
 	}
-	if (currentIndex === sections.length) {
+	if (currentSection.index === sections.length) {
 		$(".fragment-control.next").addClass('hidden');
 		// show submit button
 		$submitButton.removeClass('hidden');
@@ -43,15 +61,6 @@ Template.apply.rendered = function() {
 			$submitButton.addClass('disabled');
 		}
 	}
-
-	// essay counter
-	$('.essay').each(function() {
-		$(this).find('textarea').simplyCountable({
-			counter: $('.counter', this),
-			countType: 'words',
-			maxCount: 500
-		});
-	});
 };
 
 //Template Events
@@ -60,8 +69,8 @@ Template.apply.events = {
 		e.preventDefault();
 		var current = Session.get('currentSection'),
 			sections = Session.get('applySections'),
-			currentIndex = getIndex(current),
-			prev = (currentIndex === 1) ? current : sections[currentIndex-2].name;
+			currentSection = getCurrentSection(),
+			prev = (currentSection.index === 1) ? current : sections[currentSection.index-2].slug;
 
 		saveInputs(function () {
 			// navigate away!
@@ -72,8 +81,8 @@ Template.apply.events = {
 		e.preventDefault();
 		var current = Session.get('currentSection'),
 			sections = Session.get('applySections'),
-			currentIndex = getIndex(current),
-			next = sections[currentIndex].name;
+			currentSection = getCurrentSection(),
+			next = sections[currentSection.index].slug;
 
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
@@ -88,7 +97,7 @@ Template.apply.events = {
 		e.preventDefault();
 		// `this` is the context of of these li's
 		var current = Session.get('currentSection'),
-			to = this.name;
+			to = this.slug;
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
 			return;
@@ -146,7 +155,6 @@ Template.apply.events = {
 // Template Variables
 
 Template.apply.fragments = function() {
-	console.log(new Date());
 	return getInfo('apply-sections');
 }
 

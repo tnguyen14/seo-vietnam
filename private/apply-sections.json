@@ -14,15 +14,36 @@
 			"name": "professional"
 		}, {
 			"index": 5,
-			"name": "passion"
+			"name": "essay-one",
+			"slug": "essay/one",
+			"type": "essay",
+			"question": "How did you hear about SEO-Vietnam and why do you want to apply to our summer program?"
 		}, {
 			"index": 6,
-			"name": "community"
+			"name": "essay-two",
+			"slug": "essay/two",
+			"type": "essay",
+			"question": "Why should we pick you?"
 		}, {
 			"index": 7,
-			"name": "leadership"
+			"name": "essay-three",
+			"slug": "essay/three",
+			"type": "essay",
+			"question": "What does community service mean to you and what have you done to help your community?"
 		}, {
 			"index": 8,
+			"name": "essay-four",
+			"slug": "essay/four",
+			"type": "essay",
+			"question": "Where do you see yourself in the next 5 years?"
+		}, {
+			"index": 9,
+			"name": "essay-five",
+			"slug": "essay/five",
+			"type": "essay",
+			"question": "Tell us something about yourself that you are really proud of."
+		},{
+			"index": 10,
 			"name": "files"
 		}
 	]

@@ -1,5 +1,5 @@
 Meteor.publish('information', function(){
-	return Information.find();
+	return Information.find({});
 });
 
 Meteor.publish('applications', function(){
