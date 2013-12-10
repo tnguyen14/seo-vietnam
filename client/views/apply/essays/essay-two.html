@@ -1,9 +1,9 @@
 <template name="essay-two">
-	<form id="essay-two" name="essay" class="fragment" method="post" action="">
+	<form id="{{section.name}}" name="essay" class="fragment" method="post" action="">
 		<h2>Essays</h2>
 		<div class="form-group essay">
-			<label for="essay.two" class="control-label">Why should we pick you? </label>
-			<textarea name="essay.two" class="form-control">{{essay.community}}</textarea>
+			<label for="essay.{{section.id}}" class="control-label"> {{section.question}}</label>
+			<textarea name="essay.{{section.id}}" class="form-control">{{getEssay essay section.id}}</textarea>
 			<div class="control-label"><span class="counter"></span><span> words remaining</span></div>
 		</div>
 	</form>

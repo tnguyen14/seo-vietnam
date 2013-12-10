@@ -2,7 +2,7 @@ apply = function(section, part) {
 	if (!section) {
 		section = 'personal-info';
 	}
-	Session.set('currentSection', section);
+	Session.set('current', section);
 	return 'apply';
 };
 

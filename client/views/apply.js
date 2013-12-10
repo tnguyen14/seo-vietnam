@@ -1,14 +1,22 @@
 var getSectionByName = function (name, sections) {
-	return _.find(sections, function(el) {
+	return _.find(sections, function (el) {
 		return name === el.name;
 	});
+}
+var getSectionByIndex = function (index, sections) {
+	return _.find(sections, function (el) {
+		return index === el.index;
+	})
 }
 
 // Rendered
 Template.apply.rendered = function() {
 	this.sections = getInfo('apply-sections');
-	var current = Session.get('currentSection'),
+	var current = Session.get('current'),
+		currentSection = getSectionByName(current, this.sections),
 		$submitButton = $('#app-submit');
+	this.data.currentSection = currentSection;
+	Session.set('currentSection', currentSection);
 	// add active class
 	$(".pagination li")
 		.removeClass('active')
@@ -31,7 +39,7 @@ Template.apply.rendered = function() {
 
 	// selectively hide fragment controls for first and last fragments
 	$(".fragment-control").removeClass('hidden');
-	var currentSection = getSectionByName(current, this.sections);
+
 	if (!currentSection) {
 		return;
 	}
@@ -54,19 +62,18 @@ Template.apply.rendered = function() {
 Template.apply.events = {
 	'click .fragment-control.prev .glyphicon': function(e, t) {
 		e.preventDefault();
-		var current = Session.get('currentSection'),
-			currentSection = getSectionByName(current, t.sections),
-			prev = t.sections[currentSection.index-2].slug;
-
+		var current = Session.get('current'),
+			currentSection = Session.get('currentSection'),
+			prev = getSectionByIndex(currentSection.index - 1, t.sections).slug;
 		saveInputs(function () {
 			Meteor.Router.to('/apply/' + prev);
 		});
 	},
 	'click .fragment-control.next .glyphicon': function(e, t) {
 		e.preventDefault();
-		var current = Session.get('currentSection'),
-			currentSection = getSectionByName(current, t.sections),
-			next = t.sections[currentSection.index].slug;
+		var current = Session.get('current'),
+			currentSection = Session.get('currentSection'),
+			next = getSectionByIndex(currentSection.index + 1, t.sections).slug;
 
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
@@ -80,7 +87,7 @@ Template.apply.events = {
 	'click .pagination li': function(e) {
 		e.preventDefault();
 		// `this` is the context of of these li's
-		var current = Session.get('currentSection'),
+		var current = Session.get('current'),
 			to = this.slug;
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
@@ -93,7 +100,7 @@ Template.apply.events = {
 	},
 	'click #app-save': function(e) {
 		e.preventDefault();
-		var current = Session.get('currentSection');
+		var current = Session.get('current');
 
 		if (!$('#' + current).valid()) {
 			return;
@@ -140,6 +147,10 @@ Template.apply.events = {
 
 Template.apply.fragments = function() {
 	return getInfo('apply-sections');
+}
+
+Template.apply.current = function() {
+	return Session.get('current');
 }
 
 Template.apply.currentSection = function() {

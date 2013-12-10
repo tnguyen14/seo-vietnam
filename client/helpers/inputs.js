@@ -40,7 +40,7 @@ collectInputs = function(ctx) {
 // use jQuery Deferred success and failure callback styles
 saveInputs = function (doneCb, failCb) {
 	// save personal information to the user collection
-	var current = Session.get('currentSection'),
+	var current = Session.get('current'),
 		$ctx = $('#' + current),
 		inputGroups = [],
 		docId = (current === 'personal-info') ? Meteor.userId() : currentApp()._id,
@@ -77,6 +77,5 @@ saveInputs = function (doneCb, failCb) {
 	}).fail(function(err) {
 		if (failCb) failCb(err);
 	});
-
 
 }
