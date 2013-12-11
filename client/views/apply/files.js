@@ -30,16 +30,19 @@ Template.files.uploads = function(){
 		{
 			label: 'cover letter',
 			field: 'cover-letter',
+			optional: true,
 			file: files['cover-letter']
 		},
 		{
 			label: 'transcript',
 			field: 'transcript',
+			optional: true,
 			file: files['transcript']
 		},
 		{
 			label: 'writing sample',
 			field: 'writing-sample',
+			optional: true,
 			file: files['writing-sample']
 		}
 	];
