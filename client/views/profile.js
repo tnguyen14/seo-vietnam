@@ -60,7 +60,7 @@ Template.profile.helpers({
 	getLanguage: function (language, level) {
 		var html = '<span class="list-group">';
 		_.each(language, function(fluency, lang) {
-			if (_.contains(fluency, level)) {
+			if (level === fluency) {
 				html += '<span class="list-item">' + _getName('language', lang) + '</span>';
 			}
 		});
