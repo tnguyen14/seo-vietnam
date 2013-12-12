@@ -57,7 +57,7 @@ Handlebars.registerHelper('isEmpty', function(thing, options) {
 });
 
 // Google Analytics
-Template.main.created = function () {
+
 	if (process.env.APP_ENV && process.env.APP_ENV === 'production') {
 
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -69,4 +69,3 @@ Template.main.created = function () {
 		ga('send', 'pageview');
 
 	}
-}
