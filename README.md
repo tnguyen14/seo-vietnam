@@ -25,10 +25,13 @@ Information about the project, including scope, timeline, and structure are docu
 Currently, for each application, the required information are:
 
 - college
+- graduation-date
 - major
-- essay-community
-- essay-leadership
-- essay-passion
+- essay.one
+- essay.two
+- essay.three
+- essay.four
+- files.resume
 
 ## Development
 ### File upload
