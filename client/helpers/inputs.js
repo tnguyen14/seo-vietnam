@@ -26,12 +26,17 @@ collectInputs = function(ctx) {
 	});
 
 	// checkboxes are saved as array of values
-	$('input[type="checkbox"]:checked', ctx).each(function(){
+	$('input[type="checkbox"]', ctx).each(function(){
 		var name = $(this).attr('name'),
+			value;
+		if (this.checked) {
 			value = $(this).val();
-		value = html_entity_encode(value);
+			value = html_entity_encode(value);
+		}
 		field[name] = field[name] || [];
-		field[name].push(value);
+		if (value) {
+			field[name].push(value);
+		}
 	});
 	return field;
 };
