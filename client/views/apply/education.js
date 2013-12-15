@@ -1,10 +1,11 @@
 Template.education.rendered = function() {
 	var currentYear = new Date().getFullYear(),
+		minYear = currentYear - 2,
 		maxYear = currentYear + 8;
 	$("#education").validate({
 		rules: {
 			'graduation-date': {
-				range: [currentYear, maxYear]
+				range: [minYear, maxYear]
 			}
 		},
 		messages: {
