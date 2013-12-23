@@ -1,5 +1,3 @@
-Meteor.subscribe('applications');
-
 Template.login.rendered = function() {
 	if (Meteor.user()) {
 		Meteor.Router.to('/apply');

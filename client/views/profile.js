@@ -1,4 +1,4 @@
-Meteor.subscribe('applications');
+Meteor.subscribe('app');
 Meteor.subscribe('information');
 
 var _getName = function (category, value) {
