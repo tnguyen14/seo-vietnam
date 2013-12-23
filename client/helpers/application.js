@@ -75,7 +75,13 @@ appReady = function(){
 	});
 
 	if (empty.length > 0) {
-		notify({message: 'Application is not complete'});
+		// build the list of missing fields to notify
+		var message = 'Missing fields: <ul>';
+		_.each(empty, function(field) {
+			message += '<li>' + field.name + '</li>';
+		});
+		message += '</ul>';
+		notify({message: message});
 		return false;
 	} else {
 		return true;

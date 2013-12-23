@@ -131,7 +131,7 @@ Template.apply.events = {
 			}
 		} else {
 			notify({
-				message: 'Your application is incomplete.',
+				message: 'Your application is incomplete. Please filled in the missing fields and try again.',
 				auto: true
 			});
 		}

@@ -1,12 +1,14 @@
 // In-app notifications
 // valid context: success, info, warning, danger
+// @param timeout - the duration for message to appear if auto dismissed is selected
 notify = function(options) {
 	// default options
 	var defaultOptions = {
 		message: 'Something went wrong.',
 		context: 'warning',
 		dismissable: true,
-		auto: false
+		auto: false,
+		timeout: 5000
 	}
 	var contexts = [
 		'success',
@@ -36,7 +38,7 @@ notify = function(options) {
 			$notification.fadeOut(1000, function(){
 				$(this).remove();
 			});
-		}, 3000);
+		}, options.timeout);
 		return;
 	} else {
 		return $notification;
