@@ -4,7 +4,8 @@
     "basePackages": {
       "momentjs": {},
       "router": {},
-      "npm": {}
+      "npm": {},
+      "iron-router": {}
     },
     "packages": {
       "momentjs": {
@@ -19,8 +20,13 @@
       },
       "npm": {
         "git": "https://github.com/arunoda/meteor-npm.git",
-        "tag": "v0.2.3",
-        "commit": "b73430ad90d74295d25c4d64439c71869d305b29"
+        "tag": "v0.2.6",
+        "commit": "177ab6118de5bf8cffb19481343d5762ff7a2aaf"
+      },
+      "iron-router": {
+        "git": "https://github.com/EventedMind/iron-router.git",
+        "tag": "v0.6.1",
+        "commit": "4e1ee0581d68bff422a915dacb0bd30eae10fe08"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

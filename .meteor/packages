@@ -10,7 +10,7 @@ standard-app-packages
 bower-dependencies
 momentjs
 page-js-ie-support
-router
 accounts-password
 accounts-ui-unstyled
 npm
+iron-router
