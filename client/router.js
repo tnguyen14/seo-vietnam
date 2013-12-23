@@ -1,30 +1,45 @@
-apply = function(section, part) {
-	if (!section) {
-		section = 'personal-info';
+ApplyController = RouteController.extend({
+	before: function() {
+		var section = this.params.section || 'personal-info';
+		Session.set('current', section);
+		this.render(section, {to: 'section'});
 	}
-	Session.set('current', section);
-	return 'apply';
-};
-
-Meteor.Router.add({
-	'/': 'login',
-	'/login': 'login',
-	'/apply': apply,
-	'/apply/:section': apply,
-	'/completed': 'completed',
-	'/profile': 'profile'
 });
 
-Meteor.Router.filters({
-	'checkLoggedIn': function(page) {
-		if (Meteor.loggingIn()) {
-			return 'loading';
-		} else if (Meteor.user()) {
-			return page;
-		} else {
-			return 'login';
+var filters = {
+	isLoggedIn: function() {
+		if (!(Meteor.loggingIn() || Meteor.user())) {
+			this.render('login');
+			this.stop();
 		}
 	}
+}
+
+Router.configure({
+	layoutTemplate: 'layout'
 });
 
-Meteor.Router.filter('checkLoggedIn', {except: 'login'});
+Router.map(function(){
+	this.route('login', {
+		path: '/'
+	});
+
+	this.route('login', {
+		path: '/login'
+	});
+
+	this.route('apply', {
+		path: '/apply/:section?',
+		controller: ApplyController
+	});
+
+	this.route('completed', {
+		path: '/completed'
+	});
+
+	this.route('/profile', {
+		path: '/profile'
+	})
+});
+
+Router.before(filters.isLoggedIn, {except: 'login'});
