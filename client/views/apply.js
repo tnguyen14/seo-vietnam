@@ -104,10 +104,14 @@ Template.apply.events = {
 		}
 
 		saveInputs(function () {
-			notify('The application is saved successfully.', 'success', true, true);
+			notify({
+				message: 'The application is saved successfully.',
+				context: 'success',
+				auto: true
+			});
 		}, function(err) {
 			console.log(err);
-			notify('Failed to save your application.', 'warning', true);
+			notify({message: 'Failed to save your application.'});
 		});
 	},
 	'click #app-submit': function(e) {
@@ -126,7 +130,10 @@ Template.apply.events = {
 				Meteor.Router.to('/profile');
 			}
 		} else {
-			notify('Your application is incomplete.', 'warning', true, true);
+			notify({
+				message: 'Your application is incomplete.',
+				auto: true
+			});
 		}
 	},
 	'click #view-profile': function(e) {

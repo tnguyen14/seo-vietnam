@@ -12,7 +12,7 @@ newApplication = function (cb) {
 			cb(appId);
 		});
 	} catch(e) {
-		notify(e.message, 'warning', true);
+		notify({message: e.message});
 	}
 }
 
@@ -20,7 +20,10 @@ currentApp = function() {
 	var userId = Meteor.userId(),
 		count = Applications.find({user: userId}).count();
 	if (count === 0) {
-		notify('No application found for this user.', 'warning', true, true);
+		notify({
+			message: 'No application found for this user.',
+			auto: true
+		});
 	}
 	return Applications.find({user:userId}).fetch()[0];
 }
@@ -72,7 +75,7 @@ appReady = function(){
 	});
 
 	if (empty.length > 0) {
-		notify('Application is not complete', 'warning', true);
+		notify({message: 'Application is not complete'});
 		return false;
 	} else {
 		return true;
