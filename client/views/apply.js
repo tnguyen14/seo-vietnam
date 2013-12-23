@@ -52,11 +52,6 @@ Template.apply.rendered = function() {
 		$(".fragment-control.next").addClass('hidden');
 		// show submit button
 		$submitButton.removeClass('hidden');
-		if (appReady()) {
-			$submitButton.removeClass('disabled');
-		} else {
-			$submitButton.addClass('disabled');
-		}
 	}
 };
 

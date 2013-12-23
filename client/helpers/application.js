@@ -28,21 +28,38 @@ currentApp = function() {
 // Check whether application is ready for submit
 appReady = function(){
 	var required = [
-			'college',
-			'graduation-date',
-			'major',
-			'essay.one',
-			'essay.two',
-			'essay.three',
-			'essay.four',
-			'files.resume'
+			{
+				'slug': 'college',
+				'name': 'College'
+			}, {
+				'slug': 'graduation-date',
+				'name': 'Graduation Date'
+			}, {
+				'slug': 'major',
+				'name': 'Major'
+			}, {
+				'slug': 'essay.one',
+				'name': 'Essay One'
+			}, {
+				'slug': 'essay.two',
+				'name': 'Essay Two'
+			}, {
+				'slug': 'essay.three',
+				'name': 'Essay Three'
+			}, {
+				'slug': 'essay.four',
+				'name': 'Essay Four'
+			}, {
+				'slug': 'files.resume',
+				'name': 'Resume'
+			}
 		],
 		app = currentApp(),
 		empty = [];
 	_.each(required, function(field){
 		// parse the dot notation
 		var value = app,
-			path = field.split('.');
+			path = field.slug.split('.');
 		while (path.length !== 0) {
 			if (!value) {
 				break;
@@ -54,8 +71,8 @@ appReady = function(){
 		}
 	});
 
-	if (empty.length) {
-		console.log(empty);
+	if (empty.length > 0) {
+		notify('Application is not complete', 'warning', true);
 		return false;
 	} else {
 		return true;
