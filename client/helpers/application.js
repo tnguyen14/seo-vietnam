@@ -33,28 +33,36 @@ appReady = function(){
 	var required = [
 			{
 				'slug': 'college',
-				'name': 'College'
+				'name': 'College',
+				'url': '/apply/education'
 			}, {
 				'slug': 'graduation-date',
-				'name': 'Graduation Date'
+				'name': 'Graduation Date',
+				'url': '/apply/education'
 			}, {
 				'slug': 'major',
-				'name': 'Major'
+				'name': 'Major',
+				'url': '/apply/education'
 			}, {
 				'slug': 'essay.one',
-				'name': 'Essay One'
+				'name': 'Essay One',
+				'url': '/apply/essay-one'
 			}, {
 				'slug': 'essay.two',
-				'name': 'Essay Two'
+				'name': 'Essay Two',
+				'url': '/apply/essay-two'
 			}, {
 				'slug': 'essay.three',
-				'name': 'Essay Three'
+				'name': 'Essay Three',
+				'url': '/apply/essay-three'
 			}, {
 				'slug': 'essay.four',
-				'name': 'Essay Four'
+				'name': 'Essay Four',
+				'url': '/apply/essay-four'
 			}, {
 				'slug': 'files.resume',
-				'name': 'Resume'
+				'name': 'Resume',
+				'url': '/apply/files'
 			}
 		],
 		app = currentApp(),
@@ -78,7 +86,7 @@ appReady = function(){
 		// build the list of missing fields to notify
 		var message = 'Missing fields: <ul>';
 		_.each(empty, function(field) {
-			message += '<li>' + field.name + '</li>';
+			message += '<li><a href="' + field.url + '">' + field.name + '</a></li>';
 		});
 		message += '</ul>';
 		notify({message: message});
