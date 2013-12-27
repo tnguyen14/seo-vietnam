@@ -6,18 +6,20 @@ Meteor.startup(function(){
 				$elemMatch: { address: superAdminEmail }
 			}
 		});
-	var newRoles = [];
-	if (!_.contains(user.roles, 'admin')) {
-		newRoles.push('admin');
-	}
-	if (!_.contains(user.roles, 'super-admin')) {
-		newRoles.push('super-admin');
-	}
-	if (newRoles.length > 0) {
-		Meteor.users.update({_id: user._id}, {
-			$pushAll: {
-				roles: newRoles
-			}
-		});
+	if (user) {
+		var newRoles = [];
+		if (!_.contains(user.roles, 'admin')) {
+			newRoles.push('admin');
+		}
+		if (!_.contains(user.roles, 'super-admin')) {
+			newRoles.push('super-admin');
+		}
+		if (newRoles.length > 0) {
+			Meteor.users.update({_id: user._id}, {
+				$pushAll: {
+					roles: newRoles
+				}
+			});
+		}
 	}
 });
