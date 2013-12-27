@@ -5,7 +5,7 @@ Template.logout.events = {
 			if (err) {
 				console.log(err);
 			} else {
-				Meteor.Router.to('/');
+				Router.go('/');
 			}
 		});
 	}

@@ -66,7 +66,7 @@ Template.apply.events = {
 			currentSection = Session.get('currentSection'),
 			prev = getSectionByIndex(currentSection.index - 1, t.sections).slug;
 		saveInputs(function () {
-			Meteor.Router.to('/apply/' + prev);
+			Router.go('apply', {section: prev});
 		});
 	},
 	'click .fragment-control.next .glyphicon': function(e, t) {
@@ -80,7 +80,7 @@ Template.apply.events = {
 			return;
 		}
 		saveInputs(function () {
-			Meteor.Router.to('/apply/' + next);
+			Router.go('apply', {section: next});
 		});
 
 	},
@@ -95,7 +95,7 @@ Template.apply.events = {
 		}
 
 		saveInputs(function () {
-			Meteor.Router.to('/apply/' + to);
+			Router.go('apply', {section: to});
 		});
 	},
 	'click #app-save': function(e) {
@@ -123,10 +123,10 @@ Template.apply.events = {
 					status: 'completed',
 					completedAt: new Date()
 				}}, function() {
-					Meteor.Router.to('/completed');
+					Router.go('completed');
 				});
 			} else {
-				Meteor.Router.to('/profile');
+				Router.go('profile');
 			}
 		} else {
 			notify('Your application is incomplete.', 'warning', true, true);
@@ -134,7 +134,7 @@ Template.apply.events = {
 	},
 	'click #view-profile': function(e) {
 		e.preventDefault();
-		Meteor.Router.to('/profile');
+		Router.go('profile');
 	},
 	// add own content
 	'click .add-own-content .add': function(e) {
@@ -155,8 +155,4 @@ Template.apply.current = function() {
 
 Template.apply.currentSection = function() {
 	return Session.get('currentSection');
-}
-
-Template.apply.app = function() {
-	return currentApp();
 }

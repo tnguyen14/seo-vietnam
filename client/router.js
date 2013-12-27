@@ -1,8 +1,22 @@
 ApplyController = RouteController.extend({
+	waitOn: function() {
+		Meteor.subscribe('applications');
+	},
 	before: function() {
 		var section = this.params.section || 'personal-info';
 		Session.set('current', section);
-		this.render(section, {to: 'section'});
+	},
+	action: function() {
+		var section = Session.get('current');
+		this.render();
+		this.render(section, {
+			to: 'section'
+		});
+	},
+	data: function() {
+		return {
+			app: Applications.findOne({user: Meteor.userId()})
+		}
 	}
 });
 

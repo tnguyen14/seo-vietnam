@@ -2,7 +2,7 @@ Meteor.subscribe('applications');
 
 Template.login.rendered = function() {
 	if (Meteor.user()) {
-		Meteor.Router.to('/apply');
+		Router.go('apply');
 	}
 
 	$("#login").validate({
@@ -46,7 +46,7 @@ Template.login.events = {
 				return ;
 			}
 			newApplication(function(){
-				Meteor.Router.to('/apply')
+				Router.go('apply')
 			});
 		});
 	},
@@ -65,9 +65,9 @@ Template.login.events = {
 				return ;
 			}
 			if (currentApp().status === 'completed') {
-				Meteor.Router.to('/profile');
+				Router.go('profile');
 			} else {
-				Meteor.Router.to('/apply');
+				Router.go('apply');
 			}
 		});
 	}
