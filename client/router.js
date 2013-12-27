@@ -23,6 +23,16 @@ var filters = {
 			this.render('login');
 			this.stop();
 		}
+	},
+	isAdmin: function() {
+		if (Meteor.loggingIn()) {
+			this.render('admin-loading');
+			this.stop();
+		}
+		if (!Meteor.loggingIn() && !isAdmin()) {
+			this.render('oops');
+			this.stop();
+		}
 	}
 }
 
@@ -55,6 +65,12 @@ Router.map(function(){
 
 	this.route('profile', {
 		path: '/profile',
+	});
+
+	this.route('admin', {
+		path: '/admin',
+		before: filters.isAdmin,
+		controller: AdminController
 	})
 });
 
