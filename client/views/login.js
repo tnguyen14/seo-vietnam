@@ -1,5 +1,3 @@
-Meteor.subscribe('applications');
-
 Template.login.rendered = function() {
 	if (Meteor.user()) {
 		Router.go('apply');
@@ -42,7 +40,7 @@ Template.login.events = {
 			}
 		}, function(err) {
 			if (err) {
-				notify(err.reason, 'warning', true);
+				notify({message: err.reason});
 				return ;
 			}
 			newApplication(function(){
@@ -61,7 +59,7 @@ Template.login.events = {
 		Meteor.loginWithPassword(email, password, function(err) {
 			clearNotifications();
 			if (err) {
-				notify(err.reason, 'warning', true);
+				notify({message: err.reason});
 				return ;
 			}
 			if (currentApp().status === 'completed') {

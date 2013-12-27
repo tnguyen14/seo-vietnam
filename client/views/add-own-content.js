@@ -25,7 +25,10 @@ Template['add-own-content'].events = {
 				if (added) {
 					$input.val('');
 					clearNotifications('danger');
-					notify('Successfully added your option.', 'success', true);
+					notify({
+						message: 'Successfully added your option.',
+						context: 'success'
+					});
 				}
 			}
 		});

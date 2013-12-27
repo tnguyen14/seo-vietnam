@@ -19,7 +19,7 @@ readFile = function(file, field) {
 
 	// @TODO check for file types again here
 	if (file.size > maxSize) {
-		notify('Your file size must be 4MB or less.', 'warning', true);
+		notify({message: 'Your file size must be 4MB or less.'});
 		return;
 	}
 

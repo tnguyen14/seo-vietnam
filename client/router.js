@@ -1,6 +1,6 @@
 ApplyController = RouteController.extend({
 	waitOn: function() {
-		Meteor.subscribe('applications');
+		Meteor.subscribe('app');
 	},
 	before: function() {
 		var section = this.params.section || 'personal-info';

@@ -12,7 +12,7 @@ newApplication = function (cb) {
 			cb(appId);
 		});
 	} catch(e) {
-		notify(e.message, 'warning', true);
+		notify({message: e.message});
 	}
 }
 
@@ -20,7 +20,10 @@ currentApp = function() {
 	var userId = Meteor.userId(),
 		count = Applications.find({user: userId}).count();
 	if (count === 0) {
-		notify('No application found for this user.', 'warning', true, true);
+		notify({
+			message: 'No application found for this user.',
+			auto: true
+		});
 	}
 	return Applications.find({user:userId}).fetch()[0];
 }
@@ -28,21 +31,46 @@ currentApp = function() {
 // Check whether application is ready for submit
 appReady = function(){
 	var required = [
-			'college',
-			'graduation-date',
-			'major',
-			'essay.one',
-			'essay.two',
-			'essay.three',
-			'essay.four',
-			'files.resume'
+			{
+				'slug': 'college',
+				'name': 'College',
+				'url': '/apply/education'
+			}, {
+				'slug': 'graduation-date',
+				'name': 'Graduation Date',
+				'url': '/apply/education'
+			}, {
+				'slug': 'major',
+				'name': 'Major',
+				'url': '/apply/education'
+			}, {
+				'slug': 'essay.one',
+				'name': 'Essay One',
+				'url': '/apply/essay-one'
+			}, {
+				'slug': 'essay.two',
+				'name': 'Essay Two',
+				'url': '/apply/essay-two'
+			}, {
+				'slug': 'essay.three',
+				'name': 'Essay Three',
+				'url': '/apply/essay-three'
+			}, {
+				'slug': 'essay.four',
+				'name': 'Essay Four',
+				'url': '/apply/essay-four'
+			}, {
+				'slug': 'files.resume',
+				'name': 'Resume',
+				'url': '/apply/files'
+			}
 		],
 		app = currentApp(),
 		empty = [];
 	_.each(required, function(field){
 		// parse the dot notation
 		var value = app,
-			path = field.split('.');
+			path = field.slug.split('.');
 		while (path.length !== 0) {
 			if (!value) {
 				break;
@@ -54,8 +82,14 @@ appReady = function(){
 		}
 	});
 
-	if (empty.length) {
-		console.log(empty);
+	if (empty.length > 0) {
+		// build the list of missing fields to notify
+		var message = 'Missing fields: <ul>';
+		_.each(empty, function(field) {
+			message += '<li><a href="' + field.url + '">' + field.name + '</a></li>';
+		});
+		message += '</ul>';
+		notify({message: message});
 		return false;
 	} else {
 		return true;

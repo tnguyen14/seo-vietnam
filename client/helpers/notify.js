@@ -1,28 +1,44 @@
 // In-app notifications
 // valid context: success, info, warning, danger
-notify = function(message, context, dismissable, auto) {
-	if (!message) {
-		return ;
+// @param timeout - the duration for message to appear if auto dismissed is selected
+notify = function(options) {
+	// default options
+	var defaultOptions = {
+		message: 'Something went wrong.',
+		context: 'warning',
+		dismissable: true,
+		auto: false,
+		timeout: 5000
+	}
+	var contexts = [
+		'success',
+		'info',
+		'warning',
+		'danger'
+	]
+	if (_.isObject(options)) {
+		options = _.extend(defaultOptions, options);
 	}
 	var html = '<div class="alert ';
-	if (_.contains(['success', 'info', 'warning', 'danger'], context)) {
-		html += 'alert-' + context;
+	if (_.contains(contexts, options.context)) {
+		html += 'alert-' + options.context;
 	}
 	html += '"">';
 
-	if (dismissable) {
+	if (options.dismissable) {
 		html += '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
 	}
 
-	html += message + '</div>';
+	// the main message
+	html += options.message + '</div>';
 
 	var $notification = $(html).appendTo('.notifications');
-	if (auto) {
+	if (options.auto) {
 		setTimeout(function() {
 			$notification.fadeOut(1000, function(){
 				$(this).remove();
 			});
-		}, 3000);
+		}, options.timeout);
 		return;
 	} else {
 		return $notification;

@@ -1,3 +1,5 @@
+Meteor.subscribe('app');
+
 var getSectionByName = function (name, sections) {
 	return _.find(sections, function (el) {
 		return name === el.name;
@@ -50,11 +52,6 @@ Template.apply.rendered = function() {
 		$(".fragment-control.next").addClass('hidden');
 		// show submit button
 		$submitButton.removeClass('hidden');
-		if (appReady()) {
-			$submitButton.removeClass('disabled');
-		} else {
-			$submitButton.addClass('disabled');
-		}
 	}
 };
 
@@ -107,10 +104,14 @@ Template.apply.events = {
 		}
 
 		saveInputs(function () {
-			notify('The application is saved successfully.', 'success', true, true);
+			notify({
+				message: 'The application is saved successfully.',
+				context: 'success',
+				auto: true
+			});
 		}, function(err) {
 			console.log(err);
-			notify('Failed to save your application.', 'warning', true);
+			notify({message: 'Failed to save your application.'});
 		});
 	},
 	'click #app-submit': function(e) {
@@ -129,7 +130,10 @@ Template.apply.events = {
 				Router.go('profile');
 			}
 		} else {
-			notify('Your application is incomplete.', 'warning', true, true);
+			notify({
+				message: 'Your application is incomplete. Please filled in the missing fields and try again.',
+				auto: true
+			});
 		}
 	},
 	'click #view-profile': function(e) {

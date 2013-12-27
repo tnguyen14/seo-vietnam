@@ -1,6 +1,3 @@
-Meteor.subscribe('information');
-Meteor.subscribe('applications');
-
 Template.qualifications.rendered = function() {
 	$("#qualifications").validate({
 		rules: {
