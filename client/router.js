@@ -25,6 +25,7 @@ var filters = {
 		}
 	},
 	isAdmin: function() {
+		// wait for user logged in before proceed
 		if (Meteor.loggingIn()) {
 			this.render('admin-loading');
 			this.stop();
