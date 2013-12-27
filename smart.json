@@ -2,6 +2,7 @@
   "packages": {
     "momentjs": {},
     "npm": {},
+    "page-js-ie-support": {},
     "iron-router": {}
   }
 }
