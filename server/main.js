@@ -7,10 +7,10 @@ Meteor.startup(function(){
 			}
 		});
 	var newRoles = [];
-	if (_.contains(user.roles, 'admin')) {
+	if (!_.contains(user.roles, 'admin')) {
 		newRoles.push('admin');
 	}
-	if (_.contains(user.roles, 'super-admin')) {
+	if (!_.contains(user.roles, 'super-admin')) {
 		newRoles.push('super-admin');
 	}
 	if (newRoles.length > 0) {
