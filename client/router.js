@@ -1,7 +1,4 @@
 ApplyController = RouteController.extend({
-	waitOn: function() {
-		Meteor.subscribe('app');
-	},
 	before: function() {
 		var section = this.params.section || 'personal-info';
 		Session.set('current', section);
@@ -30,16 +27,21 @@ var filters = {
 }
 
 Router.configure({
-	layoutTemplate: 'layout'
+	layoutTemplate: 'layout',
+	waitOn: function() {
+		return Meteor.subscribe('app')
+	}
 });
 
 Router.map(function(){
 	this.route('login', {
-		path: '/'
+		path: '/',
+		waitOn: null
 	});
 
 	this.route('login', {
-		path: '/login'
+		path: '/login',
+		waitOn: null
 	});
 
 	this.route('apply', {
@@ -51,8 +53,8 @@ Router.map(function(){
 		path: '/completed'
 	});
 
-	this.route('/profile', {
-		path: '/profile'
+	this.route('profile', {
+		path: '/profile',
 	})
 });
 

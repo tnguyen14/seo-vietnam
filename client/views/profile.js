@@ -79,7 +79,7 @@ Template.profile.rendered = function () {
 Template.profile.events = {
 	'click .edit-app': function(e) {
 		e.preventDefault();
-		Meteor.Router.to('/apply');
+		Router.go('/apply');
 	}
 }
 
