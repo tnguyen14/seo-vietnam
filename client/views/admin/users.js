@@ -14,3 +14,8 @@ AdminUsersController = RouteController.extend({
 		};
 	}
 });
+
+Template['admin-users'].rendered = function() {
+	var $table = $('#admin-users .admin-list-users');
+	$table.dataTable();
+}

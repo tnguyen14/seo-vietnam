@@ -13,6 +13,7 @@ AdminAppsController = RouteController.extend({
 			var user = Meteor.users.findOne(a.user);
 			if (user) {
 				a.profile = user.profile;
+				a.email = user.emails[0].address;
 			}
 		});
 		return {
@@ -20,3 +21,8 @@ AdminAppsController = RouteController.extend({
 		}
 	}
 });
+
+Template['admin-apps'].rendered = function() {
+	var $table = $('#admin-apps .admin-list-apps');
+	$table.dataTable();
+}
