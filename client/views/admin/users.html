@@ -15,7 +15,7 @@
 					<tr>
 						<td>{{profile.name.first}} {{profile.name.last}}</td>
 						<td>{{emails.0.address}}</td>
-						<td>{{createdAt}}</td>
+						<td>{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td>{{roles}}</td>
 					</tr>
 				{{/each}}
