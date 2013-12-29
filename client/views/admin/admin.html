@@ -1,5 +1,9 @@
 <template name="admin">
 	<h1>Hello admin!</h1>
+	{{> admin-stats}}
+</template>
+
+<template name="admin-stats">
 	<div class="stats">
 		<h2>Some basic stats</h2>
 		<div>
@@ -20,4 +24,12 @@
 
 <template name="admin-loading">
 	<h2>Working on it...</h2>
+</template>
+
+<template name="admin-menu">
+	<i class="nav-icon glyphicon glyphicon-th-list"></i>
+	<ul class="nav-menu">
+		<li class="nav-menu-item">Applications</li>
+		<li class="nav-menu-item">Users</li>
+	</ul>
 </template>

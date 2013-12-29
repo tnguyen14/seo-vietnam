@@ -1,9 +1,10 @@
 @import "public/bower_components/bootstrap/less/bootstrap.less";
-@import "mixins.lessimport";
+@import "mixins.less";
 
 // fix glyphicon path
 @icon-font-path: "/bower_components/bootstrap/dist/fonts/";
 
+// Apply
 .btn {
 	.caret {
 		margin-top: 8px;
@@ -314,5 +315,30 @@ input {
 	margin-top: 2em;
 	#app-submit {
 		margin-left: 1em;
+	}
+}
+
+// Admin
+
+.admin-content {
+	width: 70%;
+	float: left;
+}
+.admin-menu {
+	width: 30%;
+	float: right;
+	.nav-icon {
+		float: right;
+		font-size: 2em;
+		background-color: #eee;
+	}
+	.nav-menu {
+		font-size: 1.5em;
+	}
+}
+
+.admin-list-apps {
+	th, td {
+		padding: 0.5em;
 	}
 }
