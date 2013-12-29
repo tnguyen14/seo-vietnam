@@ -1,0 +1,25 @@
+<template name="admin-users">
+	<h2>Users</h2>
+	<form id="admin-users">
+		<table class="admin-list-users">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Date Joined</th>
+					<th>Roles</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each users}}
+					<tr>
+						<td>{{profile.name.first}} {{profile.name.last}}</td>
+						<td>{{emails.0.address}}</td>
+						<td>{{createdAt}}</td>
+						<td>{{roles}}</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</form>
+</template>

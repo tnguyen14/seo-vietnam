@@ -1,4 +1,4 @@
-AdminAppController = RouteController.extend({
+AdminAppsController = RouteController.extend({
 	layoutTemplate: 'admin-layout',
 	template: 'admin-apps',
 	waitOn: function() {

@@ -77,7 +77,13 @@ Router.map(function(){
 	this.route('admin-apps', {
 		path: '/admin/apps',
 		before: filters.isAdmin,
-		controller: AdminAppController
+		controller: AdminAppsController
+	});
+
+	this.route('admin-users', {
+		path: '/admin/users',
+		before: filters.isAdmin,
+		controller: AdminUsersController
 	})
 });
 
