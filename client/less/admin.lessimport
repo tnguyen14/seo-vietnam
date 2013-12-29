@@ -1,9 +1,9 @@
 .admin-content {
-	width: 70%;
+	width: 80%;
 	float: left;
 }
 .admin-menu {
-	width: 30%;
+	width: 20%;
 	float: right;
 	.nav-icon {
 		float: right;
@@ -11,7 +11,10 @@
 		background-color: #eee;
 	}
 	.nav-menu {
-		font-size: 1.5em;
+		font-size: 1.2em;
+		.nav-menu-item {
+			list-style: none;
+		}
 	}
 }
 

@@ -22,6 +22,7 @@ Template['admin-users'].rendered = function() {
 
 AdminUserSingle = RouteController.extend({
 	layoutTemplate: 'admin-layout',
+	template: 'admin-user-single',
 	waitOn: function() {
 		return Meteor.subscribe('userData', this.params._id);
 	},

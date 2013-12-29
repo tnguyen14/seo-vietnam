@@ -27,9 +27,9 @@
 </template>
 
 <template name="admin-menu">
-	<i class="nav-icon glyphicon glyphicon-th-list"></i>
+	<!-- <i class="nav-icon glyphicon glyphicon-th-list"></i> -->
 	<ul class="nav-menu">
-		<li class="nav-menu-item">Applications</li>
-		<li class="nav-menu-item">Users</li>
+		<li class="nav-menu-item"><a href="{{pathFor 'admin-apps'}}">Applications</a></li>
+		<li class="nav-menu-item"><a href="{{pathFor 'admin-users'}}">Users</a></li>
 	</ul>
 </template>

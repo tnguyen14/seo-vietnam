@@ -69,6 +69,7 @@ Router.map(function(){
 	});
 
 	this.route('admin', {
+		layoutTemplate: 'admin-layout',
 		path: '/admin',
 		before: filters.isAdmin,
 		controller: AdminController,
@@ -76,18 +77,21 @@ Router.map(function(){
 
 	this.route('admin-apps', {
 		path: '/admin/apps',
+		layoutTemplate: 'admin-layout',
 		before: filters.isAdmin,
 		controller: AdminAppsController
 	});
 
 	this.route('admin-users', {
 		path: '/admin/users',
+		layoutTemplate: 'admin-layout',
 		before: filters.isAdmin,
 		controller: AdminUsersController
 	});
 
 	this.route('admin-user-single', {
 		path: '/admin/users/:_id',
+		layoutTemplate: 'admin-layout',
 		before: filters.isAdmin,
 		controller: AdminUserSingle
 	});

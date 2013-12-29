@@ -1,5 +1,4 @@
 AdminController = RouteController.extend({
-	layoutTemplate: 'admin-layout',
 	waitOn: function() {
 		return [
 			Meteor.subscribe('allApps'),
