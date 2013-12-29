@@ -13,7 +13,7 @@
 			<tbody>
 				{{#each users}}
 					<tr>
-						<td>{{profile.name.first}} {{profile.name.last}}</td>
+						<td><a href="{{pathFor 'admin-user-single'}}">{{profile.name.first}} {{profile.name.last}}</a></td>
 						<td>{{emails.0.address}}</td>
 						<td>{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td>{{roles}}</td>
@@ -21,5 +21,24 @@
 				{{/each}}
 			</tbody>
 		</table>
+	</form>
+</template>
+
+<template name="admin-user-single">
+	<h2>User - {{user.profile.name.first}} {{user.profile.name.last}}</h2>
+	<form id="admin-edit-user" data-id="{{user._id}}">
+		<div class="field-group">
+			<label for="email">Email</label>
+			<div class="value">{{user.emails.0.address}}</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Roles</label>
+			{{#each roles}}
+				<div class="checkbox">
+					<label><input type="checkbox" name="roles" value="{{this}}" {{roles-check this ../user.roles}}/>{{this}}</label>
+				</div>
+			{{/each}}
+		</div>
+		<button class="btn btn-default btn-lg" id="user-save">Save</button>
 	</form>
 </template>

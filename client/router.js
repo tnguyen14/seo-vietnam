@@ -84,7 +84,13 @@ Router.map(function(){
 		path: '/admin/users',
 		before: filters.isAdmin,
 		controller: AdminUsersController
-	})
+	});
+
+	this.route('admin-user-single', {
+		path: '/admin/users/:_id',
+		before: filters.isAdmin,
+		controller: AdminUserSingle
+	});
 });
 
 Router.before(filters.isLoggedIn, {except: 'login'});
