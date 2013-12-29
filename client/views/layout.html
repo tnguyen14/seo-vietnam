@@ -8,3 +8,17 @@
 		</div>
 	</footer>
 </template>
+
+<template name="admin-layout">
+	<div class="main-container">
+		<div class="admin-menu">
+			{{> admin-menu}}
+		</div><!-- .admin-menu -->
+		<div class="admin-content">
+			{{yield}}
+		</div>
+	</div><!-- .admin-container -->
+	<footer class="main-footer">
+		<div>Admin page</div>
+	</footer>
+</template>

@@ -53,3 +53,8 @@ Handlebars.registerHelper('isEmpty', function(thing, options) {
 		return options.inverse(this);
 	}
 });
+
+Handlebars.registerHelper('date', function(d, f) {
+	var format = (_.isString(f)) ? f : 'ddd, MMM Do YYYY, h:mm a';
+	return moment(d).format(format);
+});

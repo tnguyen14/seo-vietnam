@@ -1,0 +1,33 @@
+<template name="admin-apps">
+	<h2>Applications</h2>
+	<form id="admin-apps">
+		<table class="admin-list-apps">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Status</th>
+					<th>Date created</th>
+					<th>Date submitted</th>
+					<th>Grade 1</th>
+					<th>Grade 2</th>
+					<th>Grade 3</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each apps}}
+					<tr>
+						<td>{{profile.name.first}} {{profile.name.last}}</td>
+						<td>{{email}}</td>
+						<td>{{status}}</td>
+						<td>{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</form>
+</template>

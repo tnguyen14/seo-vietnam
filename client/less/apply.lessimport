@@ -1,0 +1,311 @@
+.btn {
+	.caret {
+		margin-top: 8px;
+	}
+}
+
+@single-column-width: 50em;
+.main-container,
+.main-footer {
+	.clearfix();
+	margin: 1em auto;
+	position: relative;
+	width: 95%;
+	@media (min-width: @single-column-width) {
+		width: 80%;
+	}
+}
+.form-container {
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	z-index: 2;
+}
+.form {
+	.clearfix();
+	position: relative;
+	.fragment {
+		width: 100%;
+	}
+}
+
+.fragment-control {
+	.text-hide();
+	.glyphicon {
+		color: @gray;
+		cursor: pointer;
+		font-size: 4rem;
+		line-height: 3;
+		padding: 0 0.2em;
+		&:hover {
+			color: #000;
+		}
+		@media (min-width: @single-column-width) {
+			padding-top: 1em;
+			padding-bottom: 1em;
+		}
+	}
+	.icon-wrap {
+		position: relative;
+		@media (min-width: @single-column-width) {
+			position: absolute;
+			top: 40%;
+			left: 0;
+		}
+	}
+	&.prev {
+		.icon-wrap {
+			float: left;
+		}
+		.glyphicon {
+			@media (min-width: @single-column-width) {
+				left: -120%;
+			}
+
+		}
+	}
+	&.next {
+		.icon-wrap {
+			float: right;
+			@media (min-width: @single-column-width) {
+				right: 0;
+				left: auto;
+			}
+		}
+		.glyphicon {
+			@media (min-width: @single-column-width) {
+				right: -120%;
+			}
+		}
+	}
+}
+
+input {
+	padding: 0.5em;
+}
+
+.form-group {
+	label {
+		display: block;
+	}
+	.clearfix();
+	.checkbox {
+		margin-top: 0.5em;
+		+ .checkbox {
+			margin-top: 0.5em;
+		}
+		@media (min-width: 30em) {
+			float: left;
+			width: 50%;
+		}
+	}
+
+}
+
+.languages {
+	.radio {
+		margin-top: 0.5em;
+		padding-left: 21px;
+		+ .radio {
+			margin-top: 0.5em;
+		}
+		@media (min-width: 30em) {
+			float: left;
+			width: 50%;
+		}
+		@media (min-width: 45em) {
+			width: 25%;
+		}
+	}
+}
+.qualifications {
+	.sat,
+	.others {
+		@media (min-width: 30em) {
+			float: left;
+			width: 50%;
+		}
+	}
+}
+
+.essay {
+	textarea {
+		height: 15em;
+	}
+	label {
+		margin-bottom: 1em;
+	}
+}
+
+.phone {
+	select {
+		float: left;
+		margin-right: 1em;
+		width: 10%;
+		min-width: 10rem;
+		max-width: 15rem;
+	}
+	input[type='tel'] {
+		width: 60%;
+		min-width: 15rem;
+		max-width: 30rem;
+	}
+	// Other dialing code
+	input[type='text'] {
+		float: left;
+		margin: 0 1em 1em 0;
+		width: 4em;
+	}
+}
+
+//Files
+.file {
+	margin-bottom: 2em;
+	.file-label {
+		text-transform: capitalize;
+	}
+}
+.form-control {
+	margin-bottom: 1em;
+	@media ( min-width: 48.75em) {
+		width: 70%;
+	}
+}
+
+.field-group {
+	margin-bottom: 1em;
+}
+
+.error-label {
+	font-size: 0.9em;
+	font-style: italic;
+	margin-left: 1em;
+	.text-danger();
+}
+.success-label {
+	.text-success();
+}
+
+.add-field {
+	font-weight: 700;
+	font-size: 1.2em;
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.add-own-content {
+	margin-bottom: 2em;
+}
+
+.profile {
+	.title {
+		margin-bottom: 1em;
+		padding-bottom: 0.5em;
+		border-bottom: 1px solid #000;
+	}
+	.section-title {
+		margin-bottom: 1em;
+	}
+	.actions {
+		.clearfix();
+		@media (min-width: 40em) {
+			float: right;
+		}
+	}
+	.edit-app {
+		float: left;
+		margin-right: 1em;
+	}
+	.logout {
+		float: left;
+	}
+	.field-group {
+		label {
+			width: 8rem;
+		}
+		.value {
+			display: inline-block;
+			padding-left: 10rem;
+		}
+	}
+	.list-group {
+		.list-item {
+			&:after {
+				content: ', ';
+			}
+			&:last-of-type:after {
+				content: '';
+			}
+		}
+	}
+	.essay {
+		label {
+			width: 100%;
+		}
+		.value {
+			display: block;
+			padding: 0;
+			width: 100%;
+		}
+	}
+}
+
+.login {
+	margin: 0 auto 1em;
+	width: 100%;
+	@media (min-width: 37.5em) {
+		width: 50%;
+	}
+	label {
+		display: block;
+		font-size: 1.2em;
+	}
+	.error-label {
+		font-size: 0.9em;
+		font-weight: normal;
+	}
+	input[type="email"],
+	input[type="password"] {
+		width: 100%;
+	}
+	#register-button {
+		float: right;
+		margin-left: 1em;
+	}
+	#signin-button {
+		float: right;
+	}
+}
+.page-header {
+	line-height: 1.4;
+	text-align: center;
+}
+
+.logout {
+	float: right;
+}
+.view-profile {
+	float: right;
+	margin-right: 1em;
+}
+
+.main-footer {
+	margin-top: 3em;
+	border-top: 1px solid #eee;
+}
+.help {
+	margin-top: 1em;
+	p {
+		text-align: center;
+	}
+}
+
+.app-actions {
+	.pull-right();
+	margin-top: 2em;
+	#app-submit {
+		margin-left: 1em;
+	}
+}

@@ -22,4 +22,10 @@ Package.on_use(function(api) {
 		'../../public/bower_components/ladda-bootstrap/dist/spin.min.js',
 		'../../public/bower_components/ladda-bootstrap/dist/ladda.min.js'
 	], 'client');
+	//dataTables
+	api.add_files([
+		'../../public/bower_components/datatables/media/js/jquery.dataTables.js',
+		'../../public/bower_components/datatables/media/css/jquery.dataTables.css',
+
+	], 'client');
 });

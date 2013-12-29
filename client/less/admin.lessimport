@@ -1,0 +1,23 @@
+.admin-content {
+	width: 70%;
+	float: left;
+}
+.admin-menu {
+	width: 30%;
+	float: right;
+	.nav-icon {
+		float: right;
+		font-size: 2em;
+		background-color: #eee;
+	}
+	.nav-menu {
+		font-size: 1.5em;
+	}
+}
+
+.admin-list-apps,
+.admin-list-users {
+	th, td {
+		padding: 0.5em;
+	}
+}
