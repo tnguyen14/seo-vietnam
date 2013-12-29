@@ -6,7 +6,7 @@
     "jquery-simply-countable": "https://github.com/aaronrussell/jquery-simply-countable.git",
     "jquery.validation": "~1.11.1",
     "ladda-bootstrap": "https://github.com/msurguy/ladda-bootstrap.git",
-    "datatables": "~1.9.4"
+    "datatables": "1_10_wip"
   },
   "ignore": [
     "**/.*",
