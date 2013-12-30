@@ -99,11 +99,38 @@ Template['forgot-password'].rendered = function() {
 Template['forgot-password'].events = {
 	"click #forgot-button": function(e) {
 		e.preventDefault();
-		var $form = $('#forgot-password');
+		var $form = $('#forgot-password'),
+			key = 'forgot-password-prev-request',
+			denyMessage = 'Forgot password requests cannot be made within an hour of each other. Please try again later.';
 		if (!$form.valid()) {
 			return;
 		}
-		var email = $form.find(".login-email").val().trim();
+		 var email = $form.find(".login-email").val().trim();
+		// deny request if it has been sent recenty
+		if (Modernizr && Modernizr.localstorage) {
+			var prevReq = localStorage.getItem(key);
+
+			if (prevReq) {
+				prevReq = JSON.parse(prevReq);
+				if (moment().isBefore(prevReq.expires)) {
+					notify({
+						message: denyMessage,
+						context: 'warning',
+						auto: true
+					});
+					return;
+				}
+			}
+		} else {
+			if ($.cookie(key)) {
+				notify({
+					message: denyMessage,
+					context: 'warning',
+					auto: true
+				});
+				return;
+			}
+		}
 		Accounts.forgotPassword({email: email}, function(error) {
 			if (error) {
 				notify({
@@ -117,6 +144,23 @@ Template['forgot-password'].events = {
 					context: 'success',
 					dismissable: true
 				});
+
+				var now = new Date(),
+					time = now.getTime();
+				// wait for an hour
+				time += 3600 * 1000;
+				now.setTime(time);
+
+				if (Modernizr && Modernizr.localstorage) {
+
+					localStorage.setItem(key, JSON.stringify({
+						submitted: true,
+						expires: now
+					}));
+				} else {
+					// use cookie if localstorage is not supported
+					$.cookie(key, true, {expires: now});
+				}
 			}
 		});
 	}
