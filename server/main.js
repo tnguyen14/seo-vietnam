@@ -1,6 +1,6 @@
 Meteor.startup(function(){
 	// set up superadmin
-	var superAdminEmail = process.env.admin_email || Meteor.settings.admin.email,
+	var superAdminEmail = process.env.ADMIN_EMAIL || Meteor.settings.admin.email,
 		user = Meteor.users.findOne({
 			emails: {
 				$elemMatch: { address: superAdminEmail }

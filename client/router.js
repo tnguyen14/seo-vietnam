@@ -55,6 +55,16 @@ Router.map(function(){
 		waitOn: null
 	});
 
+	this.route('forgot-password');
+	this.route('reset-password', {
+		path: '/reset-password/:token',
+		data: function() {
+			return {
+				token: this.params.token
+			}
+		}
+	})
+
 	this.route('apply', {
 		path: '/apply/:section?',
 		controller: ApplyController
@@ -64,9 +74,7 @@ Router.map(function(){
 		path: '/completed'
 	});
 
-	this.route('profile', {
-		path: '/profile',
-	});
+	this.route('profile');
 
 	this.route('admin', {
 		layoutTemplate: 'admin-layout',
@@ -97,4 +105,4 @@ Router.map(function(){
 	});
 });
 
-Router.before(filters.isLoggedIn, {except: 'login'});
+Router.before(filters.isLoggedIn, {except: ['login', 'forgot-password', 'reset-password']});

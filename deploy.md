@@ -14,6 +14,9 @@ Use `heroku config:set KEY=VALUE --remote REMOTE_NAME` to set up environment var
 - `S3_SECRET`
 - `S3_BUCKET`
 - `ROOT_URL` (usually in the form `http://APP_NAME.herokuapp.com`)
+- `ADMIN_EMAIL`
+- `SITE_NAME`
+- `EMAIL_FROM`
 
 **Enable websockets**
 ```sh

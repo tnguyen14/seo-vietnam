@@ -98,15 +98,19 @@
 
 			<h3 class="section-title">Files</h3>
 			<ul>
-			{{#each files}}
-				<li class="field-group">
-					{{#if file.url}}
-						<a href="{{file.url}}">View your uploaded {{label}}.</a>
-					{{else}}
-						You have not uploaded your {{label}}.
-					{{/if}}
-				</li>
-			{{/each}}
+			{{#if files}}
+				{{#each files}}
+					<li class="field-group">
+						{{#if file.url}}
+							<a href="{{file.url}}">View your uploaded {{label}}.</a>
+						{{else}}
+							You have not uploaded your {{label}}.
+						{{/if}}
+					</li>
+				{{/each}}
+			{{else}}
+				You have not uploaded any files yet.
+			{{/if}}
 			</ul>
 			<button class="btn btn-primary edit-app">Edit your application</button>
 		{{/with}}

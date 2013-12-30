@@ -70,3 +70,79 @@ Template.login.events = {
 		});
 	}
 }
+
+Template['forgot-password'].rendered = function() {
+	$('#forgot-password').validate({
+		rules: {
+			email: {
+				email: true,
+				required: true
+			}
+		}
+	});
+}
+
+Template['forgot-password'].events = {
+	"click #forgot-button": function(e) {
+		e.preventDefault();
+		var $form = $('#forgot-password');
+		if (!$form.valid()) {
+			return;
+		}
+		var email = $form.find(".login-email").val().trim();
+		Accounts.forgotPassword({email: email}, function(error) {
+			if (error) {
+				notify({
+					message: error.message,
+					context: 'warning',
+					dismissable: true
+				});
+			} else {
+				notify({
+					message: 'An email has been sent to ' + email,
+					context: 'success',
+					dismissable: true
+				});
+			}
+		});
+	}
+}
+
+Template['reset-password'].rendered = function() {
+	$('#reset-password').validate({
+		rules: {
+			password: {
+				required: true
+			}
+		}
+	});
+}
+
+Template['reset-password'].events = {
+	"click #reset-button": function(e) {
+		e.preventDefault();
+		var $form = $('#reset-password');
+		if (!$form.valid()) {
+			return;
+		}
+		var newPass = $form.find(".login-password").val().trim(),
+			token = $form.data('token');
+		if (token) {
+			Accounts.resetPassword(token, newPass, function(error) {
+				if (error) {
+					console.log(error);
+				} else {
+					notify({
+						message: 'Your password has been reset successfully! Logging you in...',
+						context: 'success',
+						auto: true,
+						timeout: 5000
+					});
+					Meteor.setTimeout(function() {
+						Router.go('apply');
+					}, 5000);
+				}
+			});
+		}
+	}
+}
