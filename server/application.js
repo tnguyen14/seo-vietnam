@@ -8,7 +8,7 @@ var createApp = function (userId) {
 			createdAt: new Date()
 		});
 	} else {
-		throw new Error(400, 'Application already exists for this user');
+		throw new Meteor.Error(400, 'Application already exists for this user');
 	}
 	return appId;
 }
@@ -16,7 +16,7 @@ var createApp = function (userId) {
 var currentApp = function (userId) {
 	var count = Applications.find({user: userId}).count();
 	if (count === 0) {
-		throw new Error(400, 'Application not found');
+		throw new Meteor.Error(400, 'Application not found');
 	}
 	return Applications.find({user: userId}).fetch()[0];
 }

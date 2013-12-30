@@ -40,7 +40,7 @@ var filters = {
 Router.configure({
 	layoutTemplate: 'layout',
 	waitOn: function() {
-		return Meteor.subscribe('app')
+		return Meteor.subscribe('appData')
 	}
 });
 

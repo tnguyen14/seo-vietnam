@@ -8,15 +8,23 @@
 					<th>Email</th>
 					<th>Date Joined</th>
 					<th>Roles</th>
+					<th>App</th>
 				</tr>
 			</thead>
 			<tbody>
 				{{#each users}}
 					<tr>
-						<td><a href="{{pathFor 'admin-user-single'}}">{{profile.name.first}} {{profile.name.last}}</a></td>
-						<td>{{emails.0.address}}</td>
+						<td><a href="{{pathFor 'admin-user-single'}}" title="View User">{{profile.name.first}} {{profile.name.last}}</a></td>
+						<td><a href="{{pathFor 'admin-user-single'}}" title="View User">{{emails.0.address}}</a></td>
 						<td>{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td>{{roles}}</td>
+						<td>
+						{{#if app_id}}
+							<a href="{{pathFor 'admin-app-single'}}">View app</a>
+						{{else}}
+							Not found
+						{{/if}}
+						</td>
 					</tr>
 				{{/each}}
 			</tbody>
@@ -26,6 +34,7 @@
 
 <template name="admin-user-single">
 	<h2>User - {{user.profile.name.first}} {{user.profile.name.last}}</h2>
+	<div class="notifications"></div>
 	<form id="admin-edit-user" data-id="{{user._id}}">
 		<div class="field-group">
 			<label for="email">Email</label>
@@ -39,6 +48,17 @@
 				</div>
 			{{/each}}
 		</div>
+		<div>
+			<label>App</label>
+			{{#if app}}
+				<div><a href="{{pathFor 'admin-app-single'}}">View app</a></div>
+			{{else}}
+				<div>No application found for this user.</div>
+				<button class="btn btn-default" id="create-new-app">Create new app</button>
+			{{/if}}
+		</div>
 		<button class="btn btn-default btn-lg" id="user-save">Save</button>
 	</form>
+
+
 </template>

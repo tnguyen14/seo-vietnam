@@ -1,19 +1,33 @@
 // application stuff
 
-newApplication = function (cb) {
-	var userId = Meteor.userId(),
-		appId;
+newApplication = function (userId, cb) {
+	// if only 1 argument is passed in, and that is a function, use it as callback
+	if (_.isFunction(userId)) {
+		cb = userId;
+	}
+	if (!userId || !_.isString(userId)) {
+		userId = Meteor.userId();
+	}
+	// If still don't know what the userId is at this point, quit!
 	if (!userId) {
 		console.log('User is not logged in');
 		return;
 	}
-	try {
-		Meteor.call('createApp', Meteor.userId(), function() {
-			cb(appId);
-		});
-	} catch(e) {
-		notify({message: e.message});
-	}
+	Meteor.call('createApp', userId, function(err, res) {
+		if (err) {
+			if (cb) {
+				cb(err);
+			} else {
+				console.log(err);
+			}
+		} else {
+			if (cb) {
+				cb(null, res);
+			} else {
+				console.log('successfully created new app ' + res);
+			}
+		}
+	});
 }
 
 currentApp = function() {

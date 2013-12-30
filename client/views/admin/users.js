@@ -9,6 +9,12 @@ AdminUsersController = RouteController.extend({
 	},
 	data: function() {
 		var users = Meteor.users.find().fetch();
+		_.each(users, function(u) {
+			var app = Applications.findOne({user: u._id});
+			if (app) {
+				u.app_id = app._id;
+			}
+		});
 		return {
 			users: users,
 		};
@@ -24,13 +30,17 @@ AdminUserSingle = RouteController.extend({
 	layoutTemplate: 'admin-layout',
 	template: 'admin-user-single',
 	waitOn: function() {
-		return Meteor.subscribe('userData', this.params._id);
+		return [
+			Meteor.subscribe('userData', this.params._id),
+			Meteor.subscribe('appData', this.params._id)
+		];
 	},
 	data: function() {
 		var roles = ['applicant', 'admin', 'grader'];
 		return {
 			user: Meteor.users.findOne(this.params._id),
-			roles: roles
+			roles: roles,
+			app: Applications.findOne({user: this.params._id})
 		};
 	}
 });
@@ -60,5 +70,17 @@ Template['admin-user-single'].events = {
 				});
 			});
 		}
+	},
+	'click #create-new-app': function(e) {
+		e.preventDefault();
+		var userId = $('#admin-edit-user').data('id');
+		console.log(userId);
+		newApplication(userId, function(err, appId) {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('successfully created new app ' + appId);
+			}
+		});
 	}
 }

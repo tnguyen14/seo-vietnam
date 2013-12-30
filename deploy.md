@@ -17,9 +17,14 @@ Use `heroku config:set KEY=VALUE --remote REMOTE_NAME` to set up environment var
 - `ADMIN_EMAIL`
 - `MAIL_URL` (usually in the form `smtp://LOGIN:PASSWORD@smtp.mailgun.org:587` for [Mailgun](http://mailgun.com))
 
-**Enable websockets**
+### Add-ons
+**websockets**
 ```sh
 $ heroku labs:enable websockets -a APP_NAME
+```
+**mailgun**
+```sh
+$ heroku addons:add mailgun --remote REMOTE_NAME
 ```
 
 ### Set up custom domain (optional)

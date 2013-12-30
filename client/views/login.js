@@ -40,12 +40,23 @@ Template.login.events = {
 			}
 		}, function(err) {
 			if (err) {
-				notify({message: err.reason});
-				return ;
+				notify({
+					message: err.reason,
+					context: 'warning'
+				});
+			} else {
+				newApplication(function(err, appId){
+					if (err) {
+						notify({
+							message: err.message,
+							context: 'warning'
+						});
+					} else {
+						console.log('successfully created app: ' + appId);
+						Router.go('apply');
+					}
+				});
 			}
-			newApplication(function(){
-				Router.go('apply')
-			});
 		});
 	},
 	"click #signin-button": function(e) {
@@ -59,7 +70,10 @@ Template.login.events = {
 		Meteor.loginWithPassword(email, password, function(err) {
 			clearNotifications();
 			if (err) {
-				notify({message: err.reason});
+				notify({
+					message: err.reason,
+					context: 'warning'
+				});
 				return ;
 			}
 			if (currentApp().status === 'completed') {

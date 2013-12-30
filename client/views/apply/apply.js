@@ -1,4 +1,4 @@
-Meteor.subscribe('app');
+Meteor.subscribe('appData');
 
 var getSectionByName = function (name, sections) {
 	return _.find(sections, function (el) {
