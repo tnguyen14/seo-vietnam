@@ -28,4 +28,8 @@ Package.on_use(function(api) {
 		'../../public/bower_components/datatables/media/css/jquery.dataTables.css',
 
 	], 'client');
+	// jquery cookie
+	api.add_files([
+		'../../public/bower_components/jquery.cookie/jquery.cookie.js'
+	], 'client');
 });
