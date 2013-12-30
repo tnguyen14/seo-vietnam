@@ -90,6 +90,13 @@ Router.map(function(){
 		controller: AdminAppsController
 	});
 
+	this.route('admin-app-single', {
+		path: '/admin/apps/:_appId',
+		layoutTemplate: 'admin-layout',
+		before: filters.isAdmin,
+		controller: AdminAppSingle
+	});
+
 	this.route('admin-users', {
 		path: '/admin/users',
 		layoutTemplate: 'admin-layout',

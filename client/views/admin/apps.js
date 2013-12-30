@@ -26,3 +26,31 @@ Template['admin-apps'].rendered = function() {
 	var $table = $('#admin-apps .admin-list-apps');
 	$table.dataTable();
 }
+
+AdminAppSingle = RouteController.extend({
+	waitOn: function() {
+		// since params returns appId, there's no way to
+		// look up app from userId
+		// subscribing to all for now
+		return [
+			Meteor.subscribe('allUsers'),
+			Meteor.subscribe('allApps')
+		];
+	},
+	data: function() {
+		var app = Applications.findOne(this.params._appId),
+			user, userId;
+		if (app) {
+			userId = app.user;
+		}
+		if (userId) {
+			user = Meteor.users.findOne(userId);
+		}
+		console.log(user);
+		return {
+			app: app,
+			user: user
+		}
+	}
+
+});

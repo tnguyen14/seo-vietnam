@@ -12,7 +12,7 @@ AdminUsersController = RouteController.extend({
 		_.each(users, function(u) {
 			var app = Applications.findOne({user: u._id});
 			if (app) {
-				u.app_id = app._id;
+				u._appId = app._id;
 			}
 		});
 		return {
