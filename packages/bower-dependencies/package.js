@@ -32,4 +32,9 @@ Package.on_use(function(api) {
 	api.add_files([
 		'../../public/bower_components/jquery.cookie/jquery.cookie.js'
 	], 'client');
+
+	// modernizer
+	api.add_files([
+		'../../public/bower_components/modernizr/modernizr.js'
+	], 'client');
 });
