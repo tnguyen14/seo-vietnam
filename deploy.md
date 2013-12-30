@@ -15,8 +15,7 @@ Use `heroku config:set KEY=VALUE --remote REMOTE_NAME` to set up environment var
 - `S3_BUCKET`
 - `ROOT_URL` (usually in the form `http://APP_NAME.herokuapp.com`)
 - `ADMIN_EMAIL`
-- `SITE_NAME`
-- `EMAIL_FROM`
+- `MAIL_URL` (usually in the form `smtp://LOGIN:PASSWORD@smtp.mailgun.org:587` for [Mailgun](http://mailgun.com))
 
 **Enable websockets**
 ```sh
