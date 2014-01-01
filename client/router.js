@@ -74,7 +74,14 @@ Router.map(function(){
 		path: '/completed'
 	});
 
-	this.route('profile');
+	this.route('profile', {
+		data: function() {
+			return {
+				app: Applications.findOne({user: Meteor.userId()}),
+				user: Meteor.user()
+			}
+		}
+	});
 
 	this.route('admin', {
 		layoutTemplate: 'admin-layout',

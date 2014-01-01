@@ -17,7 +17,7 @@
 			<tbody>
 				{{#each apps}}
 					<tr>
-						<td>{{profile.name.first}} {{profile.name.last}}</td>
+						<td><a href="{{pathFor 'admin-app-single'}}">{{profile.name.first}} {{profile.name.last}}</a></td>
 						<td>{{email}}</td>
 						<td>{{status}}</td>
 						<td>{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
@@ -36,6 +36,5 @@
 	<h2>Application</h2>
 	<label>Status</label>
 	<div>{{app.status}}</div>
-	<label>Name<label>
-	<div>{{user.profile.name.first}} {{user.profile.name.last}}</div>
+	{{> profile}}
 </template>

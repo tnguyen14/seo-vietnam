@@ -15,6 +15,7 @@ AdminAppsController = RouteController.extend({
 				a.profile = user.profile;
 				a.email = user.emails[0].address;
 			}
+			a._appId = a._id;
 		});
 		return {
 			apps: apps
@@ -46,7 +47,6 @@ AdminAppSingle = RouteController.extend({
 		if (userId) {
 			user = Meteor.users.findOne(userId);
 		}
-		console.log(user);
 		return {
 			app: app,
 			user: user

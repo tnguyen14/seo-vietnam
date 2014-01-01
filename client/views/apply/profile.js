@@ -20,13 +20,12 @@ var _getName = function (category, value) {
 
 Template.profile.helpers({
 	displayname: function () {
-		return this.profile.name.first + ' ' + this.profile.name.last;
+		if (this.profile && this.profile.name) {
+			return this.profile.name.first + ' ' + this.profile.name.last;
+		}
 	},
 	email: function () {
 		return this.emails[0].address;
-	},
-	app: function () {
-		return Applications.findOne({user: Meteor.userId()});
 	},
 	getName: _getName,
 	getValue: function (field, category) {
@@ -52,7 +51,9 @@ Template.profile.helpers({
 		return html;
 	},
 	getEssay: function (essays, id) {
-		return nl2br(html_entity_decode(essays[id]));
+		if (essays && essays[id]) {
+			return nl2br(html_entity_decode(essays[id]));
+		}
 	},
 	getLanguage: function (language, level) {
 		var html = '<span class="list-group">';
@@ -63,9 +64,6 @@ Template.profile.helpers({
 		});
 		html += '</span>';
 		return html;
-	},
-	checkFile: function(field) {
-		console.log(this);
 	}
 });
 
