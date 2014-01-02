@@ -57,6 +57,6 @@ Handlebars.registerHelper('isEmpty', function(thing, options) {
 Handlebars.registerHelper('date', function(d, f) {
 	if (d && d !== '') {
 		var format = (_.isString(f)) ? f : 'ddd, MMM Do YYYY, h:mm a';
-		return moment(d).format(format);
+		return moment(d).zone('+0700').format(format);
 	}
 });
