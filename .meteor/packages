@@ -8,7 +8,6 @@ less
 accounts-base
 standard-app-packages
 bower-dependencies
-momentjs
 page-js-ie-support
 accounts-password
 accounts-ui-unstyled

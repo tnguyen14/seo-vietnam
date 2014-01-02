@@ -37,4 +37,9 @@ Package.on_use(function(api) {
 	api.add_files([
 		'../../public/bower_components/modernizr/modernizr.js'
 	], 'client');
+
+	// moment
+	api.add_files([
+		'../../public/bower_components/moment/moment.js'
+	], 'client');
 });
