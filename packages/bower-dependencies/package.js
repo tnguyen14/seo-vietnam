@@ -22,12 +22,6 @@ Package.on_use(function(api) {
 		'../../public/bower_components/ladda-bootstrap/dist/spin.min.js',
 		'../../public/bower_components/ladda-bootstrap/dist/ladda.min.js'
 	], 'client');
-	//dataTables
-	api.add_files([
-		'../../public/bower_components/datatables/media/js/jquery.dataTables.js',
-		'../../public/bower_components/datatables/media/css/jquery.dataTables.css',
-
-	], 'client');
 	// jquery cookie
 	api.add_files([
 		'../../public/bower_components/jquery.cookie/jquery.cookie.js'
@@ -41,5 +35,11 @@ Package.on_use(function(api) {
 	// moment
 	api.add_files([
 		'../../public/bower_components/moment/moment.js'
+	], 'client');
+
+	// listjs
+	api.add_files([
+		'../../public/bower_components/listjs/dist/list.js',
+		'../../public/bower_components/list.pagination.js/dist/list.pagination.js'
 	], 'client');
 });

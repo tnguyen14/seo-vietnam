@@ -1,34 +1,38 @@
 <template name="admin-apps">
 	<h2>Applications</h2>
 	<form id="admin-apps">
-		<table class="admin-list-apps">
+		<table id="admin-list-apps" class="admin-list">
+			<caption>
+				<input class="search" placeholder="Search" />
+			</caption>
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Status</th>
-					<th>Date created</th>
-					<th>Date submitted</th>
-					<th>Grade 1</th>
-					<th>Grade 2</th>
-					<th>Grade 3</th>
+					<th class="name">Name</th>
+					<th class="email">Email</th>
+					<th class="status">Status</th>
+					<th class="date-created">Date created</th>
+					<th class="date-completed">Date submitted</th>
+					<th class="grade1">Grade 1</th>
+					<th class="grade2">Grade 2</th>
+					<th class="grade3">Grade 3</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="list">
 				{{#each apps}}
 					<tr>
-						<td><a href="{{pathFor 'admin-app-single'}}">{{profile.name.first}} {{profile.name.last}}</a></td>
-						<td>{{email}}</td>
-						<td>{{status}}</td>
-						<td>{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
-						<td>{{date completedAt 'MMM Do YYYY,h:mma'}}</td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td class="name"><a href="{{pathFor 'admin-app-single'}}">{{profile.name.first}} {{profile.name.last}}</a></td>
+						<td class="email">{{email}}</td>
+						<td class="status">{{status}}</td>
+						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
+						<td class="date-completed">{{date completedAt 'MMM Do YYYY,h:mma'}}</td>
+						<td class="grade1"></td>
+						<td class="grade2"></td>
+						<td class="grade2"></td>
 					</tr>
 				{{/each}}
 			</tbody>
 		</table>
+		<ul class="pagination"></ul>
 	</form>
 </template>
 

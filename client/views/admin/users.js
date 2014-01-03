@@ -22,8 +22,29 @@ AdminUsersController = RouteController.extend({
 });
 
 Template['admin-users'].rendered = function() {
-	var $table = $('#admin-users .admin-list-users');
-	$table.dataTable();
+	// var $table = $('#admin-users .admin-list-users');
+	// $table.dataTable();
+	var listOptions = {
+		valueNames: [
+			'name',
+			'email',
+			'status',
+			'date-joined',
+			'roles',
+			'app'
+		],
+		page: 20,
+		// indexAsync: true,
+		plugins: [
+			ListPagination({
+				outerWindow: 2
+			})
+		]
+	}
+	var userList = new List('admin-users', listOptions);
+	userList.on('updated', function(){
+		 $('table thead').toggle(userList.matchingItems.length !== 0);
+		});
 }
 
 AdminUserSingle = RouteController.extend({

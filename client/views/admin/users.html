@@ -1,24 +1,27 @@
 <template name="admin-users">
 	<h2>Users</h2>
 	<form id="admin-users">
-		<table class="admin-list-users">
+		<table id="admin-list-users" class="admin-list">
+			<caption>
+				<input class="search" placeholder="Search" />
+			</caption>
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Date Joined</th>
-					<th>Roles</th>
-					<th>App</th>
+					<th class="name">Name</th>
+					<th class="email">Email</th>
+					<th class="date-joined">Date Joined</th>
+					<th class="roles">Roles</th>
+					<th class="app">App</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="list">
 				{{#each users}}
 					<tr>
-						<td><a href="{{pathFor 'admin-user-single'}}" title="View User">{{profile.name.first}} {{profile.name.last}}</a></td>
-						<td><a href="{{pathFor 'admin-user-single'}}" title="View User">{{emails.0.address}}</a></td>
-						<td>{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
-						<td>{{roles}}</td>
-						<td>
+						<td class="name"><a href="{{pathFor 'admin-user-single'}}" title="View User">{{profile.name.first}} {{profile.name.last}}</a></td>
+						<td class="email"><a href="{{pathFor 'admin-user-single'}}" title="View User">{{emails.0.address}}</a></td>
+						<td class="date-joined">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
+						<td class="roles">{{roles}}</td>
+						<td class="app">
 						{{#if _appId}}
 							<a href="{{pathFor 'admin-app-single'}}">View app</a>
 						{{else}}
@@ -29,6 +32,7 @@
 				{{/each}}
 			</tbody>
 		</table>
+		<ul class="pagination"></ul>
 	</form>
 </template>
 

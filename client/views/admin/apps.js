@@ -24,8 +24,28 @@ AdminAppsController = RouteController.extend({
 });
 
 Template['admin-apps'].rendered = function() {
-	var $table = $('#admin-apps .admin-list-apps');
-	$table.dataTable();
+	// var $table = $('#admin-apps .admin-list-apps');
+	// $table.dataTable();
+	var listOptions = {
+		valueNames: [
+			'name',
+			'email',
+			'status',
+			'date-created',
+			'datecompleted',
+			'grade1',
+			'grade2',
+			'grade3'
+		],
+		page: 20,
+		// indexAsync: true,
+		plugins: [
+			ListPagination({
+				outerWindow: 2
+			})
+		]
+	}
+	var appList = new List('admin-apps', listOptions);
 }
 
 AdminAppSingle = RouteController.extend({
