@@ -1,5 +1,5 @@
 .admin-content {
-	width: 80%;
+	// width: 80%;
 	float: left;
 }
 .admin-menu {
@@ -18,9 +18,10 @@
 	}
 }
 
-.admin-list-apps,
-.admin-list-users {
-	th, td {
-		padding: 0.5em;
+.admin-list {
+	thead > tr > th {
+		// remove bold border bottom
+		border-bottom: 0;
 	}
 }
+
