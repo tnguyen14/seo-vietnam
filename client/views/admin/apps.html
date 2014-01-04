@@ -3,18 +3,18 @@
 	<form id="admin-apps">
 		<table id="admin-list-apps" class="table admin-list">
 			<caption>
-				<input class="search" placeholder="Search" />
+				<input type="text" class="search form-control" placeholder="Search {{apps.length}} applications..." autofocus/>
 			</caption>
 			<thead>
 				<tr>
-					<th class="name">Name</th>
-					<th class="email">Email</th>
-					<th class="status">Status</th>
-					<th class="date-created">Date created</th>
-					<th class="date-completed">Date submitted</th>
-					<th class="grade1">Grade 1</th>
-					<th class="grade2">Grade 2</th>
-					<th class="grade3">Grade 3</th>
+					<th class="sort" data-sort="name">Name</th>
+					<th class="sort" data-sort="email">Email</th>
+					<th class="sort" data-sort="status">Status</th>
+					<th class="sort desc" data-sort="date-created">Date created</th>
+					<th class="sort desc" data-sort="date-completed">Date submitted</th>
+					<th class="sort desc" data-sort="grade1">Grade 1</th>
+					<th class="sort desc" data-sort="grade2">Grade 2</th>
+					<th class="sort desc" data-sort="grade3">Grade 3</th>
 				</tr>
 			</thead>
 			<tbody class="list">
@@ -24,7 +24,7 @@
 						<td class="email">{{email}}</td>
 						<td class="status">{{status}}</td>
 						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
-						<td class="date-completed">{{date completedAt 'MMM Do YYYY,h:mma'}}</td>
+						<td class="date-completed">{{date completedAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="grade1"></td>
 						<td class="grade2"></td>
 						<td class="grade2"></td>

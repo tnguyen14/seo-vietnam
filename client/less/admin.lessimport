@@ -23,5 +23,18 @@
 		// remove bold border bottom
 		border-bottom: 0;
 	}
+	th {
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	caption {
+		margin: 1em 0;
+	}
+	.search {
+		border-radius: 15px;
+		width: 40%;
+	}
 }
 

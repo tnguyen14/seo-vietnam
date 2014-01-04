@@ -3,15 +3,15 @@
 	<form id="admin-users">
 		<table id="admin-list-users" class="table admin-list">
 			<caption>
-				<input class="search" placeholder="Search" />
+				<input type="text" class="search form-control" placeholder="Search {{users.length}} users..." autofocus/>
 			</caption>
 			<thead>
 				<tr>
-					<th class="name">Name</th>
-					<th class="email">Email</th>
-					<th class="date-joined">Date Joined</th>
-					<th class="roles">Roles</th>
-					<th class="app">App</th>
+					<th class="sort" data-sort="name">Name</th>
+					<th class="sort" data-sort="email">Email</th>
+					<th class="sort" data-sort="date-joined">Date Joined</th>
+					<th class="sort" data-sort="roles">Roles</th>
+					<th class="sort" data-sort="app">App</th>
 				</tr>
 			</thead>
 			<tbody class="list">
