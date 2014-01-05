@@ -43,8 +43,9 @@ currentApp = function() {
 }
 
 // Check whether application is ready for submit
-appReady = function(){
-	var required = [
+appReady = function(app){
+	var empty = [],
+		required = [
 			{
 				'slug': 'college',
 				'name': 'College',
@@ -78,9 +79,10 @@ appReady = function(){
 				'name': 'Resume',
 				'url': '/apply/files'
 			}
-		],
-		app = currentApp(),
-		empty = [];
+		];
+	if (!app) {
+		app = currentApp();
+	}
 	_.each(required, function(field){
 		// parse the dot notation
 		var value = app,
