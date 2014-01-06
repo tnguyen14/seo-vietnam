@@ -83,7 +83,7 @@ appReady = function(app){
 	if (!app) {
 		app = currentApp();
 	}
-	_.each(required, function(field){
+	Lazy(required).each(function(field){
 		// parse the dot notation
 		var value = app,
 			path = field.slug.split('.');
@@ -93,7 +93,7 @@ appReady = function(app){
 			}
 			value = value[path.shift()];
 		}
-		if (_.isEmpty(value)) {
+		if (Lazy(value).isEmpty()) {
 			empty.push(field);
 		}
 	});
@@ -101,7 +101,7 @@ appReady = function(app){
 	if (empty.length > 0) {
 		// build the list of missing fields to notify
 		var message = 'Missing fields: <ul>';
-		_.each(empty, function(field) {
+		Lazy(empty).each(function(field) {
 			message += '<li><a href="' + field.url + '">' + field.name + '</a></li>';
 		});
 		message += '</ul>';

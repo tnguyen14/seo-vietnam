@@ -42,4 +42,9 @@ Package.on_use(function(api) {
 		'../../public/bower_components/listjs/dist/list.js',
 		'../../public/bower_components/list.pagination.js/dist/list.pagination.js'
 	], 'client');
+
+	// lazy.js
+	api.add_files([
+		'../../public/bower_components/lazy.js/lazy.js'
+	], 'client');
 });

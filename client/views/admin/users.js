@@ -9,7 +9,7 @@ AdminUsersController = RouteController.extend({
 	},
 	data: function() {
 		var users = Meteor.users.find().fetch();
-		_.each(users, function(u) {
+		Lazy(users).each(function(u) {
 			var app = Applications.findOne({user: u._id});
 			if (app) {
 				u._appId = app._id;
@@ -97,7 +97,6 @@ Template['admin-user-single'].events = {
 	'click #create-new-app': function(e) {
 		e.preventDefault();
 		var userId = $('#admin-edit-user').data('id');
-		console.log(userId);
 		newApplication(userId, function(err, appId) {
 			if (err) {
 				console.log(err);

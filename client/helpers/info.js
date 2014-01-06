@@ -7,9 +7,9 @@ getInfo = function (category) {
 		category: category
 	});
 	if (cursor.count() > 0) {
-		return _.filter(cursor.fetch()[0].values, function(doc){
+		return Lazy(cursor.fetch()[0].values).filter(function(doc){
 			return doc['verified'] === true || doc['addedBy'] === Meteor.userId();
-		});
+		}).toArray();
 	} else {
 		// return an empty object
 		return cursor.fetch();

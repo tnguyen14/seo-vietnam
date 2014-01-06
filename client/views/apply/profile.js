@@ -9,8 +9,8 @@ var _getName = function (category, value) {
 	if (count === 0) {
 		return;
 	}
-	var doc = _.find(Information.find({category: category}).fetch()[0].values,
-		function(d){
+	var info = Information.find({category: category}).fetch()[0].values
+		doc = Lazy(info).find(function(d){
 			return d.slug === value;
 		});
 	if (doc) {

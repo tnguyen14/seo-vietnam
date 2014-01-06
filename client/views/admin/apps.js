@@ -9,7 +9,7 @@ AdminAppsController = RouteController.extend({
 	},
 	data: function() {
 		 var apps =  Applications.find().fetch();
-		_.each(apps, function(a) {
+		Lazy(apps).each(function(a) {
 			var user = Meteor.users.findOne(a.user);
 			if (user) {
 				a.profile = user.profile;

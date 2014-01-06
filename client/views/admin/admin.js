@@ -7,16 +7,16 @@ AdminController = RouteController.extend({
 	},
 	data: function() {
 		var totalApps = Applications.find().fetch(),
-			submittedApps = _.filter(totalApps, function(app) {
+			submittedApps = Lazy(totalApps).filter(function(app) {
 				return app.status === 'completed';
 			}),
-			completedApps = _.filter(totalApps, function(app) {
+			completedApps = Lazy(totalApps).filter(function(app) {
 				return appReady(app);
 			});
 		return {
 			totalApps: totalApps.length,
-			submittedApps: submittedApps.length,
-			completedApps: completedApps.length,
+			submittedApps: submittedApps.size(),
+			completedApps: completedApps.size(),
 			numUsers: Meteor.users.find().count()
 		}
 	}
@@ -25,7 +25,7 @@ AdminController = RouteController.extend({
 function appReady(app) {
 	var empty = [],
 		required = ['essay.one', 'essay.two', 'essay.three', 'essay.four', 'files.resume'];
-	_.each(required, function(field){
+	Lazy(required).each(function(field){
 		// parse the dot notation
 		var value = app,
 			path = field.split('.');
@@ -35,7 +35,7 @@ function appReady(app) {
 			}
 			value = value[path.shift()];
 		}
-		if (_.isEmpty(value)) {
+		if (Lazy(value).isEmpty()) {
 			empty.push(field);
 		}
 	});
