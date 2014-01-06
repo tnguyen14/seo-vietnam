@@ -86,6 +86,9 @@ Template.login.events = {
 }
 
 Template['forgot-password'].rendered = function() {
+	if (Meteor.user()) {
+		Router.go('profile');
+	}
 	$('#forgot-password').validate({
 		rules: {
 			email: {
@@ -109,7 +112,6 @@ Template['forgot-password'].events = {
 		// deny request if it has been sent recenty
 		if (Modernizr && Modernizr.localstorage) {
 			var prevReq = localStorage.getItem(key);
-
 			if (prevReq) {
 				prevReq = JSON.parse(prevReq);
 				if (moment().isBefore(prevReq.expires)) {
@@ -152,7 +154,6 @@ Template['forgot-password'].events = {
 				now.setTime(time);
 
 				if (Modernizr && Modernizr.localstorage) {
-
 					localStorage.setItem(key, JSON.stringify({
 						submitted: true,
 						expires: now
@@ -167,6 +168,9 @@ Template['forgot-password'].events = {
 }
 
 Template['reset-password'].rendered = function() {
+	if (Meteor.user()) {
+		Router.go('profile');
+	}
 	$('#reset-password').validate({
 		rules: {
 			password: {
