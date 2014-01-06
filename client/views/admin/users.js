@@ -57,11 +57,13 @@ AdminUserSingle = RouteController.extend({
 		];
 	},
 	data: function() {
-		var roles = ['applicant', 'admin', 'grader'];
+		var roles = ['applicant', 'admin', 'grader'],
+			app = Applications.findOne({user: this.params._id});
+		app._appId = app._id;
 		return {
 			user: Meteor.users.findOne(this.params._id),
 			roles: roles,
-			app: Applications.findOne({user: this.params._id})
+			app: app
 		};
 	}
 });

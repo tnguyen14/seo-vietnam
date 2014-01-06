@@ -55,7 +55,7 @@
 		<div>
 			<label>App</label>
 			{{#if app}}
-				<div><a href="{{#with app}}{{pathFor 'admin-app-single'}}{{/with}}">View app</a></div>
+				<div><a href="{{pathFor 'admin-app-single' app}}">View app</a></div>
 			{{else}}
 				<div>No application found for this user.</div>
 				<button class="btn btn-default" id="create-new-app">Create new app</button>
