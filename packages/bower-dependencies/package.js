@@ -21,7 +21,6 @@ Package.on_use(function(api) {
 
 	// font-awesome
 	api.add_files([
-		'../../public/bower_components/font-awesome/css/font-awesome.css',
 		'../../public/bower_components/font-awesome/fonts/fontawesome-webfont.eot',
 		'../../public/bower_components/font-awesome/fonts/fontawesome-webfont.svg',
 		'../../public/bower_components/font-awesome/fonts/fontawesome-webfont.ttf',
