@@ -37,7 +37,12 @@
 	<div class="nav-menu">
 		<h3>Menu</h3>
 		<ul class="">
-			<li class="nav-menu-item"><a href="{{pathFor 'admin-apps'}}">Applications</a></li>
+			<li class="nav-menu-item"><a href="{{pathFor 'admin-apps'}}">Applications</a>
+				<ul>
+					<li class="sub-nav-menu-item"><a href="{{pathFor 'admin-apps'}}"><i class="fa fa-angle-right"></i>All</a></li>
+					<li class="sub-nav-menu-item"><a href="{{pathFor 'admin-apps-completed'}}"><i class="fa fa-angle-right"></i>Completed</a></li>
+				</ul>
+			</li>
 			<li class="nav-menu-item"><a href="{{pathFor 'admin-users'}}">Users</a></li>
 		</ul>
 	</div>

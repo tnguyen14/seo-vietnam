@@ -87,8 +87,25 @@ Router.map(function(){
 
 	this.route('admin-apps', {
 		path: '/admin/apps',
-		layoutTemplate: 'admin-layout',
 		controller: AdminAppsController
+	});
+	this.route('admin-apps-completed', {
+		path: '/admin/apps/completed',
+		controller: AdminAppsController,
+		data: function() {
+			var apps =  Applications.find({status: 'completed'}).fetch();
+			Lazy(apps).each(function(a) {
+				var user = Meteor.users.findOne(a.user);
+				if (user) {
+					a.profile = user.profile;
+					a.email = user.emails[0].address;
+				}
+				a._appId = a._id;
+			});
+			return {
+				apps: apps
+			}
+		}
 	});
 
 	this.route('admin-app-single', {

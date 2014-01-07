@@ -60,9 +60,19 @@ body, html {
 	.nav-menu-item {
 		list-style: none;
 	}
+	.sub-nav-menu-item {
+		list-style: none;
+		a {
+			font-size: 1em;
+		}
+		i {
+			padding-right: 1rem;
+		}
+	}
 	a {
 		color: @cloud;
 		display: block;
+		font-size: 1.1em;
 		padding: 1.2rem 3rem;
 		border-bottom: 1px solid darken(@blue, 10%);
 		.transition(background 0.3s ease-in-out);
