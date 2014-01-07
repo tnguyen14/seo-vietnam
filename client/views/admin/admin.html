@@ -1,6 +1,9 @@
 <template name="admin">
-	<h1>Hello admin!</h1>
-	{{> admin-stats}}
+	{{> admin-menu}}
+	<div class="admin-content">
+		<h1>Hello admin!</h1>
+		{{> admin-stats}}
+	</div>
 </template>
 
 <template name="admin-stats">
@@ -30,9 +33,12 @@
 </template>
 
 <template name="admin-menu">
-	<i class="nav-icon glyphicon glyphicon-th-list"></i>
-	<ul class="nav-menu">
-		<li class="nav-menu-item"><a href="{{pathFor 'admin-apps'}}">Applications</a></li>
-		<li class="nav-menu-item"><a href="{{pathFor 'admin-users'}}">Users</a></li>
-	</ul>
+	<i class="nav-icon fa fa-bars"></i>
+	<div class="nav-menu">
+		<h3>Menu</h3>
+		<ul class="">
+			<li class="nav-menu-item"><a href="{{pathFor 'admin-apps'}}">Applications</a></li>
+			<li class="nav-menu-item"><a href="{{pathFor 'admin-users'}}">Users</a></li>
+		</ul>
+	</div>
 </template>

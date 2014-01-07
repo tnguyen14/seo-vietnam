@@ -1,6 +1,8 @@
 <template name="admin-apps">
-	<h2>Applications</h2>
-	<form id="admin-apps">
+	{{> admin-menu}}
+	<div class="admin-content">
+		<h2>Applications</h2>
+		<form id="admin-apps">
 		<table id="admin-list-apps" class="table admin-list">
 			<caption>
 				<input type="text" class="search form-control" placeholder="Search {{apps.length}} applications..." autofocus/>
@@ -33,10 +35,12 @@
 			</tbody>
 		</table>
 		<ul class="pagination"></ul>
-	</form>
+		</form>
+	</div>
 </template>
 
 <template name="admin-app-single">
+	{{> admin-menu}}
 	<h2>Application</h2>
 	<label>Status</label>
 	<div>{{app.status}}</div>

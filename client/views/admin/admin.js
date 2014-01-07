@@ -46,3 +46,17 @@ function appReady(app) {
 		return true;
 	}
 }
+
+Template['admin-menu'].events = {
+	'click .nav-icon': function() {
+		if ($('.main-container').hasClass('menu-active')) {
+			$('.overlay').unbind().remove();
+		} else {
+			setTimeout(function(){
+				$('<div class="overlay"></div>').prependTo('.main-container');
+			}, 200);
+		}
+		$('.main-container').toggleClass('menu-active');
+		$('.nav-icon').toggleClass('active');
+	}
+}
