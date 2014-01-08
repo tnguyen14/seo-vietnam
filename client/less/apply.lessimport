@@ -4,18 +4,6 @@
 	}
 }
 
-@single-column-width: 50em;
-.main-container,
-.apply-container .main-footer {
-	.clearfix();
-	margin: 0 auto;
-	position: relative;
-	width: 100%;
-	padding: 0 2.5%;
-	@media (min-width: @single-column-width) {
-		padding: 0 10%;
-	}
-}
 .form-container {
 	margin: 0 auto;
 	overflow: hidden;
