@@ -1,0 +1,35 @@
+// inspired by this pen http://codepen.io/scottybollinger/pen/tLCby
+.loading-text {
+	float: left;
+	margin-top: 0;
+	margin-right: 0.5em;
+}
+.loading {
+	margin: 0 auto;
+	padding-top: 2em;
+	.clearfix();
+}
+.loading-dot {
+	border-radius: 50%;
+	display: inline-block;
+	float: left;
+	width: 8px;
+	height: 8px;
+	margin-right: 4px;
+	margin-top: 1.5em;
+	.lh-animation-name(loading);
+	.lh-animation-duration(1.5s);
+	.lh-animation-iteration-count(infinite);
+	.lh-animation-direction(linear);
+	&:nth-child(1) {
+		.lh-animation-delay(0.25s);
+	}
+	&:nth-child(2) {
+		.lh-animation-delay(0.5s);
+	}
+	&:nth-child(3) {
+		.lh-animation-delay(0.75s);
+	}
+}
+
+.lh-keyframes(~'loading, 0%{opacity:0.3} 50%{opacity:1;background-color:#489ac9;} 100%{opacity: 0.3}');
