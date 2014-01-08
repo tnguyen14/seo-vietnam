@@ -55,7 +55,7 @@ AdminAppSingle = RouteController.extend({
 		// subscribing to all for now
 		return [
 			Meteor.subscribe('allUsers'),
-			Meteor.subscribe('allApps')
+			Meteor.subscribe('appData', this.params._appId)
 		];
 	},
 	data: function() {
