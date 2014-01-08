@@ -1,0 +1,19 @@
+<template name="grade-register">
+	<h2 class="page-header">Register to be a grader</h2>
+	<form class="login" id="grade-register">
+		<div class="form-group">
+			<label for="email">Your email</label>
+			<input type="email" name="email" class="login-email" autofocus="autofocus"/>
+		</div>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" name="password" class="login-password"/>
+		</div>
+		<div class="form-group">
+			<label for="grade-secret">Coke or Pepsi?</label>
+			<input type="text" name="grade_secret" id="grade-secret"/>
+		</div>
+		<div class="notifications"></div>
+		<input type="submit" class="btn btn-primary" id="register-button" value="Register">
+	</form>
+</template>

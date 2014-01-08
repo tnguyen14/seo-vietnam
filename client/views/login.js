@@ -1,6 +1,12 @@
 Template.login.rendered = function() {
 	if (Meteor.user()) {
-		Router.go('apply');
+		if (hasRole('admin')) {
+			Router.go('admin');
+		} else if (hasRole('grader')) {
+			Router.go('grade-temp');
+		} else {
+			Router.go('apply');
+		}
 	}
 
 	$("#login").validate({
@@ -49,7 +55,7 @@ Template.login.events = {
 					if (err) {
 						notify({
 							message: err.message,
-							context: 'warning'
+							context: 'danger'
 						});
 					} else {
 						console.log('successfully created app: ' + appId);

@@ -21,12 +21,26 @@ Accounts.onCreateUser(function (options, user) {
 			user.roles.push(role);
 		})
 	}
-
 	return user;
 });
+
+var checkGraderSecret = function(secret) {
+	var grade_secret = process.env.GRADE_SECRET || Meteor.settings.grade_secret;
+	if (grade_secret === '' || grade_secret === undefined) {
+		throw new Meteor.Error(500, 'Cannot register grader right now. Please try again later.', 'No grade secret set.');
+	}
+	if (secret.toLowerCase() !== grade_secret) {
+		throw new Meteor.Error(401, 'Incorrect secret key.');
+	}
+	return true;
+}
 
 Meteor.users.allow({
 	update: function() {
 		return true;
 	}
+});
+
+Meteor.methods({
+	'checkGraderSecret': checkGraderSecret
 })

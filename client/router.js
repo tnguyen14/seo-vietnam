@@ -29,6 +29,12 @@ var filters = {
 			this.render('oops');
 			this.stop();
 		}
+	},
+	isGrader: function() {
+		if (!(Meteor.loggingIn() || hasRole('grader', Meteor.user()))) {
+			this.render('oops');
+			this.stop();
+		}
 	}
 }
 
@@ -125,7 +131,17 @@ Router.map(function(){
 		layoutTemplate: 'admin-layout',
 		controller: AdminUserSingle
 	});
+
+	// grade
+	this.route('grade-register', {
+		path: '/grade/register',
+		template: 'grade-register'
+	});
+	this.route('grade-temp', {
+		path: 'grade/temp'
+	});
 });
 
-Router.before(filters.isLoggedIn, {except: ['login', 'forgot-password', 'reset-password']});
+Router.before(filters.isLoggedIn, {except: ['login', 'forgot-password', 'reset-password', 'grade-register']});
 Router.before(filters.isAdmin, {only: ['admin', 'admin-apps', 'admin-app-single', 'admin-users', 'admin-user-single']});
+Router.before(filters.isGrader, {only: ['grade-temp']});

@@ -8,7 +8,9 @@ notify = function(options) {
 		context: 'warning',
 		dismissable: true,
 		auto: false,
-		timeout: 5000
+		timeout: 5000,
+		clearPrev: false,
+		clearPrevType: ''
 	}
 	var contexts = [
 		'success',
@@ -31,6 +33,10 @@ notify = function(options) {
 
 	// the main message
 	html += options.message + '</div>';
+
+	if (options.clearPrev) {
+		clearNotifications(options.clearPrevType);
+	}
 
 	var $notification = $(html).appendTo('.notifications');
 	if (options.auto) {
