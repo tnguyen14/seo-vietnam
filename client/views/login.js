@@ -74,18 +74,24 @@ Template.login.events = {
 		var email = $(".login-email", $form).val().trim(),
 			password = $(".login-password", $form).val().trim();
 		Meteor.loginWithPassword(email, password, function(err) {
-			clearNotifications();
 			if (err) {
 				notify({
 					message: err.reason,
-					context: 'warning'
+					context: 'warning',
+					clearPrev: true
 				});
 				return ;
 			}
-			if (currentApp().status === 'completed') {
-				Router.go('profile');
+			if (hasRole('admin')) {
+				Router.go('admin');
+			} else if (hasRole('grader')) {
+				Router.go('grade-temp');
 			} else {
-				Router.go('apply');
+				if (currentApp().status === 'completed') {
+					Router.go('profile');
+				} else {
+					Router.go('apply');
+				}
 			}
 		});
 	}
