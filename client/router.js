@@ -170,5 +170,13 @@ Router.map(function(){
 });
 
 Router.before(filters.isLoggedIn, {except: ['login', 'forgot-password', 'reset-password', 'grade-register']});
-Router.before(filters.isAdmin, {only: ['admin', 'admin-apps', 'admin-app-single', 'admin-users', 'admin-user-single']});
-Router.before(filters.isGrader, {only: ['grade-temp']});
+Router.before(filters.isAdmin, {only: [
+	'admin',
+	'admin-apps',
+	'admin-app-single',
+	'admin-users',
+	'admin-user-single',
+	'admin-grader',
+	'admin-grader-profile'
+]});
+Router.before(filters.isGrader, {only: ['grade-temp', 'grade-profile']});
