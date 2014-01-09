@@ -12,15 +12,7 @@ Meteor.publish('appData', function(appId) {
 
 Meteor.publish('allApps', function() {
 	if (isAdminById(this.userId)) {
-		return Applications.find({},
-		{
-			fields: {
-				'status': 1,
-				'createdAt': 1,
-				'completedAt': 1,
-				'user': 1
-			}
-		});
+		return Applications.find({});
 	}
 	return [];
 })
