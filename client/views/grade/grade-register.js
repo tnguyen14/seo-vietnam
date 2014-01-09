@@ -71,7 +71,7 @@ Template['grade-register'].events = {
 					});
 					return;
 				}
-				Router.go('grade-temp');
+				Router.go('grade-profile');
 			})
 		})
 	}
