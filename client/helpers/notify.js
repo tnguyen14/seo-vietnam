@@ -11,13 +11,13 @@ notify = function(options) {
 		timeout: 5000,
 		clearPrev: false,
 		clearPrevType: ''
-	}
+	};
 	var contexts = [
 		'success',
 		'info',
 		'warning',
 		'danger'
-	]
+	];
 	if (_.isObject(options)) {
 		options = _.extend(defaultOptions, options);
 	}

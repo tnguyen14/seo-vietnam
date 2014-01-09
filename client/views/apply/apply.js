@@ -11,6 +11,28 @@ var getSectionByIndex = function (index, sections) {
 	})
 }
 
+// save inputs in the current section by groups
+// use jQuery Deferred success and failure callback styles
+var saveInputs = function (doneCb, failCb) {
+	// save personal information to the user collection
+	var current = Session.get('current'),
+		ctx = '#' + current,
+		inputGroups = getFormGroups(ctx);
+	if (current === 'personal-info') {
+		saveUser({
+			groups: inputGroups,
+			success: doneCb,
+			error: failCb
+		});
+	} else {
+		saveApp({
+			groups: inputGroups,
+			success: doneCb,
+			error: failCb
+		})
+	}
+}
+
 // Rendered
 Template.apply.rendered = function() {
 	this.sections = getInfo('apply-sections');

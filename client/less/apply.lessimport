@@ -272,9 +272,6 @@ input {
 	text-align: center;
 }
 
-.logout {
-	float: right;
-}
 .view-profile {
 	float: right;
 	margin-right: 1em;

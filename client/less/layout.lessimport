@@ -14,3 +14,11 @@ body, html {
 		padding: 0 10%;
 	}
 }
+
+.logout {
+	float: right;
+}
+
+.edit {
+	float: right;
+}

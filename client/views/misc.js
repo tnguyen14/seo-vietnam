@@ -10,3 +10,9 @@ Template.logout.events = {
 		});
 	}
 }
+
+Template.edit.helpers({
+	editing: function() {
+		return Session.get('editing');
+	}
+})

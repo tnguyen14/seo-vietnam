@@ -96,10 +96,10 @@ Router.map(function(){
 		controller: AdminAppsController
 	});
 	this.route('admin-apps-completed', {
-		path: '/admin/apps/completed',
+		path: '/admin/apps/status/:status',
 		controller: AdminAppsController,
 		data: function() {
-			var apps =  Applications.find({status: 'completed'}).fetch();
+			var apps =  Applications.find({status: this.params.status}).fetch();
 			Lazy(apps).each(function(a) {
 				var user = Meteor.users.findOne(a.user);
 				if (user) {
@@ -132,6 +132,25 @@ Router.map(function(){
 		controller: AdminUserSingle
 	});
 
+	this.route('admin-grader', {
+		path: '/admin/graders',
+		template: 'admin-users',
+		waitOn: function() {
+			return Meteor.subscribe('allUsers', 'grader');
+		},
+		// @TODO: filter roles
+		data: function() {
+			return {
+				users: Meteor.users.find({roles: 'grader'})
+			}
+		}
+	});
+
+	this.route('admin-grader-profile', {
+		path: '/admin/graders/:_id',
+		controller: GraderProfileController
+	})
+
 	// grade
 	this.route('grade-register', {
 		path: '/grade/register',
@@ -140,6 +159,10 @@ Router.map(function(){
 	this.route('grade-temp', {
 		path: 'grade/temp'
 	});
+	this.route('grader-profile', {
+		path: '/grade/profile',
+		controller: GraderProfileController
+	})
 });
 
 Router.before(filters.isLoggedIn, {except: ['login', 'forgot-password', 'reset-password', 'grade-register']});

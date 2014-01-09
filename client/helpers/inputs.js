@@ -41,18 +41,69 @@ collectInputs = function(ctx) {
 	return field;
 };
 
-// save inputs in the current section by groups
-// use jQuery Deferred success and failure callback styles
-saveInputs = function (doneCb, failCb) {
-	// save personal information to the user collection
-	var current = Session.get('current'),
-		$ctx = $('#' + current),
-		inputGroups = [],
-		docId = (current === 'personal-info') ? Meteor.userId() : currentApp()._id,
-		collection = (current === 'personal-info') ? Meteor.users : Applications;
+save = function(options) {
+	// throw tantrums if options are not declared properly
+	if (!_.isObject(options)) {
+		throw new Meteor.Error(400, 'No options specified.');
+	}
+	if (!options.groups || !_.isArray(options.groups)) {
+		throw new Meteor.Error(400, 'Save needs an array of groups to save');
+	}
+	if (!options.collection) {
+		throw new Meteor.Error(400, 'No collection specified');
+	}
+	if (!options.id) {
+		throw new Meteor.Error(400, 'No object ID specified');
+	}
 
+	// map inputGroups elements to function to save them to collection
+	// use jQuery promise to apply doneCb when all groups have been saved
+	$.when.apply($, $.map(options.groups, function(group) {
+		var dfd = new jQuery.Deferred();
+		options.collection.update(options.id, {$set: group}, function(err, res) {
+			// if there's no error, result is the number of documents affected
+			if (err) {
+				dfd.reject(err);
+			} else {
+				dfd.resolve();
+			}
+		});
+		return dfd.promise();
+	})).done(function() {
+		if (options.success) options.success();
+	}).fail(function(err) {
+		if (options.error) options.error(err);
+	});
+}
+
+saveUser = function(options) {
+	var defaultOptions = {
+		collection: Meteor.users,
+		id: Meteor.userId(),
+		groups: []
+	};
+	if (_.isObject(options)) {
+		options = _.extend(defaultOptions, options);
+	}
+	save(options);
+}
+
+saveApp = function(options) {
+	var defaultOptions = {
+		collection: Applications,
+		id: currentApp()._id,
+		groups: []
+	};
+	if (_.isObject(options)) {
+		options = _.extend(defaultOptions, options);
+	}
+	save(options);
+}
+
+getFormGroups = function(ctx) {
+	var inputGroups = [];
 	// collect inputs in groups and save them to array
-	$('.form-group', $ctx).each(function () {
+	$('.form-group', ctx).each(function () {
 		var group = {},
 			field = collectInputs(this),
 			name = $(this).attr('name');
@@ -63,24 +114,5 @@ saveInputs = function (doneCb, failCb) {
 		}
 		inputGroups.push(group);
 	});
-
-	// map inputGroups elements to function to save them to collection
-	// use jQuery promise to apply doneCb when all groups have been saved
-	$.when.apply($, $.map(inputGroups, function(group) {
-		var dfd = new jQuery.Deferred();
-		collection.update(docId, {$set: group}, function(err, res) {
-			// if there's no error, result is the number of documents affected
-			if (err) {
-				dfd.reject(err);
-			} else {
-				dfd.resolve();
-			}
-		});
-		return dfd.promise();
-	})).done(function() {
-		if (doneCb) doneCb();
-	}).fail(function(err) {
-		if (failCb) failCb(err);
-	});
-
+	return inputGroups;
 }

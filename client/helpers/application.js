@@ -38,6 +38,7 @@ currentApp = function() {
 			message: 'No application found for this user.',
 			auto: true
 		});
+		return {};
 	}
 	return Applications.find({user:userId}).fetch()[0];
 }
