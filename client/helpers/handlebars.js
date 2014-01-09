@@ -60,3 +60,15 @@ Handlebars.registerHelper('date', function(d, f) {
 		return moment(d).zone('+0700').format(format);
 	}
 });
+
+getName = function(collection, value) {
+	var doc = Lazy(collection).find(function(d){
+		return d.slug === value;
+	});
+	if (doc) {
+		return doc.name;
+	}
+}
+Handlebars.registerHelper('getName', function(collection, value) {
+	return getName(collection, value);
+})

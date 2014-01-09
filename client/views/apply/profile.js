@@ -2,20 +2,10 @@ Meteor.subscribe('appData');
 Meteor.subscribe('information');
 
 var _getName = function (category, value) {
-	var count = Information.find({category: category}).count();
-	if (!value) {
+	if (Information.find({category: category}).count() === 0) {
 		return;
 	}
-	if (count === 0) {
-		return;
-	}
-	var info = Information.find({category: category}).fetch()[0].values
-		doc = Lazy(info).find(function(d){
-			return d.slug === value;
-		});
-	if (doc) {
-		return doc.name;
-	}
+	return getName(Information.find({category: category}).fetch()[0].values, value);
 };
 
 Template.profile.helpers({
