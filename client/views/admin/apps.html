@@ -22,8 +22,8 @@
 			<tbody class="list">
 				{{#each apps}}
 					<tr>
-						<td class="name"><a href="{{pathFor 'admin-app-single'}}">{{profile.name.first}} {{profile.name.last}}</a></td>
-						<td class="email"><a href="{{pathFor 'admin-app-single'}}">{{email}}</a></td>
+						<td class="name"><a href="{{appURL}}">{{profile.name.first}} {{profile.name.last}}</a></td>
+						<td class="email"><a href="{{appURL}}">{{email}}</a></td>
 						<td class="status">{{status}}</td>
 						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="date-completed">{{date completedAt 'MMM Do YYYY, h:mma'}}</td>

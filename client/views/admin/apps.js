@@ -15,7 +15,7 @@ AdminAppsController = RouteController.extend({
 				a.profile = user.profile;
 				a.email = user.emails[0].address;
 			}
-			a._appId = a._id;
+			a.appURL = Router.routes['admin-app-single'].path({_id:a._id});
 		});
 		return {
 			apps: apps
@@ -55,11 +55,11 @@ AdminAppSingle = RouteController.extend({
 		// subscribing to all for now
 		return [
 			Meteor.subscribe('allUsers'),
-			Meteor.subscribe('appData', this.params._appId)
+			Meteor.subscribe('appData', this.params._id)
 		];
 	},
 	data: function() {
-		var app = Applications.findOne(this.params._appId),
+		var app = Applications.findOne(this.params._id),
 			user, userId;
 		if (app) {
 			userId = app.user;

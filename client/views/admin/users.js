@@ -15,6 +15,7 @@ AdminUsersController = RouteController.extend({
 				u._appId = app._id;
 			}
 			u.profileURL = Router.routes['admin-user-single'].path({_id: u._id});
+			u.appURL = (app) ? Router.routes['admin-app-single'].path({_id: app._id}) : undefined;
 		});
 		return {
 			users: users,

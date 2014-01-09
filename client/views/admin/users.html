@@ -23,8 +23,8 @@
 						<td class="date-joined">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="roles">{{roles}}</td>
 						<td class="app">
-						{{#if _appId}}
-							<a href="{{pathFor 'admin-app-single'}}">View app</a>
+						{{#if appURL}}
+							<a href="{{appURL}}">View app</a>
 						{{else}}
 							Not found
 						{{/if}}

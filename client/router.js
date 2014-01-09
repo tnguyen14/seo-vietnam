@@ -115,7 +115,7 @@ Router.map(function(){
 	});
 
 	this.route('admin-app-single', {
-		path: '/admin/apps/:_appId',
+		path: '/admin/apps/:_id',
 		layoutTemplate: 'admin-layout',
 		controller: AdminAppSingle
 	});
