@@ -96,10 +96,10 @@ Router.map(function(){
 		controller: AdminAppsController
 	});
 	this.route('admin-apps-completed', {
-		path: '/admin/apps/status/:status',
+		path: '/admin/apps/completed',
 		controller: AdminAppsController,
 		data: function() {
-			var apps =  Applications.find({status: this.params.status}).fetch();
+			var apps =  Applications.find({status: 'completed'}).fetch();
 			Lazy(apps).each(function(a) {
 				var user = Meteor.users.findOne(a.user);
 				if (user) {
@@ -140,8 +140,12 @@ Router.map(function(){
 		},
 		// @TODO: filter roles
 		data: function() {
+			var graders = Meteor.users.find({roles: 'grader'}).fetch();
+			Lazy(graders).each(function(u) {
+				u.profileURL = Router.routes['admin-grader-profile'].path({_id: u._id});
+			});
 			return {
-				users: Meteor.users.find({roles: 'grader'})
+				users: graders
 			}
 		}
 	});

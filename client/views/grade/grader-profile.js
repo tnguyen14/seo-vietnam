@@ -1,5 +1,5 @@
 GraderProfileController = RouteController.extend({
-	layout: 'grader-profile',
+	template: 'grader-profile',
 	waitOn: function() {
 		return [
 			Meteor.subscribe('graderData', this.params._id)
