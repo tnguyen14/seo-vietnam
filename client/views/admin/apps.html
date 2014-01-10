@@ -42,9 +42,27 @@
 <template name="admin-app-single">
 	{{> admin-menu}}
 	<h2>Application</h2>
+	{{#with user}}
+		<h3>{{displayname}}</h3>
+	{{/with}}
 	<div class="field-group">
 		<label class="control-label">Status</label>
 		<div class="value">{{app.status}}</div>
 	</div>
-	{{> profile}}
+	{{#with user}}
+		{{> display-personal-info}}
+	{{/with}}
+	{{#with app}}
+		<h2 class="section-title">Education</h2>
+			{{> display-education}}
+		<h2 class="section-title">Qualifications</h2>
+			{{> display-qualifications}}
+		<h2 class="section-title">Professional Interests</h2>
+			{{> display-professional}}
+		<h2 class="section-title">Essays</h2>
+			{{> display-essays}}
+
+		<h3 class="section-title">Files</h3>
+			{{> display-files}}
+	{{/with}}
 </template>

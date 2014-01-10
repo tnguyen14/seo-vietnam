@@ -171,6 +171,16 @@ input {
 		display: inline-block;
 		padding-left: 10rem;
 	}
+	&.essay {
+		label {
+			width: 100%;
+		}
+		.value {
+			display: block;
+			padding: 0;
+			width: 100%;
+		}
+	}
 }
 
 .error-label {
@@ -225,16 +235,6 @@ input {
 			&:last-of-type:after {
 				content: '';
 			}
-		}
-	}
-	.essay {
-		label {
-			width: 100%;
-		}
-		.value {
-			display: block;
-			padding: 0;
-			width: 100%;
 		}
 	}
 }
