@@ -18,7 +18,8 @@ body, html {
 	}
 }
 
-.nav-icon {
+.nav-icon,
+.grade-icon {
 	background-color: white;
 	color: @blue;
 	cursor: pointer;
@@ -104,3 +105,58 @@ body, html {
 	}
 }
 
+// grader
+.grade-icon {
+	color: @red;
+	right: 0;
+	left: auto;
+	&:hover {
+		background-color: @red;
+	}
+	&.active {
+		background-color: @red;
+		left: auto;
+		&:hover {
+			left: auto;
+		}
+	}
+}
+.grade-wrap {
+	background-color: @red;
+	font-size: 1.2em;
+	position: absolute;
+	width: 25%;
+	height: 100%;
+	right: -25%;
+	.lh-transition(right 0.3s ease-in-out);
+	&.grade-active {
+		right: 0;
+		.criteria {
+			position: fixed;
+		}
+	}
+	h3 {
+		color: white;
+		font-size: 1.3em;
+		margin: 0;
+		padding: 0.6em 0 0.6em 1.3em;
+	}
+	.criteria {
+		ul {
+			padding: 0 1em;
+			margin: 0;
+		}
+		li {
+			list-style: none;
+		}
+		label {
+			color: white;
+		}
+	}
+}
+.grade-app-wrap {
+	.lh-transition(width 0.3s ease-in-out);
+	.grade-active & {
+		width: 70%;
+	}
+}

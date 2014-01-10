@@ -45,6 +45,35 @@ Meteor.publish('graderData', function(graderId) {
 			'grader': 1
 		}
 	});
+});
+
+function graderAssignedApps(graderId) {
+	var grader = Meteor.users.findOne(graderId);
+	return _.pluck(grader.grader.apps, 'id');
+}
+function graderAssignedUsers(graderId) {
+	var grader = Meteor.users.findOne(graderId);
+	return _.pluck(grader.grader.apps, 'userId');
+}
+
+Meteor.publish('graderApps', function() {
+	if (!hasRole('grader', this.userId)) {
+		return [];
+	}
+	var assignedApps = graderAssignedApps(this.userId);
+	return Applications.find({_id: {
+		$in: assignedApps
+	}});
+});
+
+Meteor.publish('graderUsers', function() {
+	if (!hasRole('grader', this.userId)) {
+		return [];
+	}
+	var assignedUsers = graderAssignedUsers(this.userId);
+	return Meteor.users.find({_id: {
+		$in: assignedUsers
+	}})
 })
 
 Meteor.publish('allUsers', function(role) {

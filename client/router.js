@@ -169,7 +169,7 @@ Router.map(function(){
 	});
 	this.route('grade-app-single', {
 		path: '/grade/apps/:_id',
-
+		controller: GradeAppSingleController
 	});
 });
 

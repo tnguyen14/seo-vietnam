@@ -1,0 +1,51 @@
+<template name="grade-app-single">
+	{{> admin-menu}}
+	{{> grade}}
+	<div class="grade-app-wrap">
+		<h2>Application Grading</h2>
+		{{#with user}}
+			<h4>{{displayname}}</h4>
+		{{/with}}
+		<div class="field-group">
+			<label class="control-label">Status</label>
+			<div class="value">{{app.status}}</div>
+		</div>
+		{{#with user}}
+			{{> display-personal-info}}
+		{{/with}}
+		{{#with app}}
+			<h2 class="section-title">Education</h2>
+				{{> display-education}}
+			<h2 class="section-title">Qualifications</h2>
+				{{> display-qualifications}}
+			<h2 class="section-title">Professional Interests</h2>
+				{{> display-professional}}
+			<h2 class="section-title">Essays</h2>
+				{{> display-essays}}
+
+			<h3 class="section-title">Files</h3>
+				{{> display-files}}
+		{{/with}}
+	</div>
+</template>
+<template name="grade-app-unauthorized">
+	<h3>Uh oh! You do not have access to this app.</h3>
+</template>
+
+<template name="grade">
+	<i class="grade-icon fa fa-pencil"></i>
+	<div class="grade-wrap">
+		<h3>Grades</h3>
+		<form class="criteria">
+			<ul>
+			{{#each criteria}}
+				<li class="criterion">
+					<label>{{title}} ({{weight}}%)</label>
+					<input type="number" name="{{slug}}"/>
+				</li>
+			{{/each}}
+			</ul>
+			<button id="grade-save" class="btn btn-primary">Save</button>
+		</form>
+	</div><!-- .grade-wrap -->
+</template>
