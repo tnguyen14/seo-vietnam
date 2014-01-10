@@ -164,6 +164,13 @@ input {
 
 .field-group {
 	margin-bottom: 1em;
+	label {
+		width: 8rem;
+	}
+	.value {
+		display: inline-block;
+		padding-left: 10rem;
+	}
 }
 
 .error-label {
@@ -209,15 +216,6 @@ input {
 	}
 	.logout {
 		float: left;
-	}
-	.field-group {
-		label {
-			width: 8rem;
-		}
-		.value {
-			display: inline-block;
-			padding-left: 10rem;
-		}
 	}
 	.list-group {
 		.list-item {

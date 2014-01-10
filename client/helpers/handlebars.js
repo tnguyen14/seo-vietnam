@@ -69,6 +69,54 @@ getName = function(collection, value) {
 		return doc.name;
 	}
 }
+getInfoName = function(category, value) {
+	if (Information.find({category: category}).count() === 0) {
+		return;
+	}
+	return getName(Information.find({category: category}).fetch()[0].values, value);
+}
+getAppValue = function(app, field, category) {
+	var html = '',
+	// default category to field name
+	category = _.isString(category) ? category : field,
+	value;
+if (!app) {
+	return;
+}
+value = app[field];
+
+if (_.isArray(value)) {
+	html += '<span class="list-group">';
+	_.each(value, function(val) {
+		html+= '<span class="list-item">' + getInfoName(category, val) + '</span>';
+	});
+	html += '</span>'
+} else {
+	html = getInfoName(category, value);
+}
+return html;
+}
+
 Handlebars.registerHelper('getName', function(collection, value) {
 	return getName(collection, value);
+});
+
+Handlebars.registerHelper('getInfoName', function(category, value) {
+	return getInfoName(category, value);
+});
+
+// Assume user object as context
+Handlebars.registerHelper('displayname', function() {
+	if (this.profile && this.profile.name) {
+		return this.profile.name.first + ' ' + this.profile.name.last;
+	}
+});
+
+Handlebars.registerHelper('email', function() {
+	return this.emails[0].address;
+});
+
+// Assume app object as context
+Handlebars.registerHelper('getAppValue', function(field, category) {
+	return getAppValue(this, field, category);
 })

@@ -42,7 +42,9 @@
 <template name="admin-app-single">
 	{{> admin-menu}}
 	<h2>Application</h2>
-	<label>Status</label>
-	<div>{{app.status}}</div>
+	<div class="field-group">
+		<label class="control-label">Status</label>
+		<div class="value">{{app.status}}</div>
+	</div>
 	{{> profile}}
 </template>

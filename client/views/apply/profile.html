@@ -1,118 +1,147 @@
 <template name="profile">
 	<div class="profile">
 		<div class="actions">
-			<button class="btn btn-primary edit-app">Edit your application</button>
+			<button class="btn btn-primary edit-app">Edit application</button>
 			{{> logout}}
 		</div><!-- .actions -->
 		{{#with user}}
 			<h1 class="title">{{displayname}}</h1>
-			<div class="field-group">
-				<label for="email">Email</label>
-				<div class="value">{{email}}</div>
-			</div>
-			<div class="field-group">
-				<label for="country-residence">Country of Residence</label>
-				<div class="value">{{getName 'country' profile.country-residence}}</div>
-			</div>
-			<div class="field-group">
-				<label for="phone">Phone Number</label>
-				<div class="value">{{profile.phone}}</div>
-			</div>
+			{{> display-personal-info}}
 		{{/with}}
 		{{#with app}}
 			<h2 class="section-title">Education</h2>
-			<div class="field-group">
-				<label for="college">College/ University</label>
-				<div class="value">{{getName 'college' college}} '{{date graduation-date 'YY'}}</div>
-			</div>
-			<div class="field-group">
-				<label for="major">Major</label>
-				<div class="value">{{{getValue 'major'}}}</div>
-			</div>
+				{{> display-education}}
 			<h2 class="section-title">Qualifications</h2>
-			<h3>Standardized Tests</h3>
-			<h4>SAT</h4>
-			<div class="field-group">
-				<label for="sat-writing">Writing</label>
-				<div class="value">{{sat.writing}}</div>
-			</div>
-			<div class="field-group">
-				<label for="sat-reading">Reading</label>
-				<div class="value">{{sat.reading}}</div>
-			</div>
-			<div class="field-group">
-				<label for="sat-math">Math</label>
-				<div class="value">{{sat.math}}</div>
-			</div>
-
-			<h4>Others</h4>
-			<div class="field-group">
-				<label for="toefl">TOEFL</label>
-				<div class="value">{{tests.toefl}}</div>
-			</div>
-			<div class="field-group">
-				<label for="ielts">IELTS</label>
-				<div class="value">{{tests.ielts}}</div>
-			</div>
-			<div class="field-group">
-				<label for="gre">GRE</label>
-				<div class="value">{{tests.gre}}</div>
-			</div>
-			<div class="field-group">
-				<label for="gmat">GMAT</label>
-				<div class="value">{{tests.gmat}}</div>
-			</div>
-
-			<div class="field-group">
-				<h4>Language Proficiency</h4>
-				<div>
-					<label>Fluent</label>
-					<div class="value">{{{getLanguage language 'fluent'}}}</div>
-				</div>
-				<div>
-					<label>Intermediate</label>
-					<div class="value">{{{getLanguage language 'intermediate'}}}</div>
-				</div>
-				<div>
-					<label>Basic understanding</label>
-					<div class="value">{{{getLanguage language 'basic'}}}</div>
-				</div>
-
-			</div>
+				{{> display-qualifications}}
 			<h2 class="section-title">Professional Interests</h2>
-			<div class="field-group">
-				<label for="industry">Industries</label>
-				<div class="value">{{{getValue 'industry'}}}</div>
-			</div>
-			<div class="field-group">
-				<label for="profession">Professions</label>
-				<div class="value">{{{getValue 'profession'}}}</div>
-			</div>
+				{{> display-professional}}
 			<h2 class="section-title">Essays</h2>
-			{{#each essays}}
-				<div class="field-group essay">
-					<label for="{{name}}">{{question}}</label>
-					<div class="value">{{{getEssay ../essay id}}}</div>
-				</div>
-			{{/each}}
+				{{> display-essays}}
 
 			<h3 class="section-title">Files</h3>
-			<ul>
-			{{#if files}}
-				{{#each files}}
-					<li class="field-group">
-						{{#if file.url}}
-							<a href="{{file.url}}">View your uploaded {{label}}.</a>
-						{{else}}
-							You have not uploaded your {{label}}.
-						{{/if}}
-					</li>
-				{{/each}}
-			{{else}}
-				You have not uploaded any files yet.
-			{{/if}}
-			</ul>
+				{{> display-files}}
 			<button class="btn btn-primary edit-app">Edit your application</button>
 		{{/with}}
 	</div>
+</template>
+
+<!-- requires a user context -->
+<template name="display-personal-info">
+	<div class="field-group">
+		<label for="email">Email</label>
+		<div class="value">{{email}}</div>
+	</div>
+	<div class="field-group">
+		<label for="country-residence">Country of Residence</label>
+		<div class="value">{{getInfoName 'country' profile.country-residence}}</div>
+	</div>
+	<div class="field-group">
+		<label for="phone">Phone Number</label>
+		<div class="value">{{profile.phone}}</div>
+	</div>
+</template>
+
+<!-- requires app context -->
+<template name="display-education">
+	<div class="field-group">
+		<label for="college">College/ University</label>
+		<div class="value">{{getInfoName 'college' college}} '{{date graduation-date 'YY'}}</div>
+	</div>
+	<div class="field-group">
+		<label for="major">Major</label>
+		<div class="value">{{{getAppValue 'major'}}}</div>
+	</div>
+</template>
+
+<!-- requires app context -->
+<template name="display-qualifications">
+	<h3>Standardized Tests</h3>
+	<h4>SAT</h4>
+	<div class="field-group">
+		<label for="sat-writing">Writing</label>
+		<div class="value">{{sat.writing}}</div>
+	</div>
+	<div class="field-group">
+		<label for="sat-reading">Reading</label>
+		<div class="value">{{sat.reading}}</div>
+	</div>
+	<div class="field-group">
+		<label for="sat-math">Math</label>
+		<div class="value">{{sat.math}}</div>
+	</div>
+
+	<h4>Others</h4>
+	<div class="field-group">
+		<label for="toefl">TOEFL</label>
+		<div class="value">{{tests.toefl}}</div>
+	</div>
+	<div class="field-group">
+		<label for="ielts">IELTS</label>
+		<div class="value">{{tests.ielts}}</div>
+	</div>
+	<div class="field-group">
+		<label for="gre">GRE</label>
+		<div class="value">{{tests.gre}}</div>
+	</div>
+	<div class="field-group">
+		<label for="gmat">GMAT</label>
+		<div class="value">{{tests.gmat}}</div>
+	</div>
+
+	<h3>Language Proficiency</h3>
+	<div class="field-group">
+		<div>
+			<label>Fluent</label>
+			<div class="value">{{{getLanguage language 'fluent'}}}</div>
+		</div>
+		<div>
+			<label>Intermediate</label>
+			<div class="value">{{{getLanguage language 'intermediate'}}}</div>
+		</div>
+		<div>
+			<label>Basic understanding</label>
+			<div class="value">{{{getLanguage language 'basic'}}}</div>
+		</div>
+	</div>
+</template>
+
+<!-- requires app context -->
+<template name="display-professional">
+	<div class="field-group">
+		<label for="industry">Industries</label>
+		<div class="value">{{{getAppValue 'industry'}}}</div>
+	</div>
+	<div class="field-group">
+		<label for="profession">Professions</label>
+		<div class="value">{{{getAppValue 'profession'}}}</div>
+	</div>
+</template>
+
+<!-- requires app context -->
+<template name="display-essays">
+	{{#each essays}}
+		<div class="field-group essay">
+			<label for="{{name}}">{{question}}</label>
+			<div class="value">{{{getEssay ../essay id}}}</div>
+		</div>
+	{{/each}}
+</template>
+
+<!-- requires app context -->
+<template name="display-files">
+	{{#if files}}
+	<ul>
+		{{#each files}}
+			<li class="field-group">
+				{{#if file.url}}
+					<a href="{{file.url}}">View uploaded {{label}}.</a>
+				{{else}}
+					No {{label}} uploaded yet.
+				{{/if}}
+			</li>
+		{{/each}}
+	</ul>
+	{{else}}
+		<p>No file has been uploaded yet.</p>
+	{{/if}}
 </template>

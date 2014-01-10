@@ -166,10 +166,19 @@ Router.map(function(){
 	this.route('grader-profile', {
 		path: '/grade/profile',
 		controller: GraderProfileController
-	})
+	});
+	this.route('grade-app-single', {
+		path: '/grade/apps/:_id',
+
+	});
 });
 
-Router.before(filters.isLoggedIn, {except: ['login', 'forgot-password', 'reset-password', 'grade-register']});
+Router.before(filters.isLoggedIn, {except: [
+	'login',
+	'forgot-password',
+	'reset-password',
+	'grade-register'
+]});
 Router.before(filters.isAdmin, {only: [
 	'admin',
 	'admin-apps',
@@ -179,4 +188,7 @@ Router.before(filters.isAdmin, {only: [
 	'admin-grader',
 	'admin-grader-profile'
 ]});
-Router.before(filters.isGrader, {only: ['grade-temp', 'grade-profile']});
+Router.before(filters.isGrader, {only: [
+	'grade-temp',
+	'grade-profile'
+]});
