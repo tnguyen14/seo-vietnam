@@ -106,7 +106,7 @@ Router.map(function(){
 					a.profile = user.profile;
 					a.email = user.emails[0].address;
 				}
-				a._appId = a._id;
+				a._appURL = Router.routes['admin-app-single'].path({_id: a._id});
 			});
 			return {
 				apps: apps
