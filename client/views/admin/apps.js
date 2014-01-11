@@ -13,7 +13,7 @@ AdminAppsController = RouteController.extend({
 			var user = Meteor.users.findOne(a.user);
 			if (user) {
 				a.profile = user.profile;
-				a.email = user.emails[0].address;
+				a.emails = user.emails;
 			}
 			a.appURL = Router.routes['admin-app-single'].path({_id:a._id});
 		});
