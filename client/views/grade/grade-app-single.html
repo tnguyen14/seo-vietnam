@@ -3,6 +3,7 @@
 	{{> grade}}
 	<div class="grade-app-wrap">
 		<h2>Application Grading</h2>
+		<div class="notifications"></div>
 		{{#with user}}
 			<h4>{{displayname}}</h4>
 		{{/with}}
@@ -39,9 +40,9 @@
 		<form class="criteria">
 			<ul>
 			{{#each criteria}}
-				<li class="criterion">
+				<li class="criterion form-group">
 					<label>{{title}} ({{weight}}%)</label>
-					<input type="number" name="{{slug}}"/>
+					<input type="number" name="{{slug}}" value="{{score}}"/>
 				</li>
 			{{/each}}
 			</ul>

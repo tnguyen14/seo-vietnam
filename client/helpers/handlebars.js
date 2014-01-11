@@ -80,21 +80,21 @@ getAppValue = function(app, field, category) {
 	// default category to field name
 	category = _.isString(category) ? category : field,
 	value;
-if (!app) {
-	return;
-}
-value = app[field];
+	if (!app) {
+		return;
+	}
+	value = app[field];
 
-if (_.isArray(value)) {
-	html += '<span class="list-group">';
-	_.each(value, function(val) {
-		html+= '<span class="list-item">' + getInfoName(category, val) + '</span>';
-	});
-	html += '</span>'
-} else {
-	html = getInfoName(category, value);
-}
-return html;
+	if (_.isArray(value)) {
+		html += '<span class="list-group">';
+		_.each(value, function(val) {
+			html+= '<span class="list-item">' + getInfoName(category, val) + '</span>';
+		});
+		html += '</span>'
+	} else {
+		html = getInfoName(category, value);
+	}
+	return html;
 }
 
 Handlebars.registerHelper('getName', function(collection, value) {

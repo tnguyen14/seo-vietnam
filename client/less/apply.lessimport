@@ -183,6 +183,17 @@ input {
 	}
 }
 
+.list-group {
+	.list-item {
+		&:after {
+			content: ', ';
+		}
+		&:last-of-type:after {
+			content: '';
+		}
+	}
+}
+
 .error-label {
 	font-size: 0.9em;
 	font-style: italic;
@@ -226,16 +237,6 @@ input {
 	}
 	.logout {
 		float: left;
-	}
-	.list-group {
-		.list-item {
-			&:after {
-				content: ', ';
-			}
-			&:last-of-type:after {
-				content: '';
-			}
-		}
 	}
 }
 

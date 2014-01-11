@@ -107,14 +107,15 @@ body, html {
 
 // grader
 .grade-icon {
-	color: @red;
+	color: @orange;
+	padding: 0.4em;
 	right: 0;
 	left: auto;
 	&:hover {
-		background-color: @red;
+		background-color: darken(@orange,10%);
 	}
 	&.active {
-		background-color: @red;
+		background-color: darken(@orange, 10%);
 		left: auto;
 		&:hover {
 			left: auto;
@@ -122,8 +123,7 @@ body, html {
 	}
 }
 .grade-wrap {
-	background-color: @red;
-	font-size: 1.2em;
+	background-color: @orange;
 	position: absolute;
 	width: 25%;
 	height: 100%;
@@ -136,21 +136,33 @@ body, html {
 		}
 	}
 	h3 {
-		color: white;
-		font-size: 1.3em;
+		color: @darker-blue;
+		font-size: 1.7em;
 		margin: 0;
-		padding: 0.6em 0 0.6em 1.3em;
+		padding: 0.6em 0 1.3em 1.3em;
 	}
 	.criteria {
 		ul {
-			padding: 0 1em;
+			padding: 0 3rem;
 			margin: 0;
 		}
 		li {
 			list-style: none;
+			margin-bottom: 2em;
 		}
 		label {
-			color: white;
+			color: @darker-blue;
+			display: block;
+		}
+		input[type="number"] {
+			width: 30%;
+		}
+		.btn {
+			margin-left: 3rem;
+			&:hover {
+				background-color: @darker-blue;
+				border-color: @darker-blue;
+			}
 		}
 	}
 }
