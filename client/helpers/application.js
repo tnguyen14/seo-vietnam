@@ -15,17 +15,9 @@ newApplication = function (userId, cb) {
 	}
 	Meteor.call('createApp', userId, function(err, res) {
 		if (err) {
-			if (cb) {
-				cb(err);
-			} else {
-				console.log(err);
-			}
+			if (cb) cb(err);
 		} else {
-			if (cb) {
-				cb(null, res);
-			} else {
-				console.log('successfully created new app ' + res);
-			}
+			if (cb) cb(null, res);
 		}
 	});
 }

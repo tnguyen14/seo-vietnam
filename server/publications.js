@@ -2,12 +2,20 @@ Meteor.publish('information', function() {
 	return Information.find({});
 });
 
+// appId can be a oID string or a query object
+// for eg: appId = {user: 'userId'}
 Meteor.publish('appData', function(appId) {
-	if (!_.isString(appId)) {
+	if (_.isObject(appId)) {
+		if (appId.user) {
+			console.log('appId user: ' + appId.user);
+			return Applications.find({user: appId.user});
+		}
+	} else if (_.isString(appId)) {
+		return Applications.find(appId);
+	} else {
 		userId = this.userId;
 		return Applications.find({user: userId})
 	}
-	return Applications.find(appId);
 });
 
 Meteor.publish('allApps', function() {

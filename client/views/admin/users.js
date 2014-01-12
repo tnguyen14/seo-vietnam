@@ -55,13 +55,15 @@ AdminUserSingle = RouteController.extend({
 	waitOn: function() {
 		return [
 			Meteor.subscribe('userData', this.params._id),
-			Meteor.subscribe('appData', this.params._id)
+			Meteor.subscribe('appData', {user: this.params._id})
 		];
 	},
 	data: function() {
 		var roles = ['applicant', 'admin', 'grader'],
 			app = Applications.findOne({user: this.params._id});
-		app._appId = app._id;
+		if (app) {
+			app.url = Router.routes['admin-app-single'].path({_id: app._id});
+		}
 		return {
 			user: Meteor.users.findOne(this.params._id),
 			roles: roles,
@@ -92,6 +94,19 @@ Template['admin-user-single'].events = {
 			$form.find('.form-group').each(function() {
 				var field = collectInputs(this);
 				Meteor.users.update(userId, {$set: field}, function(err, res){
+					if (!err) {
+						notify({
+							message: 'Successfully saved.',
+							context: 'success',
+							auto: true
+						});
+					} else {
+						notify({
+							message: err.message,
+							context: 'warning',
+							dismissable: true
+						})
+					}
 				});
 			});
 		}
@@ -101,9 +116,17 @@ Template['admin-user-single'].events = {
 		var userId = $('#admin-edit-user').data('id');
 		newApplication(userId, function(err, appId) {
 			if (err) {
-				console.log(err);
+				notify({
+					message: err.message,
+					context: 'danger',
+					dismissable: true
+				})
 			} else {
-				console.log('successfully created new app ' + appId);
+				notify({
+					message: 'Successfully created new app ' + appId,
+					context: 'success',
+					auto: true
+				});
 			}
 		});
 	}
