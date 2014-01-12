@@ -129,6 +129,14 @@ Template['admin-app-single'].events = {
 							auto: true
 						});
 						Session.set('editing', false);
+					},
+					error: function(err) {
+						notify({
+							message: err.reason,
+							context: 'danger',
+							dismissable: true,
+							clearPrev: true
+						})
 					}
 				})
 			}
