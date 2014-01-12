@@ -74,10 +74,11 @@ input {
 	padding: 0.5em;
 }
 
+.control-label {
+	display: block;
+	width: auto;
+}
 .form-group {
-	label {
-		display: block;
-	}
 	.clearfix();
 	.checkbox {
 		margin-top: 0.5em;
@@ -165,7 +166,7 @@ input {
 .field-group {
 	margin-bottom: 1em;
 	label {
-		width: 8rem;
+		width: 10rem;
 	}
 	.value {
 		display: inline-block;

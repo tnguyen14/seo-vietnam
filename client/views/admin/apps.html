@@ -42,27 +42,41 @@
 <template name="admin-app-single">
 	{{> admin-menu}}
 	<h2>Application</h2>
+	{{> notifications}}
+	{{> edit}}
 	{{#with user}}
 		<h3>{{displayname}}</h3>
 	{{/with}}
-	<div class="field-group">
-		<label class="control-label">Status</label>
-		<div class="value">{{app.status}}</div>
-	</div>
-	{{#with user}}
-		{{> display-personal-info}}
-	{{/with}}
-	{{#with app}}
-		<h2 class="section-title">Education</h2>
-			{{> display-education}}
-		<h2 class="section-title">Qualifications</h2>
-			{{> display-qualifications}}
-		<h2 class="section-title">Professional Interests</h2>
-			{{> display-professional}}
-		<h2 class="section-title">Essays</h2>
-			{{> display-essays}}
+	<form id="admin-app-single" data-id="{{app._id}}">
+		<div class="form-group">
+			<div class="field-group">
+				<label for "status" class="{{#if editing}}control-label{{/if}}">Status</label>
+				{{#if editing}}
+					<select name="status" id="status" class="form-control">
+						{{#each statuses}}
+							<option value="{{slug}}" {{selected slug ../app.status}}>{{name}}</option>
+						{{/each}}
+					</select>
+				{{else}}
+					<div class="value">{{app.status}}</div>
+				{{/if}}
+			</div>
+		</div><!-- .form-group status -->
+		{{#with user}}
+			{{> display-personal-info}}
+		{{/with}}
+		{{#with app}}
+			<h2 class="section-title">Education</h2>
+				{{> display-education}}
+			<h2 class="section-title">Qualifications</h2>
+				{{> display-qualifications}}
+			<h2 class="section-title">Professional Interests</h2>
+				{{> display-professional}}
+			<h2 class="section-title">Essays</h2>
+				{{> display-essays}}
 
-		<h3 class="section-title">Files</h3>
-			{{> display-files}}
-	{{/with}}
+			<h3 class="section-title">Files</h3>
+				{{> display-files}}
+		{{/with}}
+	</form>
 </template>

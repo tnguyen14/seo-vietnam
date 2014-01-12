@@ -89,8 +89,51 @@ AdminAppSingle = RouteController.extend({
 		}
 		return {
 			app: app,
-			user: user
+			user: user,
+			statuses: [
+				{
+					"slug": "started",
+					"name": "started"
+				}, {
+					"slug": "completed",
+					"name": "completed"
+				}
+			]
 		}
 	}
-
 });
+
+Template['admin-app-single'].created = function() {
+	Session.set('editing', false);
+}
+
+Template['admin-app-single'].helpers({
+	editing: function() {
+		return Session.get('editing');
+	}
+});
+
+Template['admin-app-single'].events = {
+	'click #edit': function(e) {
+		e.preventDefault();
+		if (Session.get('editing')) {
+			var $form = $('#admin-app-single');
+			if ($form.valid()) {
+				saveApp({
+					groups: getFormGroups($form),
+					id: $form.data('id'),
+					success: function() {
+						notify({
+							message: 'Successfully saved app',
+							context: 'success',
+							auto: true
+						});
+						Session.set('editing', false);
+					}
+				})
+			}
+		} else {
+			Session.set('editing', true);
+		}
+	}
+}

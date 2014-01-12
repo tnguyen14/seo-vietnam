@@ -1,11 +1,11 @@
 <template name="grader-profile">
 	<h2>Profile</h2>
-	{{> edit}}
 	{{> notifications}}
+	{{> edit}}
 	<form id="grader-profile" name="grader-profile" method="post" action="" data-id="{{id}}">
 		<div class="form-group" name="profile.name">
 			<div class="field-group">
-				<label for="first" class="control-label">First Name</label>
+				<label for="first" class="{{#if editing}}control-label{{/if}}">First Name</label>
 				{{#if editing}}
 					<input type="text" name="first" class="form-control" placeholder="First Name" value="{{profile.name.first}}" />
 				{{else}}
@@ -13,7 +13,7 @@
 				{{/if}}
 			</div>
 			<div class="field-group">
-				<label for="last" class="control-label">Last Name</label>
+				<label for="last" class="{{#if editing}}control-label{{/if}}">Last Name</label>
 				{{#if editing}}
 					<input type="text" name="last" class="form-control" placeholder="Last Name" value="{{profile.name.last}}" />
 				{{else}}
@@ -23,7 +23,7 @@
 		</div><!--.form-group profile.name -->
 		<div class="form-group" name="grader">
 			<div class="field-group">
-				<label for="limit" class="control-label">Limit number of apps</label>
+				<label for="limit" class="{{#if editing}}control-label{{/if}}">Limit number of apps</label>
 				{{#if editing}}
 					<input type="number" class="form-control" name="limit" value="{{grader.limit}}">
 				{{else}}
@@ -31,9 +31,9 @@
 				{{/if}}
 			</div>
 			<div class="field-group">
-				<label for="location" class="control-label">Location</label>
+				<label for="location" class="{{#if editing}}control-label{{/if}}">Location</label>
 				{{#if editing}}
-					<select name="location" id="location" class="form-contorl">
+					<select name="location" id="location" class="form-control">
 						<option value=""></option>
 						{{#each locations}}
 							<option value="{{slug}}" {{selected slug ../grader.location}}>{{name}}</option>
@@ -44,9 +44,9 @@
 				{{/if}}
 			</div>
 			<div class="field-group">
-				<label for="professional" class="control-label">Professional Background</label>
+				<label for="professional" class="{{#if editing}}control-label{{/if}}">Professional Background</label>
 				{{#if editing}}
-					<select name="professional" id="professional" class="form-contorl">
+					<select name="professional" id="professional" class="form-control">
 						<option value=""></option>
 						{{#each profs}}
 							<option value="{{slug}}" {{selected slug ../grader.professional}}>{{name}}</option>
@@ -57,9 +57,9 @@
 				{{/if}}
 			</div>
 			<div class="field-group">
-				<label for="experience" class="control-label">Experience Level</label>
+				<label for="experience" class="{{#if editing}}control-label{{/if}}">Experience Level</label>
 				{{#if editing}}
-					<select name="experience" id="experience" class="form-contorl">
+					<select name="experience" id="experience" class="form-control">
 						<option value=""></option>
 						{{#each exlevels}}
 							<option value="{{slug}}" {{selected slug ../grader.experience}}>{{name}}</option>
