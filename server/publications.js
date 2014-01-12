@@ -7,7 +7,6 @@ Meteor.publish('information', function() {
 Meteor.publish('appData', function(appId) {
 	if (_.isObject(appId)) {
 		if (appId.user) {
-			console.log('appId user: ' + appId.user);
 			return Applications.find({user: appId.user});
 		}
 	} else if (_.isString(appId)) {

@@ -11,7 +11,7 @@ AdminController = RouteController.extend({
 				return app.status === 'completed';
 			}),
 			completedApps = Lazy(totalApps).filter(function(app) {
-				return appReady(app);
+				return appComplete(app);
 			});
 		return {
 			totalApps: totalApps.length,
@@ -22,7 +22,7 @@ AdminController = RouteController.extend({
 	}
 });
 
-function appReady(app) {
+appComplete = function (app) {
 	var empty = [],
 		required = ['essay.one', 'essay.two', 'essay.three', 'essay.four', 'files.resume'];
 	Lazy(required).each(function(field){

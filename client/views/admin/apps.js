@@ -8,7 +8,7 @@ AdminAppsController = RouteController.extend({
 		]
 	},
 	data: function() {
-		 var apps =  Applications.find().fetch();
+		var apps =  Applications.find().fetch();
 		Lazy(apps).each(function(a) {
 			var user = Meteor.users.findOne(a.user);
 			if (user) {
@@ -19,6 +19,26 @@ AdminAppsController = RouteController.extend({
 		});
 		return {
 			apps: apps
+		}
+	}
+});
+
+AdminAppsCompletedController = AdminAppsController.extend({
+	data: function() {
+		var apps =  Applications.find().fetch(),
+			completedApps = Lazy(apps).filter(function(app) {
+				return appComplete(app);
+			});
+		Lazy(completedApps).each(function(a) {
+			var user = Meteor.users.findOne(a.user);
+			if (user) {
+				a.profile = user.profile;
+				a.emails = user.emails;
+			}
+			a.appURL = Router.routes['admin-app-single'].path({_id: a._id});
+		});
+		return {
+			apps: completedApps.toArray()
 		}
 	}
 });
