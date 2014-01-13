@@ -36,6 +36,7 @@ Template['admin-users'].rendered = function() {
 			'app'
 		],
 		page: 20,
+		searchClass: 'searchUsers',
 		// indexAsync: true,
 		plugins: [
 			ListPagination({
