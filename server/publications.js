@@ -91,7 +91,8 @@ Meteor.publish('allUsers', function(role) {
 			'profile': 1,
 			'emails': 1,
 			'_id': 1,
-			'createdAt': 1
+			'createdAt': 1,
+			'grader': 1
 		};
 		// default to all users
 		if (!role) {

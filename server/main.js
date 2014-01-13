@@ -34,5 +34,18 @@ Meteor.startup(function(){
 			});
 			Information.update({category: 'profession'}, {$set: {values: currentProfs}});
 		}
-	})
+	});
+	// add location to completed applications
+	// set to 'local' if user is in Vietnam, 'overseas' otherwise
+	var apps = Applications.find({status:'completed'}).fetch();
+	Lazy(apps).each(function(a){
+		var user = Meteor.users.findOne(a.user);
+		if (!a.location && user.profile['country-residence']) {
+			if (user.profile['country-residence'] === 'vietnam') {
+				Applications.update(a._id, {$set:{location: 'local'}});
+			} else {
+				Applications.update(a._id, {$set: {location: 'overseas'}});
+			}
+		}
+	});
 });
