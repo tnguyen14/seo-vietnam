@@ -6,7 +6,7 @@
 	{{#with user}}
 		<h3>{{displayname}}</h3>
 	{{/with}}
-	<form id="admin-app-single" data-id="{{app._id}}">
+	<form id="admin-app-single" data-id="{{app._id}}" data-applicantid="{{user._id}}">
 		<div class="form-group">
 			<div class="field-group">
 				<label for "status" class="{{#if editing}}control-label{{/if}}">Status</label>

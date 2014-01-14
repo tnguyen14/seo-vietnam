@@ -64,41 +64,92 @@ Template['admin-app-single'].helpers({
 	}
 });
 
+function saveGrader(graderId, appId, applicantId) {
+	var dfd = new $.Deferred();
+	Meteor.users.update(graderId, {
+		$addToSet: {
+			'grader.apps': {
+				appId: appId,
+				applicantId: applicantId,
+				status: 'assigned'
+			}
+		}
+	}, function(err, res) {
+		if (!err) {
+			dfd.resolve();
+		} else {
+			dfd.reject(err);
+		}
+	});
+	return dfd.promise();
+};
+
 Template['admin-app-single'].events = {
 	'click #edit': function(e) {
 		e.preventDefault();
+		// if session was in editing mode, save changes and switch to regular mode
 		if (Session.get('editing')) {
-			var $form = $('#admin-app-single');
-			if ($form.valid()) {
-				var groups = getFormGroups($form);
-				Lazy(groups).each(function(g) {
-					if (g.graders) {
-						if (_.isString(g.graders)) {
-							g.graders = [g.graders];
-						}
-					}
-				});
-				saveApp({
-					groups: groups,
-					id: $form.data('id'),
-					success: function() {
-						notify({
-							message: 'Successfully saved app',
-							context: 'success',
-							auto: true
-						});
-						Session.set('editing', false);
-					},
-					error: function(err) {
-						notify({
-							message: err.reason,
-							context: 'danger',
-							dismissable: true,
-							clearPrev: true
-						})
-					}
-				});
+			var $form = $('#admin-app-single'),
+				appId = $form.data('id'),
+				applicantId = $form.data('applicantid');
+			if (!$form.valid()) {
+				return;
 			}
+			var groups = getFormGroups($form),
+				// use deferred to save apps and also save to grader profile if grader changes are invoked
+				saveAppDfd = new $.Deferred(),
+				saveGraderDfd = new $.Deferred();
+
+			Lazy(groups).each(function (g) {
+				// if there are changes to the graders
+				if (g.graders) {
+					if (_.isString(g.graders)) {
+						g.graders = [g.graders];
+					}
+					// for each grader, save apps to grader's profile
+					$.when.apply($, $.map(g.graders, function (graderId) {
+						console.log('graderId ' + graderId );
+						console.log('applicantId ' + applicantId);
+						saveGrader(graderId, appId, applicantId);
+					})).done(function () {
+						saveGraderDfd.resolve();
+					}).fail(function (err) {
+						saveGraderDfd.reject(err);
+					});
+				} else {
+					saveGraderDfd.resolve();
+				}
+			});
+
+			// save any changes into the app itself
+			saveApp({
+				groups: groups,
+				id: appId,
+				success: function() {
+					saveAppDfd.resolve();
+				},
+				error: function(err) {
+					saveAppDfd.reject(err);
+				}
+			});
+
+			// when saving into app and into grader's profile are done, notify
+			$.when( saveGraderDfd.promise(), saveAppDfd.promise() ).done(function() {
+				notify({
+					message: 'Successfully saved app',
+					context: 'success',
+					auto: true
+				});
+				Session.set('editing', false);
+			}).fail(function(err) {
+				notify({
+					message: err.reason,
+					context: 'danger',
+					dismissable: true,
+					clearPrev: true
+				});
+			});
+		// if session was not in editing mode, turn editing on
 		} else {
 			Session.set('editing', true);
 		}
@@ -106,7 +157,6 @@ Template['admin-app-single'].events = {
 	'click #add-grader': function(e) {
 		e.preventDefault();
 		var $graderSelects = $('#graders select[name="graders"]');
-		console.log($graderSelects.length);
 		if ($graderSelects.length < 3) {
 			$('#graders .editing').append(Meteor.render(Template['add-grader']));
 		}
