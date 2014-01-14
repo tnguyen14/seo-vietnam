@@ -1,0 +1,79 @@
+<template name="admin-app-single">
+	{{> admin-menu}}
+	<h2>Application</h2>
+	{{> notifications}}
+	{{> edit}}
+	{{#with user}}
+		<h3>{{displayname}}</h3>
+	{{/with}}
+	<form id="admin-app-single" data-id="{{app._id}}">
+		<div class="form-group">
+			<div class="field-group">
+				<label for "status" class="{{#if editing}}control-label{{/if}}">Status</label>
+				{{#if editing}}
+					<select name="status" id="status" class="form-control">
+						{{#each statuses}}
+							<option value="{{slug}}" {{selected slug ../app.status}}>{{name}}</option>
+						{{/each}}
+					</select>
+				{{else}}
+					<div class="value">{{app.status}}</div>
+				{{/if}}
+			</div>
+		</div><!-- .form-group status -->
+		<div class="form-group" id="graders">
+			<div class="field-group">
+				<label for "grader" class="{{#if editing}}control-label{{/if}}">Graders</label>
+				{{#if editing}}
+					<div class="editing">
+					{{#each gradersAssigned}}
+						<div class="edit-grader">
+							<select name="graders" class="form-control">
+								{{#each ../graders}}
+									<option value="{{_id}}" {{selected _id ../_id}}>{{profile.name.first}} {{profile.name.last}} ({{emails.0.address}})</option>
+								{{/each}}
+							</select>
+							<a href="#" class="remove">Remove</a>
+						</div><!-- .edit-grader -->
+					{{/each}}
+					</div><!-- .editing -->
+					<button id="add-grader" class="btn">+ Add Grader</button>
+				{{else}}
+					<div class="value list-group">
+					{{#each gradersAssigned}}
+						<span class="list-item">{{name}} ({{email}})</span>
+					{{/each}}
+					</div>
+				{{/if}}
+			</div>
+		</div><!-- .form-group #graders -->
+		{{#with user}}
+			{{> display-personal-info}}
+		{{/with}}
+		{{#with app}}
+			<h2 class="section-title">Education</h2>
+				{{> display-education}}
+			<h2 class="section-title">Qualifications</h2>
+				{{> display-qualifications}}
+			<h2 class="section-title">Professional Interests</h2>
+				{{> display-professional}}
+			<h2 class="section-title">Essays</h2>
+				{{> display-essays}}
+
+			<h3 class="section-title">Files</h3>
+				{{> display-files}}
+		{{/with}}
+	</form>
+</template>
+
+<template name="add-grader">
+	<div class="add-grader">
+		<select name="graders" class="form-control">
+			<option value=""></option>
+			{{#each graders}}
+			<option value="{{_id}}">{{profile.name.first}} {{profile.name.last}} ({{emails.0.address}})</option>
+			{{/each}}
+		</select>
+		<a href="#" class="remove">Remove</a>
+	</div><!-- .add-grader -->
+</template>

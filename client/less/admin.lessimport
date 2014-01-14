@@ -172,3 +172,16 @@ body, html {
 		width: 70%;
 	}
 }
+
+.add-grader,
+.edit-grader {
+	.clearfix();
+	select {
+		float: left;
+	}
+	.remove {
+		float: left;
+		margin-left: 1em;
+		padding-top: 0.5em;
+	}
+}

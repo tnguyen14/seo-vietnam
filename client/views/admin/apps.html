@@ -23,7 +23,7 @@
 				{{#each apps}}
 					<tr>
 						<td class="name"><a href="{{appURL}}">{{profile.name.first}} {{profile.name.last}}</a></td>
-						<td class="email"><a href="{{appURL}}">{{email}}</a></td>
+						<td class="email"><a href="{{appURL}}">{{userEmail}}</a></td>
 						<td class="status">{{status}}</td>
 						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="date-completed">{{date completedAt 'MMM Do YYYY, h:mma'}}</td>
@@ -37,46 +37,4 @@
 		<ul class="pagination"></ul>
 		</form>
 	</div>
-</template>
-
-<template name="admin-app-single">
-	{{> admin-menu}}
-	<h2>Application</h2>
-	{{> notifications}}
-	{{> edit}}
-	{{#with user}}
-		<h3>{{displayname}}</h3>
-	{{/with}}
-	<form id="admin-app-single" data-id="{{app._id}}">
-		<div class="form-group">
-			<div class="field-group">
-				<label for "status" class="{{#if editing}}control-label{{/if}}">Status</label>
-				{{#if editing}}
-					<select name="status" id="status" class="form-control">
-						{{#each statuses}}
-							<option value="{{slug}}" {{selected slug ../app.status}}>{{name}}</option>
-						{{/each}}
-					</select>
-				{{else}}
-					<div class="value">{{app.status}}</div>
-				{{/if}}
-			</div>
-		</div><!-- .form-group status -->
-		{{#with user}}
-			{{> display-personal-info}}
-		{{/with}}
-		{{#with app}}
-			<h2 class="section-title">Education</h2>
-				{{> display-education}}
-			<h2 class="section-title">Qualifications</h2>
-				{{> display-qualifications}}
-			<h2 class="section-title">Professional Interests</h2>
-				{{> display-professional}}
-			<h2 class="section-title">Essays</h2>
-				{{> display-essays}}
-
-			<h3 class="section-title">Files</h3>
-				{{> display-files}}
-		{{/with}}
-	</form>
 </template>

@@ -27,7 +27,7 @@ Handlebars.registerHelper('checked', function (slug, values) {
 });
 Handlebars.registerHelper('selected', function(slug, value) {
 	if (slug === value) {
-		return 'selected';
+		return 'selected="selected"';
 	}
 });
 
@@ -112,7 +112,7 @@ Handlebars.registerHelper('displayname', function() {
 	}
 });
 
-Handlebars.registerHelper('email', function() {
+Handlebars.registerHelper('userEmail', function() {
 	return this.emails[0].address;
 });
 
