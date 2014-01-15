@@ -118,28 +118,15 @@ Router.map(function(){
 		controller: AdminUserSingle
 	});
 
-	this.route('admin-grader', {
+	this.route('admin-graders', {
 		path: '/admin/graders',
-		template: 'admin-users',
-		waitOn: function() {
-			return Meteor.subscribe('allUsers', 'grader');
-		},
-		// @TODO: filter roles
-		data: function() {
-			var graders = Meteor.users.find({roles: 'grader'}).fetch();
-			Lazy(graders).each(function(u) {
-				u.profileURL = Router.routes['admin-grader-profile'].path({_id: u._id});
-			});
-			return {
-				users: graders
-			}
-		}
+		controller: AdminGradersController
 	});
 
-	this.route('admin-grader-profile', {
+	this.route('admin-grader-single', {
 		path: '/admin/graders/:_id',
 		controller: GraderProfileController
-	})
+	});
 
 	// grade
 	this.route('grade-register', {
@@ -175,8 +162,8 @@ Router.before(filters.isAdmin, {only: [
 	'admin-app-single',
 	'admin-users',
 	'admin-user-single',
-	'admin-grader',
-	'admin-grader-profile'
+	'admin-graders',
+	'admin-grader-single'
 ]});
 Router.before(filters.isGrader, {only: [
 	'grade-temp',

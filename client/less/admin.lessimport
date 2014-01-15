@@ -97,6 +97,10 @@ body, html {
 			text-decoration: underline;
 		}
 	}
+	td.id,
+	th.id {
+		display: none;
+	}
 	caption {
 		margin: 1em 0;
 	}

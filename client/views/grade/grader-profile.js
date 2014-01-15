@@ -2,16 +2,33 @@ GraderProfileController = RouteController.extend({
 	template: 'grader-profile',
 	waitOn: function() {
 		return [
-			Meteor.subscribe('graderData', this.params._id)
+			Meteor.subscribe('graderData', this.params._id),
+			Meteor.subscribe('graderApps', this.params._id),
+			Meteor.subscribe('graderUsers', this.params._id)
 		];
 	},
 	data: function() {
 		var graderId = (this.params._id) ? this.params._id : Meteor.userId(),
-			grader = Meteor.users.findOne(graderId);
+			grader = Meteor.users.findOne(graderId),
+			apps = apps = Applications.find({'user': {$nin: [graderId, Meteor.userId()]}}).fetch();
+		Lazy(apps).each(function(a) {
+			// applicant whom the app belongs to
+			var applicant = Meteor.users.findOne(a.user);
+			if (applicant) {
+				a.profile = applicant.profile;
+				a.emails = applicant.emails;
+			}
+			a.appURL = Router.routes['grade-app-single'].path({_id: a._id});
+
+			// find app data from the grader profile
+			var graderApp = Lazy(grader.grader.apps).findWhere({appId: a._id});
+			if (graderApp) a.graderStatus = graderApp.status;
+		});
 		return {
-			id: graderId,
+			graderId: graderId,
 			profile: grader.profile,
 			grader: grader.grader,
+			apps: apps,
 			locations: [
 				{
 					"slug": "overseas",
@@ -72,11 +89,13 @@ Template['grader-profile'].events = {
 		// if currently editing, save the profile
 		if (Session.get('editing')) {
 			var $form = $('#grader-profile'),
-				id = $form.data('id');
+				graderId = $form.data('graderid');
+			console.log(graderId);
+
 			if ($form.valid()) {
 				saveUser({
 					groups: getFormGroups($form),
-					id: id,
+					id: graderId,
 					success: function() {
 						Session.set('editing', false);
 						notify({

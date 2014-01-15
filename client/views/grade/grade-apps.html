@@ -1,16 +1,17 @@
 <template name="grade-apps">
 	<div class="grade-apps">
 		<h2>Applications Assigned</h2>
-		<form id="grade-apps">
-		<table id="grade-apps" class="table grade-list">
+		<form id="grade-apps" data-graderid="{{graderId}}">
+		<table id="grade-list-apps" class="table grade-list">
 			<caption>
-				<input type="text" class="search form-control" placeholder="Search {{apps.length}} applications..." autofocus/>
+				<input type="text" class="searchApps form-control" placeholder="Search {{apps.length}} applications..." autofocus/>
 			</caption>
 			<thead>
 				<tr>
+					<th class="id">ID</th>
 					<th class="sort" data-sort="name">Name</th>
 					<th class="sort" data-sort="email">Email</th>
-					<th class="sort" data-sort="status">App Status</th>
+					<th class="sort" data-sort="app-status">App Status</th>
 					<th class="sort desc" data-sort="date-created">Date created</th>
 					<th class="sort desc" data-sort="date-completed">Date submitted</th>
 					<th class="sort" data-sort="grader-status">Grader Status</th>
@@ -20,13 +21,14 @@
 			<tbody class="list">
 				{{#each apps}}
 					<tr class="assignedApp" data-id="{{_id}}">
+						<td class="id">{{_id}}</td>
 						<td class="name"><a href="{{appURL}}">{{profile.name.first}} {{profile.name.last}}</a></td>
 						<td class="email"><a href="{{appURL}}">{{userEmail}}</a></td>
-						<td class="status">{{status}}</td>
+						<td class="app-status">{{status}}</td>
 						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="date-completed">{{date completedAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="grader-status">{{graderStatus}}</td>
-						<td>{{#if ../isAdmin}}<a href="#" class="drop">Drop app</a>{{/if}}</td>
+						<td class="drop"><a href="#" class="drop">Drop app</a></td>
 					</tr>
 				{{/each}}
 			</tbody>

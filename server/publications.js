@@ -47,21 +47,27 @@ function graderAssignedUsers(graderId) {
 	return _.pluck(grader.grader.apps, 'applicantId');
 }
 
-Meteor.publish('graderApps', function() {
-	if (!hasRole('grader', this.userId)) {
+Meteor.publish('graderApps', function(graderId) {
+	if (!_.isString(graderId)) {
+		graderId = this.userId;
+	}
+	if (!hasRole('grader', graderId)) {
 		return [];
 	}
-	var assignedApps = graderAssignedApps(this.userId);
+	var assignedApps = graderAssignedApps(graderId);
 	return Applications.find({_id: {
 		$in: assignedApps
 	}});
 });
 
-Meteor.publish('graderUsers', function() {
-	if (!hasRole('grader', this.userId)) {
+Meteor.publish('graderUsers', function(graderId) {
+	if (!_.isString(graderId)) {
+		graderId = this.userId;
+	}
+	if (!hasRole('grader', graderId)) {
 		return [];
 	}
-	var assignedUsers = graderAssignedUsers(this.userId);
+	var assignedUsers = graderAssignedUsers(graderId);
 	return Meteor.users.find({_id: {
 		$in: assignedUsers
 	}})
