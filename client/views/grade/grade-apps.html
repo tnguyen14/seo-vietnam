@@ -1,0 +1,37 @@
+<template name="grade-apps">
+	<div class="grade-apps">
+		<h2>Applications Assigned</h2>
+		<form id="grade-apps">
+		<table id="grade-apps" class="table grade-list">
+			<caption>
+				<input type="text" class="search form-control" placeholder="Search {{apps.length}} applications..." autofocus/>
+			</caption>
+			<thead>
+				<tr>
+					<th class="sort" data-sort="name">Name</th>
+					<th class="sort" data-sort="email">Email</th>
+					<th class="sort" data-sort="status">App Status</th>
+					<th class="sort desc" data-sort="date-created">Date created</th>
+					<th class="sort desc" data-sort="date-completed">Date submitted</th>
+					<th class="sort" data-sort="grader-status">Grader Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody class="list">
+				{{#each apps}}
+					<tr class="assignedApp" data-id="{{_id}}">
+						<td class="name"><a href="{{appURL}}">{{profile.name.first}} {{profile.name.last}}</a></td>
+						<td class="email"><a href="{{appURL}}">{{userEmail}}</a></td>
+						<td class="status">{{status}}</td>
+						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
+						<td class="date-completed">{{date completedAt 'MMM Do YYYY, h:mma'}}</td>
+						<td class="grader-status">{{graderStatus}}</td>
+						<td><a href="#" class="drop">Drop app</a></td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<ul class="pagination"></ul>
+		</form>
+	</div><!-- .grade-apps -->
+</template>

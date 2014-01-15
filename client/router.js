@@ -153,6 +153,10 @@ Router.map(function(){
 		path: '/grade/profile',
 		controller: GraderProfileController
 	});
+	this.route('grade-apps', {
+		path: '/grade/apps',
+		controller: GradeAppsController
+	});
 	this.route('grade-app-single', {
 		path: '/grade/apps/:_id',
 		controller: GradeAppSingleController
@@ -176,5 +180,7 @@ Router.before(filters.isAdmin, {only: [
 ]});
 Router.before(filters.isGrader, {only: [
 	'grade-temp',
-	'grade-profile'
+	'grade-profile',
+	'grade-apps',
+	'grade-app-single'
 ]});
