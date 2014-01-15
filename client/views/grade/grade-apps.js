@@ -18,9 +18,11 @@ GradeAppsController = RouteController.extend({
 			}
 			a.appURL = Router.routes['grade-app-single'].path({_id: a._id});
 			a.graderStatus = Lazy(grader.grader.apps).findWhere({appId: a._id}).status;
-		})
+		});
+
 		return {
-			apps: apps
+			apps: apps,
+			isAdmin: hasRole('admin', Meteor.user())
 		}
 	}
 });
@@ -28,6 +30,14 @@ GradeAppsController = RouteController.extend({
 Template['grade-apps'].events = {
 	'click .assignedApp .drop': function(e) {
 		e.preventDefault();
+		if (!hasRole('admin', Meteor.user())) {
+			notify({
+				message: 'Only an admin can drop app',
+				context: 'warning',
+				dismissable: true
+			});
+			return;
+		}
 
 	}
 }

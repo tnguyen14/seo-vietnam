@@ -26,7 +26,7 @@
 						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="date-completed">{{date completedAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="grader-status">{{graderStatus}}</td>
-						<td><a href="#" class="drop">Drop app</a></td>
+						<td>{{#if ../isAdmin}}<a href="#" class="drop">Drop app</a>{{/if}}</td>
 					</tr>
 				{{/each}}
 			</tbody>
