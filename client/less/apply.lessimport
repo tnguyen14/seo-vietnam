@@ -185,6 +185,7 @@ input {
 }
 
 .list-group {
+	margin-bottom: 0;
 	.list-item {
 		&:after {
 			content: ', ';

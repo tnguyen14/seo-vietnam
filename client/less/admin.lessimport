@@ -85,7 +85,8 @@ body, html {
 }
 
 
-.admin-list {
+.admin-list,
+.grade-list {
 	thead > tr > th {
 		// remove bold border bottom
 		border-bottom: 0;
