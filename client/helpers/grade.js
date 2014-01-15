@@ -18,6 +18,10 @@ addAppToGrader = function(graderId, appId, applicantId) {
 	var grader = Meteor.users.findOne(graderId),
 		limit = grader.grader.limit,
 		assignedApps = grader.grader.apps;
+	if (!limit) {
+		dfd.reject(new Meteor.Error(400, 'Grader ' + grader.profile.name.first + ' ' + grader.profile.name.last + ' has no limit set.'));
+			return dfd.promise();
+	}
 	if (_.isArray(assignedApps)) {
 		if (assignedApps.length >= limit) {
 			dfd.reject(new Meteor.Error(400, 'Grader ' + grader.profile.name.first + ' ' + grader.profile.name.last + ' has reached their limit.'));
@@ -49,6 +53,10 @@ addGraderToApp = function(appId, graderId) {
 		grader = Meteor.users.findOne(graderId),
 		limit = grader.grader.limit,
 		assignedApps = grader.grader.apps;
+	if (!limit) {
+		dfd.reject(new Meteor.Error(400, 'Grader ' + grader.profile.name.first + ' ' + grader.profile.name.last + ' has no limit set.'));
+			return dfd.promise();
+	}
 	if (_.isArray(assignedApps)) {
 		if (assignedApps.length >= limit) {
 			dfd.reject(new Meteor.Error('Grader ' + grader.profile.name.first + ' ' + grader.profile.name.last + ' has reached their limit.2'));
