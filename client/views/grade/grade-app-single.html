@@ -3,9 +3,9 @@
 	{{> grade}}
 	<div class="grade-app-wrap">
 		<h2>Application Grading</h2>
-		<div class="notifications"></div>
+		{{> notifications}}
 		{{#with user}}
-			<h4>{{displayname}}</h4>
+			<h3>{{displayname}}</h3>
 		{{/with}}
 		<div class="field-group">
 			<label class="control-label">Status</label>
