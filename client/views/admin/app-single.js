@@ -181,7 +181,7 @@ Template['admin-app-single'].events = {
 			$editGrader = $(e.target).closest('.edit-grader'),
 			graderId = $editGrader.find('select').val();
 
-		$.when(removeAppFromGrader(graderId, appId), removeGraderFromApp(appId, graderId)).done(function () {
+		$.when(removeAppFromGrader(graderId, appId), removeGraderFromApp(appId, graderId), removeGradeFromApp(appId, graderId)).done(function () {
 			notify({
 				message: 'Successfully removed grader',
 				context: 'success',

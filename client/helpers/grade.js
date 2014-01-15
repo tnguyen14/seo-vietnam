@@ -49,8 +49,12 @@ addAppToGrader = function(graderId, appId, applicantId) {
 // add a new grader to app
 // @return jQuery deferred Promise object
 addGraderToApp = function(appId, graderId) {
-	var dfd = new $.Deferred(),
-		grader = Meteor.users.findOne(graderId),
+	var dfd = new $.Deferred();
+	if (!graderId || !appId) {
+		dfd.reject(new Meteor.Error(400, 'No grader or app provided.'));
+		return dfd.promise();
+	}
+	var grader = Meteor.users.findOne(graderId),
 		limit = grader.grader.limit,
 		assignedApps = grader.grader.apps;
 	if (!limit) {
@@ -81,6 +85,10 @@ addGraderToApp = function(appId, graderId) {
 // @return jQuery deferred Promise object
 removeAppFromGrader = function(graderId, appId) {
 	var dfd = new $.Deferred();
+	if (!graderId || !appId) {
+		dfd.reject(new Meteor.Error(400, 'No grader or app provided.'));
+		return dfd.promise();
+	}
 	Meteor.users.update(graderId, {
 		$pull: {
 			'grader.apps': {appId: appId}
@@ -99,6 +107,10 @@ removeAppFromGrader = function(graderId, appId) {
 // @return jQuery deferred Promise object
 removeGraderFromApp = function(appId, graderId) {
 	var dfd = new $.Deferred();
+	if (!graderId || !appId) {
+		dfd.reject(new Meteor.Error(400, 'No grader or app provided.'));
+		return dfd.promise();
+	}
 	Applications.update(appId, {
 		$pull: {
 			'graders': graderId
@@ -112,3 +124,21 @@ removeGraderFromApp = function(appId, graderId) {
 	});
 	return dfd.promise();
 };
+
+// remove any grade by grader from an app
+// @return jQuery deferred Promise object
+removeGradeFromApp = function(appId, graderId) {
+	var dfd = new $.Deferred();
+	Applications.update(appId, {
+		$pull: {
+			'grades': {grader: graderId}
+		}
+	}, function(err) {
+		if (!err) {
+			dfd.resolve();
+		} else {
+			dfd.reject(err);
+		}
+	})
+	return dfd.promise();
+}

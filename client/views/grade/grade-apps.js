@@ -67,7 +67,7 @@ Template['grade-apps'].events = {
 		var graderId = $('#grade-apps').data('graderid'),
 			$assignedApp = $(e.target).closest('.assignedApp'),
 			appId = $assignedApp.data('id');
-		$.when(removeAppFromGrader(graderId, appId), removeGraderFromApp(appId, graderId)).done(function () {
+		$.when(removeAppFromGrader(graderId, appId), removeGraderFromApp(appId, graderId), removeGradeFromApp(appId, graderId)).done(function () {
 			notify({
 				message: 'Successfully removed grader',
 				context: 'success',
