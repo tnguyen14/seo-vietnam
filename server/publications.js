@@ -24,22 +24,6 @@ Meteor.publish('allApps', function() {
 	return [];
 })
 
-Meteor.publish('userData', function(userId) {
-	if (!_.isString(userId)) {
-		userId = this.userId;
-	}
-	return Meteor.users.find({_id: userId},
-	{
-		fields: {
-			'roles': 1,
-			'profile': 1,
-			'emails': 1,
-			'_id': 1,
-			'createdAt': 1
-		}
-	});
-});
-
 Meteor.publish('graderData', function(graderId) {
 	if (!_.isString(graderId)) {
 		graderId = this.userId;
@@ -56,11 +40,11 @@ Meteor.publish('graderData', function(graderId) {
 
 function graderAssignedApps(graderId) {
 	var grader = Meteor.users.findOne(graderId);
-	return _.pluck(grader.grader.apps, 'id');
+	return _.pluck(grader.grader.apps, 'appId');
 }
 function graderAssignedUsers(graderId) {
 	var grader = Meteor.users.findOne(graderId);
-	return _.pluck(grader.grader.apps, 'userId');
+	return _.pluck(grader.grader.apps, 'applicantId');
 }
 
 Meteor.publish('graderApps', function() {
@@ -114,4 +98,36 @@ Meteor.publish('allUsers', function(role) {
 		}
 	}
 	return [];
+});
+
+Meteor.publish('allGraders', function() {
+	if (!hasRole('grader', this.userId)) {
+		return [];
+	}
+	return Meteor.users.find({roles: 'grader'});
 })
+
+Meteor.publish('userData', function(userId) {
+	// find user based on app
+	if (_.isObject(userId)) {
+		if (userId.app) {
+			// find app first
+			var app = Applications.findOne(userId.app);
+			return Meteor.users.find(app.user);
+		}
+	}
+
+	if (!_.isString(userId)) {
+		userId = this.userId;
+	}
+	return Meteor.users.find({_id: userId},
+	{
+		fields: {
+			'roles': 1,
+			'profile': 1,
+			'emails': 1,
+			'_id': 1,
+			'createdAt': 1
+		}
+	});
+});
