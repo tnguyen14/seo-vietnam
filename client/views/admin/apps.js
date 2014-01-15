@@ -58,6 +58,7 @@ Template['admin-apps'].rendered = function() {
 			'grade3'
 		],
 		page: 20,
+		searchClass: 'searchApps',
 		// indexAsync: true,
 		plugins: [
 			ListPagination({
