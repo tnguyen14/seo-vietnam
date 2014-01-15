@@ -1,10 +1,9 @@
 AdminAppSingle = RouteController.extend({
 	waitOn: function() {
-		// since params returns appId, there's no way to
-		// look up app from userId
-		// subscribing to all for now
 		return [
-			Meteor.subscribe('allUsers'),
+			Meteor.subscribe('allGraders'),
+			// get applicant data based on app
+			Meteor.subscribe('userData', {app: this.params._id}),
 			Meteor.subscribe('appData', this.params._id)
 		];
 	},
@@ -21,7 +20,7 @@ AdminAppSingle = RouteController.extend({
 			user = Meteor.users.findOne(userId);
 		}
 
-		// get grader names
+		// get grader profiles
 		if (_.isArray(gradersAssigned) && gradersAssigned.length > 0) {
 			gradersAssigned = Lazy(gradersAssigned).map(function(gid) {
 				var grader = Meteor.users.findOne(gid);
@@ -32,7 +31,10 @@ AdminAppSingle = RouteController.extend({
 						email: grader.emails[0].address
 					}
 				} else {
-					return {};
+					return {
+						_id: gid,
+						noGraderFound: true
+					};
 				}
 			}).toArray();
 		}

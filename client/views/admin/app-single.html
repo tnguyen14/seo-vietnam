@@ -1,10 +1,9 @@
 <template name="admin-app-single">
 	{{> admin-menu}}
-	<h2>Application</h2>
 	{{> notifications}}
 	{{> edit}}
 	{{#with user}}
-		<h3>{{displayname}}</h3>
+		<h2>{{displayname}} - Application</h2>
 	{{/with}}
 	<form id="admin-app-single" data-id="{{app._id}}" data-applicantid="{{user._id}}">
 		<div class="form-group">
@@ -29,6 +28,9 @@
 					{{#each gradersAssigned}}
 						<div class="edit-grader">
 							<select name="graders" class="form-control">
+								{{#if noGraderFound}}
+									<option value="{{_id}}" selected>No grader found for id {{_id}}</option>
+								{{/if}}
 								{{#each ../graders}}
 									<option value="{{_id}}" {{selected _id ../_id}}>{{profile.name.first}} {{profile.name.last}} ({{emails.0.address}})</option>
 								{{/each}}
@@ -41,7 +43,11 @@
 				{{else}}
 					<div class="value list-group">
 					{{#each gradersAssigned}}
-						<span class="list-item">{{name}} ({{email}})</span>
+						{{#if noGraderFound}}
+							<span class="list-item">No grader found for id {{_id}}
+						{{else}}
+							<span class="list-item">{{name}} ({{email}})</span>
+						{{/if}}
 					{{/each}}
 					</div>
 				{{/if}}
