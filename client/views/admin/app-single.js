@@ -66,6 +66,18 @@ Template['admin-app-single'].helpers({
 	}
 });
 
+function saveAppToGraders(graders, appId, applicantId) {
+	var dfd = new $.Deferred();
+	$.when.apply($, $.map(graders, function(graderId) {
+		return addAppToGrader(graderId, appId, applicantId);
+	})).done(function() {
+		dfd.resolve();
+	}).fail(function(err) {
+		dfd.reject(err);
+	});
+	return dfd.promise();
+}
+
 Template['admin-app-single'].events = {
 	'click #edit': function(e) {
 		e.preventDefault();
@@ -80,26 +92,47 @@ Template['admin-app-single'].events = {
 			var groups = getFormGroups($form),
 				// use deferred to save apps and also save to grader profile if grader changes are invoked
 				saveAppDfd = new $.Deferred(),
-				saveGraderDfd = new $.Deferred();
+				saveAppToGradersDfd = new $.Deferred(),
+				saveGradersToAppDfd = new $.Deferred(),
+				newGraders = false;
 
 			Lazy(groups).each(function (g) {
 				// if there are changes to the graders
 				if (g.graders) {
+					newGraders = true;
 					if (_.isString(g.graders)) {
 						g.graders = [g.graders];
 					}
+
 					// for each grader, save apps to grader's profile
 					$.when.apply($, $.map(g.graders, function (graderId) {
-						addAppToGrader(graderId, appId, applicantId);
+						return addAppToGrader(graderId, appId, applicantId);
 					})).done(function () {
-						saveGraderDfd.resolve();
+						saveAppToGradersDfd.resolve();
 					}).fail(function (err) {
-						saveGraderDfd.reject(err);
+						saveAppToGradersDfd.reject(err);
 					});
-				} else {
-					saveGraderDfd.resolve();
+
+					// save each of these graders back to app
+					$.when.apply($, $.map(g.graders, function(graderId) {
+						return addGraderToApp(appId, graderId)
+					})).done(function() {
+						saveGradersToAppDfd.resolve();
+					}).fail(function(err) {
+						saveGradersToAppDfd.reject(err);
+					})
+
 				}
 			});
+
+			// if there are graders to save, remove graders as it is handled separately above
+			if (!newGraders) {
+				saveGraderDfd.resolve();
+			} else {
+				groups = Lazy(groups).map(function(g) {
+					return Lazy(g).omit('graders');
+				}).toArray();
+			}
 
 			// save any changes into the app itself
 			saveApp({
@@ -114,7 +147,7 @@ Template['admin-app-single'].events = {
 			});
 
 			// when saving into app and into grader's profile are done, notify
-			$.when(saveGraderDfd.promise(), saveAppDfd.promise()).done(function() {
+			$.when(saveAppDfd.promise(), saveAppToGradersDfd.promise(), saveGradersToAppDfd.promise()).done(function() {
 				notify({
 					message: 'Successfully saved app',
 					context: 'success',

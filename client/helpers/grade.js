@@ -15,6 +15,15 @@ addAppToGrader = function(graderId, appId, applicantId) {
 			return dfd.promise();
 		}
 	}
+	var grader = Meteor.users.findOne(graderId),
+		limit = grader.grader.limit,
+		assignedApps = grader.grader.apps;
+	if (_.isArray(assignedApps)) {
+		if (assignedApps.length >= limit) {
+			dfd.reject(new Meteor.Error(400, 'Grader ' + grader.profile.name.first + ' ' + grader.profile.name.last + ' has reached their limit.'));
+			return dfd.promise();
+		}
+	}
 	Meteor.users.update(graderId, {
 		$addToSet: {
 			'grader.apps': {
@@ -36,7 +45,16 @@ addAppToGrader = function(graderId, appId, applicantId) {
 // add a new grader to app
 // @return jQuery deferred Promise object
 addGraderToApp = function(appId, graderId) {
-	var dfd = new $.Deferred();
+	var dfd = new $.Deferred(),
+		grader = Meteor.users.findOne(graderId),
+		limit = grader.grader.limit,
+		assignedApps = grader.grader.apps;
+	if (_.isArray(assignedApps)) {
+		if (assignedApps.length >= limit) {
+			dfd.reject(new Meteor.Error('Grader ' + grader.profile.name.first + ' ' + grader.profile.name.last + ' has reached their limit.2'));
+			return dfd.promise();
+		}
+	}
 	Applications.update(appId, {
 		$addToSet: {
 			'graders': graderId
