@@ -66,26 +66,6 @@ Template['admin-app-single'].helpers({
 	}
 });
 
-function saveGrader(graderId, appId, applicantId) {
-	var dfd = new $.Deferred();
-	Meteor.users.update(graderId, {
-		$addToSet: {
-			'grader.apps': {
-				appId: appId,
-				applicantId: applicantId,
-				status: 'assigned'
-			}
-		}
-	}, function(err, res) {
-		if (!err) {
-			dfd.resolve();
-		} else {
-			dfd.reject(err);
-		}
-	});
-	return dfd.promise();
-};
-
 Template['admin-app-single'].events = {
 	'click #edit': function(e) {
 		e.preventDefault();
@@ -110,9 +90,7 @@ Template['admin-app-single'].events = {
 					}
 					// for each grader, save apps to grader's profile
 					$.when.apply($, $.map(g.graders, function (graderId) {
-						console.log('graderId ' + graderId );
-						console.log('applicantId ' + applicantId);
-						saveGrader(graderId, appId, applicantId);
+						addAppToGrader(graderId, appId, applicantId);
 					})).done(function () {
 						saveGraderDfd.resolve();
 					}).fail(function (err) {
@@ -136,7 +114,7 @@ Template['admin-app-single'].events = {
 			});
 
 			// when saving into app and into grader's profile are done, notify
-			$.when( saveGraderDfd.promise(), saveAppDfd.promise() ).done(function() {
+			$.when(saveGraderDfd.promise(), saveAppDfd.promise()).done(function() {
 				notify({
 					message: 'Successfully saved app',
 					context: 'success',
@@ -165,10 +143,25 @@ Template['admin-app-single'].events = {
 	},
 	'click .edit-grader .remove': function(e) {
 		e.preventDefault();
-		var $select = $(e.target).closest('.edit-grader').find('select');
-		// Applications.update($('#admin-app-single').data('id'), {
+		var $form = $('#admin-app-single'),
+			appId = $form.data('id'),
+			$editGrader = $(e.target).closest('.edit-grader'),
+			graderId = $editGrader.find('select').val();
 
-		// })
+		$.when(removeAppFromGrader(graderId, appId), removeGraderFromApp(appId, graderId)).done(function () {
+			notify({
+				message: 'Successfully removed grader',
+				context: 'success',
+				auto: true
+			});
+			$editGrader.remove();
+		}).fail(function(err) {
+			notify({
+				message: err.reason,
+				context: 'warning',
+				dismissable: true
+			});
+		});
 	}
 }
 
