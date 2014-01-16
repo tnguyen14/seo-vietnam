@@ -23,7 +23,7 @@ Meteor.startup(function(){
 			});
 		}
 	}
-	// update professions type
+	// update professions type based on a json file declaration
 	Assets.getText('professions.json', function(err, res) {
 		if (!err) {
 			var professions = JSON.parse(res),

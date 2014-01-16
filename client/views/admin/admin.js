@@ -47,36 +47,86 @@ appComplete = function (app) {
 	}
 }
 
-function assignAppToGrader(graderId, callback) {
-	setTimeout(function() {
-		return callback();
-	}, 20);
+function assignAppRecursive(graders, app) {
+	var dfd = Q.defer();
+	if (graders.length <= 0) {
+		dfd.reject(new Meteor.Error('No more graders found for app ' + app._id));
+	} else {
+		var grader = graders.shift(),
+			apps = grader.grader.apps || [],
+			limit = parseInt(grader.grader.limit, 10);
+		// assign app to grader only if grader has not been assigned this app before and grader still within limit
+		if (!Lazy(apps).findWhere({appId: app._id}) && apps.length < limit) {
+			return Q.all([
+				addAppToGrader(grader._id, app._id, app.user),
+				addGraderToApp(app._id, grader._id)
+			]).then(function(value) {
+				return value;
+			}, function(reason) {
+				assignAppRecursive(graders, app);
+			});
+		} else {
+			assignAppRecursive(graders, app);
+		}
+	}
+	return dfd.promise;
 }
+// insert app to any graders in the array, starting with the first one
+function assignApp(app, graders) {
+	graders = graders.slice();
+	return assignAppRecursive(graders, app);
+}
+
+function assignAppsRecursive (apps, graders) {
+	var dfd = Q.defer(),
+		$output = $('.assignment-output'),
+		app;
+	if (apps.length <= 0) {
+		dfd.reject('No more apps!');
+	} else {
+		app = apps.shift();
+		assignApp(app, graders).then(function(value) {
+			if (value)
+				$output.append('<li class="success">Assigned app ' + value[1] + ' to grader ' + value[0] + '</li>');
+			else
+				$output.append('<li class="success">Assigned app, but returned undefined</li>');
+			return assignAppsRecursive(apps, graders);
+		}, function(reason) {
+			$output.append('<li class="failure">' + reason.error + '</li>');
+		});
+	}
+	return dfd.promise;
+}
+
+function startAssigning (location, profession) {
+	var graders = Meteor.users.find({roles: 'grader', 'grader.location': location, 'grader.profession': profession}).fetch(),
+		completedApps = Applications.find({
+			status: 'completed',
+			location: location,
+			$or: [
+				{'profession_type': profession},
+				{'profession_type': 'both'}
+			]
+			}).fetch(),
+		// only assign graders to apps with 0 or 1 graders
+		appsToAssign = Lazy(completedApps).filter(function(a) {
+			return (!a.graders || a.graders.length < 2);
+		}).toArray();
+	assignAppsRecursive(appsToAssign, graders).then(function(value){
+		console.log(value);
+	}, function(reason) {
+		console.log(reason);
+	}).fin(function() {
+			notify({
+				message: 'Done assigning apps',
+				context: 'success'
+			})
+		}).done();
+}
+
 Template['admin-stats'].events = {
 	'click #assign-apps': function() {
-		// get all graders and completed apps
-		var graders = Meteor.users.find({roles: 'grader'}).fetch(),
-			completedApps = Applications.find({status: 'completed'}).fetch(),
-			// only assign graders to apps with 0 or 1 graders
-			appsToAssign = Lazy(completedApps).filter(function(a) {
-				return (!a.graders || a.graders.length < 2);
-			}).toArray(),
-			appIndex = 0;
-		Lazy(graders).each(function(g) {
-			var graderId = g._id,
-				// number of apps already assigned to grader
-				currentAssignedApps = g.grader.apps || [],
-				limit = parseInt(g.grader.limit, 10) || 0,
-				i;
-			for (i = currentAssignedApps.length; i <= limit; i++) {
-				var app = appsToAssign[appIndex];
-				console.log(appIndex);
-				assignAppToGrader(graderId, function() {
-					appIndex++;
-					console.log(appIndex);
-				});
-			}
-		});
+		startAssigning('local', 'business');
 	}
 };
 

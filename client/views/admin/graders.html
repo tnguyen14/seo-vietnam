@@ -1,0 +1,34 @@
+<template name="admin-graders">
+	{{> admin-menu}}
+	<h2>Graders</h2>
+	<form id="admin-graders">
+		<table id="admin-list-graders" class="table admin-list">
+			<caption>
+				<input type="text" class="searchGraders form-control" placeholder="Search {{graders.length}} graders..." autofocus/>
+			</caption>
+			<thead>
+				<tr>
+					<th class="sort" data-sort="name">Name</th>
+					<th class="sort" data-sort="email">Email</th>
+					<th class="sort" data-sort="location">Location</th>
+					<th class="sort" data-sort="profession">Profession</th>
+					<th class="sort" data-sort="limit">Limit</th>
+					<th class="sort" data-sort="apps-assigned">Apps Assigned</th>
+				</tr>
+			</thead>
+			<tbody class="list">
+				{{#each graders}}
+					<tr>
+						<td class="name"><a href="{{profileURL}}" title="View User">{{profile.name.first}} {{profile.name.last}}</a></td>
+						<td class="email"><a href="{{profileURL}}" title="View User">{{emails.0.address}}</a></td>
+						<td class="location">{{grader.location}}</td>
+						<td class="profession">{{grader.profession}}</td>
+						<td class="limit">{{grader.limit}}</td>
+						<td class="apps-assigned">{{grader.apps.length}}</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<ul class="pagination"></ul>
+	</form>
+</template>

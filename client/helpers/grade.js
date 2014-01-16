@@ -38,7 +38,7 @@ addAppToGrader = function(graderId, appId, applicantId) {
 		}
 	}, function(err, res) {
 		if (!err) {
-			dfd.resolve();
+			dfd.resolve(graderId);
 		} else {
 			dfd.reject(err);
 		}
@@ -73,7 +73,7 @@ addGraderToApp = function(appId, graderId) {
 		}
 	}, function(err) {
 		if (!err) {
-			dfd.resolve();
+			dfd.resolve(appId);
 		} else {
 			dfd.reject(err);
 		}
