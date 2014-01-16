@@ -44,16 +44,16 @@
 				{{/if}}
 			</div>
 			<div class="field-group">
-				<label for="professional" class="{{#if editing}}control-label{{/if}}">Professional Background</label>
+				<label for="profession" class="{{#if editing}}control-label{{/if}}">Professional Background</label>
 				{{#if editing}}
-					<select name="professional" id="professional" class="form-control">
+					<select name="profession" id="profession" class="form-control">
 						<option value=""></option>
 						{{#each profs}}
-							<option value="{{slug}}" {{selected slug ../grader.professional}}>{{name}}</option>
+							<option value="{{slug}}" {{selected slug ../grader.profession}}>{{name}}</option>
 						{{/each}}
 					</select>
 				{{else}}
-					<div class="value">{{getName profs ../grader.professional}}</div>
+					<div class="value">{{getName profs ../grader.profession}}</div>
 				{{/if}}
 			</div>
 			<div class="field-group">
