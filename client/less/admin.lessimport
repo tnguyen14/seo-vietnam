@@ -190,3 +190,11 @@ body, html {
 		padding-top: 0.5em;
 	}
 }
+.assignment-output {
+	.success {
+		color: green;
+	}
+	.failure {
+		color: red;
+	}
+}
