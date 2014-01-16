@@ -35,17 +35,29 @@ Meteor.startup(function(){
 			Information.update({category: 'profession'}, {$set: {values: currentProfs}});
 		}
 	});
-	// add location to completed applications
+	// add location and profession to completed applications
 	// set to 'local' if user is in Vietnam, 'overseas' otherwise
-	var apps = Applications.find({status:'completed'}).fetch();
+	// analyze number of professions to determine whether 'business' or 'non-business'
+	var apps = Applications.find({status:'completed'}).fetch(),
+		whichProfession = function(prof) {
+			var professions = Information.findOne({category: 'profession'}).values;
+			// find the type of the profession
+			return Lazy(professions).findWhere({
+				slug: prof
+			}).type;
+		}
 	Lazy(apps).each(function(a){
-		var user = Meteor.users.findOne(a.user);
-		if (!a.location && user.profile['country-residence']) {
-			if (user.profile['country-residence'] === 'vietnam') {
-				Applications.update(a._id, {$set:{location: 'local'}});
-			} else {
-				Applications.update(a._id, {$set: {location: 'overseas'}});
+		// Location
+		var user = Meteor.users.findOne(a.user),
+			location,
+			prof_type = professionTally(a);
+		// only update location if it wasn't defined before
+		if (!a.location) {
+			location = locationType(user);
+			if (location) {
+				Applications.update(a.Id, {$set: {location: location}});
 			}
 		}
+		Applications.update(a._id, {$set: {'profession_type': prof_type}});
 	});
 });
