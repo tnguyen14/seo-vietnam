@@ -13,7 +13,8 @@
     "list.pagination.js": "~0.1.0",
     "lazy.js": "~0.3.1",
     "font-awesome": "~4.0.3",
-    "lesshat": "~2.0.13"
+    "lesshat": "~2.0.13",
+    "q": "~1.0.0"
   },
   "ignore": [
     "**/.*",

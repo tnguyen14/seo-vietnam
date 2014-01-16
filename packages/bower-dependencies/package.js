@@ -60,4 +60,9 @@ Package.on_use(function(api) {
 	api.add_files([
 		'../../public/bower_components/lazy.js/lazy.js'
 	], 'client');
+
+	//q
+	api.add_files([
+		'../../public/bower_components/q/q.js'
+	], 'client');
 });
