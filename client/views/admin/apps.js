@@ -36,6 +36,31 @@ AdminAppsCompletedController = AdminAppsController.extend({
 				a.emails = user.emails;
 			}
 			a.appURL = Router.routes['admin-app-single'].path({_id: a._id});
+			// if there are graders
+			if (a.graders) {
+				if (a.graders.length > 0) {
+					a.grade1 = 'assigned';
+				}
+				if (a.graders.length > 1) {
+					a.grade2 = 'assigned';
+				}
+				if (a.graders.length > 2) {
+					a.grade3 = 'assigned';
+				}
+				// if a grade has been received
+				// NOTE: grades array will not match up to graders array in terms of grader ID
+				if (a.grades) {
+					if (a.grades.length > 0) {
+						a.grade1 = 10;
+					}
+					if (a.grades.length > 1) {
+						a.grade2 = 10;
+					}
+					if (a.grades.length > 2) {
+						a.grade3 = 10;
+					}
+				}
+			}
 		});
 		return {
 			apps: completedApps.toArray()

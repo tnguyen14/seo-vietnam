@@ -1,5 +1,7 @@
 Meteor.subscribe('userData');
 
+Q.longStackSupport = true;
+
 // Google Analytics
 var production_url = /^apply.seo-vietnam.org$/
 
@@ -12,3 +14,4 @@ if (production_url.test(window.location.host)) {
 	ga('create', 'UA-26482928-4', 'seo-vietnam.org');
 	ga('send', 'pageview');
 }
+

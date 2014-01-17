@@ -1,8 +1,9 @@
 Template.login.rendered = function() {
-	if (Meteor.user()) {
-		if (hasRole('admin')) {
+	var user = Meteor.user();
+	if (user) {
+		if (hasRole('admin', user)) {
 			Router.go('admin');
-		} else if (hasRole('grader')) {
+		} else if (hasRole('grader', user)) {
 			Router.go('grade-temp');
 		} else {
 			Router.go('apply');
@@ -82,9 +83,10 @@ Template.login.events = {
 				});
 				return ;
 			}
-			if (hasRole('admin')) {
+			var user = Meteor.user();
+			if (hasRole('admin', user)) {
 				Router.go('admin');
-			} else if (hasRole('grader')) {
+			} else if (hasRole('grader', user)) {
 				Router.go('grade-temp');
 			} else {
 				if (currentApp().status === 'completed') {
