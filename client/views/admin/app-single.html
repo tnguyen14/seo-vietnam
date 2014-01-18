@@ -70,7 +70,7 @@
 
 <template name="add-grader">
 	<div class="add-grader">
-		<select name="graders" class="form-control">
+		<select name="graders" class="graders form-control">
 			<option value=""></option>
 			{{#each graders}}
 			<option value="{{_id}}">{{profile.name.first}} {{profile.name.last}} ({{emails.0.address}})</option>
