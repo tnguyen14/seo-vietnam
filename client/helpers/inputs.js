@@ -11,9 +11,15 @@ collectInputs = function(ctx) {
 		'select',
 		'input[type="radio"]:checked'
 	].join(', '), ctx).each(function(){
-		var name = $(this).attr('name'),
-			value = $(this).val().trim();
-		value = html_entity_encode(value);
+		var $this = $(this),
+			name = $this.attr('name'),
+			value = $this.val().trim();
+		// convert number
+		if ($this.prop('type') === 'number') {
+			value = parseInt(value, 10);
+		} else {
+			value = html_entity_encode(value);
+		}
 		// convert to array if name already exists
 		if (field[name]) {
 			if (! _.isArray(field[name])){

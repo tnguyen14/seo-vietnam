@@ -2,26 +2,25 @@
 	{{> admin-menu}}
 	{{> grade}}
 	<div class="grade-app-wrap">
-		<h2>Application Grading</h2>
+		<h3>Application Grading
+		{{#with user}} - {{displayname}}{{/with}}
+		</h3>
 		{{> notifications}}
-		{{#with user}}
-			<h3>{{displayname}}</h3>
-		{{/with}}
 		<div class="field-group">
-			<label class="control-label">Status</label>
-			<div class="value">{{app.status}}</div>
+			<label for="status">Status</label>
+			<div class="value" name="status">{{app.status}}</div>
 		</div>
 		{{#with user}}
 			{{> display-personal-info}}
 		{{/with}}
 		{{#with app}}
-			<h2 class="section-title">Education</h2>
+			<h3 class="section-title">Education</h3>
 				{{> display-education}}
-			<h2 class="section-title">Qualifications</h2>
+			<h3 class="section-title">Qualifications</h3>
 				{{> display-qualifications}}
-			<h2 class="section-title">Professional Interests</h2>
+			<h3 class="section-title">Professional Interests</h3>
 				{{> display-professional}}
-			<h2 class="section-title">Essays</h2>
+			<h3 class="section-title">Essays</h3>
 				{{> display-essays}}
 
 			<h3 class="section-title">Files</h3>
@@ -36,17 +35,34 @@
 <template name="grade">
 	<i class="grade-icon fa fa-pencil"></i>
 	<div class="grade-wrap">
-		<h3>Grades</h3>
-		<form class="criteria">
-			<ul>
+		<form id="grade-app" class="criteria">
 			{{#each criteria}}
-				<li class="criterion form-group">
-					<label>{{title}} ({{weight}}%)</label>
-					<input type="number" name="{{slug}}" value="{{score}}"/>
-				</li>
+				<div class="criterion"><h4>{{title}} ({{weight}}%)
+				{{#if hint}}
+					<i class="fa fa-question-circle tooltip-trigger" title="{{{hint}}}"></i>
+				{{/if}}
+				</h4>
+				{{#if factors}}
+					<ul class="factors form-group" name="{{slug}}">
+						{{#each factors}}
+							<li>
+								<label>{{title}} ({{weight}}%)
+								{{#if hint}}
+									<i class="fa fa-question-circle tooltip-trigger" title="{{{hint}}}"></i>
+								{{/if}}
+								</label>
+								<input type="number" name="{{key}}" value="{{score}}"/>
+							</li>
+						{{/each}}
+					</ul><!-- .factors -->
+				{{else}}
+					<div class="form-group">
+						<input type="number" name="{{slug}}" value="{{score}}" />
+					</div>
+				{{/if}}
+				</div>
 			{{/each}}
-			</ul>
-			<button id="grade-save" class="btn btn-primary">Save</button>
+			<input id="grade-save" class="btn btn-primary" type="submit" value="Save"/>
 		</form>
 	</div><!-- .grade-wrap -->
 </template>

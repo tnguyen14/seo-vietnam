@@ -5,7 +5,10 @@ body, html {
 	left: 0;
 	.transition(all 0.3s ease-in-out);
 	&.menu-active {
-		left: 15%;
+		left: 60%;
+		@media (min-width: @single-column-width) {
+			left: 25%;
+		}
 	}
 	.overlay {
 		background-color: rgba(0,0,0,0.5);
@@ -46,9 +49,13 @@ body, html {
 	background-color: @blue;
 	font-size: 1.2em;
 	position: absolute;
-	width: 15%;
+	width: 60%;
 	height: 100%;
-	left: -15%;
+	left: -60%;
+	@media (min-width: @single-column-width) {
+		width: 25%;
+		left: -25%;
+	}
 	h3 {
 		color: white;
 		font-size: 1.3em;
@@ -129,15 +136,39 @@ body, html {
 }
 .grade-wrap {
 	background-color: @orange;
-	position: absolute;
-	width: 25%;
-	height: 100%;
-	right: -25%;
-	.lh-transition(right 0.3s ease-in-out);
+	position: relative;
+	width: 100%;
+	max-height: 0;
+	.clearfix();
+	.lh-transition-duration(0.3s);
+	.lh-transition-timing-function(ease-in-out);
+	.lh-transition-property(all);
+	@media (min-width: @single-column-width) {
+		margin-top: 0;
+		max-height: none;
+		padding-top: 2em;
+		position: absolute;
+		width: 30%;
+		height: 100%;
+		right: -30%;
+		.lh-transition-property(right);
+	}
+	@media (min-width: @pretty-wide) {
+		width: 25%;
+		right: -25%;
+	}
 	&.grade-active {
-		right: 0;
+		max-height: 100em;
+		margin-top: 3.5em;
+		padding: 1em 0;
+		@media (min-width: @single-column-width) {
+			right: 0;
+			margin-top: 0;
+			padding-top: 2em;
+		}
 		.criteria {
-			position: fixed;
+			visibility: visible;
+			.opacity(1);
 		}
 	}
 	h3 {
@@ -147,7 +178,16 @@ body, html {
 		padding: 0.6em 0 1.3em 1.3em;
 	}
 	.criteria {
-		ul {
+		margin-top: 2em;
+		visibility: hidden;
+		.opacity(0);
+		.lh-transition(all 0.3s ease-in-out);
+		h4 {
+			color: darken(@darker-blue, 10%);
+			font-size: 1.3em;
+			padding-left: 1em;
+		}
+		.form-group {
 			padding: 0 3rem;
 			margin: 0;
 		}
@@ -161,20 +201,38 @@ body, html {
 		}
 		input[type="number"] {
 			width: 30%;
+			@media (min-width: @single-column-width) {
+				width: 50%;
+			}
+			@media (min-width: 60em) {
+				width: 30%;
+			}
 		}
 		.btn {
-			margin-left: 3rem;
+			margin: 1em 0 2em 3rem;
 			&:hover {
 				background-color: @darker-blue;
 				border-color: @darker-blue;
 			}
 		}
+		.tooltip-trigger {
+			font-size: 1.5rem;
+		}
 	}
 }
 .grade-app-wrap {
+	margin-top: 3em;
+	@media (min-width: @single-column-width) {
+		margin-top: 0;
+	}
 	.lh-transition(width 0.3s ease-in-out);
 	.grade-active & {
-		width: 70%;
+		@media (min-width: @single-column-width) {
+			width: 65%;
+		}
+		@media (min-width: @pretty-wide) {
+			width: 70%;
+		}
 	}
 }
 

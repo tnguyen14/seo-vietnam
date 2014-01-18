@@ -9,15 +9,14 @@
 			{{> display-personal-info}}
 		{{/with}}
 		{{#with app}}
-			<h2 class="section-title">Education</h2>
+			<h3 class="section-title">Education</h3>
 				{{> display-education}}
-			<h2 class="section-title">Qualifications</h2>
+			<h3 class="section-title">Qualifications</h3>
 				{{> display-qualifications}}
-			<h2 class="section-title">Professional Interests</h2>
+			<h3 class="section-title">Professional Interests</h3>
 				{{> display-professional}}
-			<h2 class="section-title">Essays</h2>
+			<h3 class="section-title">Essays</h3>
 				{{> display-essays}}
-
 			<h3 class="section-title">Files</h3>
 				{{> display-files}}
 			<button class="btn btn-primary edit-app">Edit your application</button>
@@ -55,8 +54,8 @@
 
 <!-- requires app context -->
 <template name="display-qualifications">
-	<h3>Standardized Tests</h3>
-	<h4>SAT</h4>
+	<h4>Standardized Tests</h4>
+	<em>SAT</em>
 	<div class="field-group">
 		<label for="sat-writing">Writing</label>
 		<div class="value">{{sat.writing}}</div>
@@ -70,7 +69,7 @@
 		<div class="value">{{sat.math}}</div>
 	</div>
 
-	<h4>Others</h4>
+	<em>Others</em>
 	<div class="field-group">
 		<label for="toefl">TOEFL</label>
 		<div class="value">{{tests.toefl}}</div>
@@ -88,7 +87,7 @@
 		<div class="value">{{tests.gmat}}</div>
 	</div>
 
-	<h3>Language Proficiency</h3>
+	<h4>Language Proficiency</h4>
 	<div class="field-group">
 		<div>
 			<label>Fluent</label>

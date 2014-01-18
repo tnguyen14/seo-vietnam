@@ -42,7 +42,7 @@ Template['grade-apps'].rendered = function() {
 			'date-completed',
 			'grader-status'
 		],
-		page: 5,
+		page: 10,
 		searchClass: 'searchApps',
 		plugins: [
 			ListPagination({

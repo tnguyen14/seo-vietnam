@@ -7,3 +7,4 @@
 @orange: #ff9431;
 
 @single-column-width: 50em;
+@pretty-wide: 70em;

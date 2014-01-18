@@ -15,42 +15,48 @@ GradeAppSingleController = RouteController.extend({
 		var graderId = Meteor.userId(),
 			user,
 			app = Applications.findOne(this.params._id),
-			criteria = [
-				{
-					"slug": "academic",
-					"title": "Academic Achievement",
-					"weight": 30
-				}, {
-					"slug": "leadership",
-					"title": "Demonstrate leadership potentials",
-					"weight": 30
-				}, {
-					"slug": "community",
-					"title": "Demonstrate passion for community service",
-					"weight": 30
-				}, {
-					"slug": "vietnam",
-					"title": "Interest in Vietnam",
-					"weight": 10
-				}
-			];
+			criteria = gradeCriteria();
+
 		if (app) {
 			user = Meteor.users.findOne(app.user);
 			if (app.grades) {
 				// get the grades that were submitted by this grader if exists
-				// filter returns an array
-				var currentGrade = _.chain(app.grades).find(function(grade) {
-					return grade.grader === graderId;
+				// omit the property grader in the grade to display properly
+				var appGrade = _.chain(app.grades).find(function(g) {
+					return g.grader === graderId;
 				}).omit('grader').value(),
-					currentKeys = _.keys(currentGrade);
-				// add current grade to criteria
+					appCriteria = _.keys(appGrade);
+				// add scores to be used in template
 				_.each(criteria, function(c){
-					if (_.contains(currentKeys, c.slug) && currentGrade[c.slug]) {
-						c.score = currentGrade[c.slug];
+					if (_.contains(appCriteria, c.slug) && appGrade[c.slug]) {
+						// if there are factors, dig deeper
+						if (c.factors) {
+							for (var f in c.factors) {
+								if (c.factors.hasOwnProperty(f)) {
+									c.factors[f].score = appGrade[c.slug][f];
+								}
+							}
+						} else {
+							c.score = appGrade[c.slug];
+						}
 					}
 				});
 			}
 		}
+		// add key to factors as Meteor handlebars does not supprt @key
+		// convert object 'factors' to array as Meteor #each does not support iterating over object
+		_.each(criteria, function(c) {
+			if (c.factors) {
+				var arrFactors = [];
+				for (var f in c.factors) {
+					if (c.factors.hasOwnProperty(f)) {
+						c.factors[f].key = f;
+						arrFactors.push(c.factors[f]);
+					}
+				}
+				c.factors = arrFactors;
+			}
+		});
 		return {
 			app: app,
 			user: user,
@@ -58,6 +64,28 @@ GradeAppSingleController = RouteController.extend({
 		}
 	}
 });
+
+Template['grade'].rendered = function() {
+	$('.tooltip-trigger').tooltip({
+		html: true,
+		placement: 'auto',
+		trigger: 'hover click'
+	});
+	var $form = $('#grade-app');
+	$form.validate({
+		rules: {
+			gpa: {
+				range: [0, 10]
+			}
+		}
+	});
+	$form.find('input[type="number"]').each(function() {
+		$(this).rules("add", {
+			range: [0, 10]
+		});
+	});
+
+}
 
 Template['grade'].events = {
 	'click .grade-icon': function(e) {
@@ -75,11 +103,16 @@ Template['grade'].events = {
 			// [{"criterion": "score"}, {"criterion2": "score2"}]
 			grades = getFormGroups($(e.target).closest('.criteria')),
 			saveGradeDfd = new $.Deferred(),
-			saveGraderStatusDfd = new $.Deferred();
+			saveGraderStatusDfd = new $.Deferred(),
+			$form = $('#grade-app');
+		console.log($form.valid());
+		if (!$form.valid()) {
+			console.log('not valid');
+			return;
+		}
 		// combine all the grades together into a single object
-		_.each(grades, function(grade) {
-			_.each(grade, function(score,slug) {
-				score = parseInt(score, 10);
+		_.each(grades, function (grade) {
+			_.each(grade, function (score, slug) {
 				g[slug] = score;
 			});
 		});
@@ -145,6 +178,6 @@ Template['grade'].events = {
 				context: "danger",
 				dismissable: true
 			});
-		})
+		});
 	}
 }
