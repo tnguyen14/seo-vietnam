@@ -73,11 +73,6 @@ Template['grade'].rendered = function() {
 	});
 	var $form = $('#grade-app');
 	$form.validate({
-		rules: {
-			gpa: {
-				range: [0, 10]
-			}
-		}
 	});
 	$form.find('input[type="number"]').each(function() {
 		$(this).rules("add", {
@@ -102,12 +97,10 @@ Template['grade'].events = {
 			// grades is an array
 			// [{"criterion": "score"}, {"criterion2": "score2"}]
 			grades = getFormGroups($(e.target).closest('.criteria')),
-			saveGradeDfd = new $.Deferred(),
-			saveGraderStatusDfd = new $.Deferred(),
+			saveGradeDfd = Q.defer(),
+			saveGraderStatusDfd = Q.defer(),
 			$form = $('#grade-app');
-		console.log($form.valid());
 		if (!$form.valid()) {
-			console.log('not valid');
 			return;
 		}
 		// combine all the grades together into a single object
@@ -165,19 +158,20 @@ Template['grade'].events = {
 				saveGraderStatusDfd.reject(err);
 			}
 		});
-		$.when(saveGradeDfd.promise(), saveGraderStatusDfd.promise())
-		.done(function() {
+		Q.all([saveGradeDfd.promise, saveGraderStatusDfd.promise])
+		.then(function() {
 			notify({
 				message: "Grades saved",
 				context: "success",
 				auto: true
 			});
-		}).fail(function(err) {
+		},function(err) {
+			console.log(err);
 			notify({
 				message: err.reason,
 				context: "danger",
 				dismissable: true
 			});
-		});
+		}).done();
 	}
 }
