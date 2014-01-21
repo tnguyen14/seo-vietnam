@@ -116,7 +116,7 @@ Meteor.publish('allUsers', function(role) {
 });
 
 Meteor.publish('allGraders', function() {
-	if (!hasRole('grader', this.userId)) {
+	if (!hasRole('grader', this.userId) && !hasRole('admin', this.userId)) {
 		return [];
 	}
 	return Meteor.users.find({roles: 'grader'});
