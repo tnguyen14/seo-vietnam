@@ -38,29 +38,30 @@ AdminAppsCompletedController = AdminAppsController.extend({
 			a.appURL = Router.routes['admin-app-single'].path({_id: a._id});
 			// if there are graders
 			if (a.graders) {
-				if (a.graders.length > 0) {
-					a.grade1 = 'assigned';
+				var grades = [];
+				// limit to the first 3 graders
+				for (var i = 0; i < 3; i++) {
+					var grade = {};
+					grade.class = 'grade' + (i + 1);
+					if (a.graders[i]) {
+						var graderId = a.graders[i],
+							grader = Meteor.users.findOne(graderId);
+						grade.status = 'assigned';
+						grade.graderId = graderId;
+						grade.grader = grader.emails[0].address;
+					}
+					grades.push(grade);
 				}
-				if (a.graders.length > 1) {
-					a.grade2 = 'assigned';
-				}
-				if (a.graders.length > 2) {
-					a.grade3 = 'assigned';
-				}
-				// if a grade has been received
-				// NOTE: grades array will not match up to graders array in order
+				// if there are grades received
 				if (a.grades) {
-					console.log(a.grades[0]);
-					if (a.grades.length > 0) {
-						a.grade1 = calculateGrade(a.grades[0]);
-					}
-					if (a.grades.length > 1) {
-						a.grade2 = calculateGrade(a.grades[1]);
-					}
-					if (a.grades.length > 2) {
-						a.grade3 = calculateGrade(a.grades[2]);
+					for (var j = 0, numGrades = a.grades.length; j < numGrades; j++) {
+						var grade = a.grades[j],
+							g = _.findWhere(grades, {graderId: grade.grader});
+						g.status = 'graded';
+						g.score = calculateGrade(grade);
 					}
 				}
+				a.displayGrades = grades;
 			}
 		});
 		return {

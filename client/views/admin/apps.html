@@ -27,9 +27,15 @@
 						<td class="status">{{status}}</td>
 						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
 						<td class="date-completed">{{date completedAt 'MMM Do YYYY, h:mma'}}</td>
-						<td class="grade1">{{grade1}}</td>
-						<td class="grade2">{{grade2}}</td>
-						<td class="grade2">{{grade3}}</td>
+						{{#each displayGrades}}
+							<td class="{{class}}">
+								{{#unless score}}
+									{{status}}
+									<span class="hidden">{{grader}}</span>
+								{{else}}
+									{{score}}
+								{{/unless}}
+						{{/each}}
 					</tr>
 				{{/each}}
 			</tbody>
