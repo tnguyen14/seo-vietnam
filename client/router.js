@@ -129,15 +129,12 @@ Router.map(function(){
 	});
 
 	// grade
-	this.route('grade-register', {
-		path: '/grade/register',
-		template: 'grade-register'
-	});
-	this.route('grade-temp', {
-		path: 'grade/temp'
+	this.route('grader-register', {
+		path: '/grader/register',
+		template: 'grader-register'
 	});
 	this.route('grader-profile', {
-		path: '/grade/profile',
+		path: '/grader/profile',
 		controller: GraderProfileController
 	});
 	this.route('grade-apps', {
@@ -167,7 +164,7 @@ Router.before(filters.isAdmin, {only: [
 ]});
 Router.before(filters.isGrader, {only: [
 	'grade-temp',
-	'grade-profile',
+	'grader-profile',
 	'grade-apps',
 	'grade-app-single'
 ]});

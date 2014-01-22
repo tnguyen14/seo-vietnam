@@ -10,7 +10,8 @@ GraderProfileController = RouteController.extend({
 	data: function() {
 		var graderId = (this.params._id) ? this.params._id : Meteor.userId(),
 			grader = Meteor.users.findOne(graderId),
-			apps = apps = Applications.find({'user': {$nin: [graderId, Meteor.userId()]}}).fetch();
+			assginedApps = graderAssignedApps(graderId),
+			apps = apps = Applications.find({_id: {$in: assginedApps}}).fetch();
 		Lazy(apps).each(function(a) {
 			// applicant whom the app belongs to
 			var applicant = Meteor.users.findOne(a.user);
@@ -90,31 +91,30 @@ Template['grader-profile'].events = {
 		if (Session.get('editing')) {
 			var $form = $('#grader-profile'),
 				graderId = $form.data('graderid');
-			console.log(graderId);
-
-			if ($form.valid()) {
-				saveUser({
-					groups: getFormGroups($form),
-					id: graderId,
-					success: function() {
-						Session.set('editing', false);
-						notify({
-							message: 'Successfully saved profile',
-							context: 'success',
-							auto: true,
-							clearPrev: true
-						});
-					},
-					error: function(err) {
-						notify({
-							message: err.reason,
-							context: 'danger',
-							dismissable: true,
-							clearPrev: true
-						})
-					}
-				});
+			if (!$form.valid()) {
+				return;
 			}
+			saveUser({
+				groups: getFormGroups($form),
+				id: graderId,
+				success: function() {
+					Session.set('editing', false);
+					notify({
+						message: 'Successfully saved profile',
+						context: 'success',
+						auto: true,
+						clearPrev: true
+					});
+				},
+				error: function(err) {
+					notify({
+						message: err.reason,
+						context: 'danger',
+						dismissable: true,
+						clearPrev: true
+					})
+				}
+			});
 		} else {
 			Session.set('editing', true);
 		}

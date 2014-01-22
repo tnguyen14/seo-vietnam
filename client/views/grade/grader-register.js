@@ -1,7 +1,7 @@
-Template['grade-register'].rendered = function() {
+Template['grader-register'].rendered = function() {
 	if (Meteor.user()) {
 		if (hasRole('grader', Meteor.user())) {
-			Router.go('grade-temp')
+			Router.go('grader-profile')
 		} else {
 			notify({
 				message: 'You\'re already a user of the site. If you\'d like to beome a grader, please contact us.',
@@ -10,7 +10,7 @@ Template['grade-register'].rendered = function() {
 			});
 		}
 	}
-	$("#grade-register").validate({
+	$("#grader-register").validate({
 		rules: {
 			email: {
 				email: true,
@@ -21,7 +21,7 @@ Template['grade-register'].rendered = function() {
 				required: true,
 				minlength: 6
 			},
-			grade_secret: {
+			grader_secret: {
 				required: true
 			}
 		},
@@ -33,20 +33,19 @@ Template['grade-register'].rendered = function() {
 	});
 }
 
-Template['grade-register'].events = {
+Template['grader-register'].events = {
 	'click #register-button': function(e) {
 		e.preventDefault();
-		var $form = $('#grade-register');
+		var $form = $('#grader-register');
 		if (!$form.valid() || Meteor.user()) {
 			return;
 		}
 		var email = $(".login-email", $form).val().trim(),
 			password = $(".login-password", $form).val().trim(),
-			secret = $("#grade-secret", $form).val().trim();
+			secret = $("#grader-secret", $form).val().trim();
 
 		Meteor.call('checkGraderSecret', secret, function(err, res) {
 			if (err) {
-				console.log(err);
 				notify({
 					message: err.reason,
 					context: 'danger',
@@ -71,7 +70,7 @@ Template['grade-register'].events = {
 					});
 					return;
 				}
-				Router.go('grade-profile');
+				Router.go('grader-profile');
 			})
 		})
 	}

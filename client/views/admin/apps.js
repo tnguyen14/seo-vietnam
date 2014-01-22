@@ -48,16 +48,17 @@ AdminAppsCompletedController = AdminAppsController.extend({
 					a.grade3 = 'assigned';
 				}
 				// if a grade has been received
-				// NOTE: grades array will not match up to graders array in terms of grader ID
+				// NOTE: grades array will not match up to graders array in order
 				if (a.grades) {
+					console.log(a.grades[0]);
 					if (a.grades.length > 0) {
-						a.grade1 = 10;
+						a.grade1 = calculateGrade(a.grades[0]);
 					}
 					if (a.grades.length > 1) {
-						a.grade2 = 10;
+						a.grade2 = calculateGrade(a.grades[1]);
 					}
 					if (a.grades.length > 2) {
-						a.grade3 = 10;
+						a.grade3 = calculateGrade(a.grades[2]);
 					}
 				}
 			}
@@ -69,8 +70,6 @@ AdminAppsCompletedController = AdminAppsController.extend({
 });
 
 Template['admin-apps'].rendered = function() {
-	// var $table = $('#admin-apps .admin-list-apps');
-	// $table.dataTable();
 	var listOptions = {
 		valueNames: [
 			'name',
