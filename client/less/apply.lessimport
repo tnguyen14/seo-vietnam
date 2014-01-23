@@ -165,7 +165,9 @@ input {
 
 .field-group {
 	margin-bottom: 1em;
-	label {
+	label,
+	.title {
+		display: inline-block;
 		width: 10rem;
 		@media (min-width: @single-column-width) {
 			width: 18rem;

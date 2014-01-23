@@ -22,7 +22,6 @@
 				{{> display-professional}}
 			<h3 class="section-title">Essays</h3>
 				{{> display-essays}}
-
 			<h3 class="section-title">Files</h3>
 				{{> display-files}}
 		{{/with}}
@@ -37,36 +36,37 @@
 	<div class="grade-wrap">
 		<form id="grade-app" class="criteria">
 			{{#each criteria}}
-				<div class="criterion"><h4>{{title}} ({{weight}}%)
+				<div class="criterion"><h4>{{title}} {{#if weight}}({{weight}}%){{/if}}
 				{{#if hint}}
 					<i class="fa fa-question-circle tooltip-trigger" title="{{{hint}}}"></i>
 				{{/if}}
 				</h4>
-				{{#if factors}}
-					<ul class="factors form-group" name="{{slug}}">
-						{{#each factors}}
-							<li>
-								<label>{{title}} ({{weight}}%)
-								{{#if hint}}
-									<i class="fa fa-question-circle tooltip-trigger" title="{{{hint}}}"></i>
-								{{/if}}
-								</label>
-								<input type="number" name="{{key}}" value="{{score}}"/>
-							</li>
-						{{/each}}
-					</ul><!-- .factors -->
+				{{#unless equal slug 'comment'}}
+					{{#if factors}}
+						<ul class="factors form-group" name="{{slug}}">
+							{{#each factors}}
+								<li>
+									<label>{{title}} ({{weight}}%)
+									{{#if hint}}
+										<i class="fa fa-question-circle tooltip-trigger" title="{{{hint}}}"></i>
+									{{/if}}
+									</label>
+									<input class="form-control" type="number" name="{{key}}" value="{{score}}"/>
+								</li>
+							{{/each}}
+						</ul><!-- .factors -->
+					{{else}}
+						<div class="form-group">
+							<input class="form-control" type="number" name="{{slug}}" value="{{score}}" />
+						</div>
+					{{/if}}
 				{{else}}
 					<div class="form-group">
-						<input type="number" name="{{slug}}" value="{{score}}" />
+						<textarea class="form-control" name="comment">{{score}}</textarea>
 					</div>
-				{{/if}}
-				</div>
+				{{/unless}}
+				</div><!-- .criterion -->
 			{{/each}}
-			<div class="criterion"><h4>Comments</h4>
-				<div class="form-group">
-					<textarea class="form-control" name="comment">{{grade.comment}}</textarea>
-				</div>
-			</div><!-- .criterion comments -->
 			<input id="grade-save" class="btn btn-primary" type="submit" value="Save"/>
 		</form>
 	</div><!-- .grade-wrap -->

@@ -23,19 +23,24 @@ AdminAppSingle = RouteController.extend({
 		// get grader profiles
 		if (_.isArray(gradersAssigned) && gradersAssigned.length > 0) {
 			gradersAssigned = Lazy(gradersAssigned).map(function(gid) {
-				var grader = Meteor.users.findOne(gid);
+				var grader = Meteor.users.findOne(gid),
+					grade = Lazy(app.grades).findWhere({grader: gid}),
+					criteria = parseGrade(grade),
+					g = {};
 				if (grader) {
-					return {
-						_id: grader._id,
-						name: grader.profile.name.first + ' ' + grader.profile.name.last,
-						email: grader.emails[0].address
-					}
+					g._id = grader._id,
+					g.name = grader.profile.name.first + ' ' + grader.profile.name.last,
+					g.email = grader.emails[0].address
 				} else {
-					return {
-						_id: gid,
-						noGraderFound: true
-					};
+					g._id = gid,
+					g.noGraderFound = true
 				}
+				if (grade) {
+					g.grade = grade;
+				}
+				g.criteria = criteria;
+				g.total = calculateGrade(grade);
+				return g;
 			}).toArray();
 		}
 		return {

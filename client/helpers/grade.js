@@ -131,3 +131,40 @@ removeGradeFromApp = function(appId, graderId) {
 		})
 	});
 }
+
+// parse app's grade, decorate it with criteria
+// @param {object} grade object
+// @return {object} the criteria object with scores
+parseGrade = function(grade) {
+	if (!grade) {
+		return;
+	}
+	var criteria = gradeCriteria(),
+	// keys of all the criteria in the grade
+		gradeKeys = Lazy(grade).keys();
+
+	Lazy(criteria).each(function(c) {
+		// if the grade contains the criteria, and a grade was given for that criteria
+		if (Lazy(gradeKeys).contains(c.slug) && grade[c.slug]) {
+			if (!c.factors) {
+				c.score = grade[c.slug];
+			// if there are subfactors, dig deeper
+			} else {
+				Lazy(c.factors).each(function(factor, key) {
+					factor.score = grade[c.slug][key];
+				});
+			}
+		}
+		// convert 'factors' to array as Meteor #each handlebars helper does not support iterating over object
+		// also add key to factors as Meteor handlebars does not support @key
+		if (c.factors) {
+			var factorsArr = [];
+			Lazy(c.factors).each(function(f, k) {
+				f.key = k;
+				factorsArr.push(f);
+			});
+			c.factors = factorsArr;
+		}
+	});
+	return criteria;
+}

@@ -15,48 +15,17 @@ GradeAppSingleController = RouteController.extend({
 		var graderId = Meteor.userId(),
 			user,
 			app = Applications.findOne(this.params._id),
-			criteria = gradeCriteria();
-
+			appGrade,
+			criteria;
 		if (app) {
 			user = Meteor.users.findOne(app.user);
 			if (app.grades) {
 				// get the grades that were submitted by this grader if exists
-				// omit the property grader in the grade to display properly
-				var appGrade = _.chain(app.grades).find(function(g) {
-					return g.grader === graderId;
-				}).omit('grader').value(),
-					appCriteria = _.keys(appGrade);
-				// add scores to be used in template
-				_.each(criteria, function(c){
-					if (_.contains(appCriteria, c.slug) && appGrade[c.slug]) {
-						// if there are factors, dig deeper
-						if (c.factors) {
-							for (var f in c.factors) {
-								if (c.factors.hasOwnProperty(f)) {
-									c.factors[f].score = appGrade[c.slug][f];
-								}
-							}
-						} else {
-							c.score = appGrade[c.slug];
-						}
-					}
-				});
+				appGrade = Lazy(app.grades).findWhere({grader: graderId});
+				criteria = parseGrade(appGrade);
+				console.log(criteria);
 			}
 		}
-		// add key to factors as Meteor handlebars does not supprt @key
-		// convert object 'factors' to array as Meteor #each does not support iterating over object
-		_.each(criteria, function(c) {
-			if (c.factors) {
-				var arrFactors = [];
-				for (var f in c.factors) {
-					if (c.factors.hasOwnProperty(f)) {
-						c.factors[f].key = f;
-						arrFactors.push(c.factors[f]);
-					}
-				}
-				c.factors = arrFactors;
-			}
-		});
 		return {
 			app: app,
 			user: user,

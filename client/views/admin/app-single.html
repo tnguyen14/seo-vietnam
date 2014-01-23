@@ -52,6 +52,37 @@
 		{{#with user}}
 			{{> display-personal-info}}
 		{{/with}}
+		<div class="grades">
+			<h3>Grades</h3>
+			{{#each gradersAssigned}}
+				<div class="grade">
+					<div class="field-group">
+						<h5 class="title">Grader</h5>
+						<div class="value" data-id="{{_id}}">{{name}} ({{email}})</div>
+					</div>
+					{{#each criteria}}
+						<div class="criterion field-group">
+							<h5 class="title">{{title}}</h5>
+							{{#if factors}}
+								{{#each factors}}
+									<div>
+										<label>{{title}}</label>
+										<div class="value">
+										{{score}}</div>
+									</div>
+								{{/each}}
+							{{else}}
+								<div class="value">{{score}}</div>
+							{{/if}}
+						</div>
+					{{/each}}
+					<div class="field-group">
+						<h5 class="title">Total</h5>
+						<div class="value">{{total}}</div>
+					</div>
+				</div>
+			{{/each}}
+		</div><!-- .grades -->
 		{{#with app}}
 			<h2 class="section-title">Education</h2>
 				{{> display-education}}

@@ -252,6 +252,20 @@ body, html {
 		padding-top: 0.5em;
 	}
 }
+.grade {
+	background-color: #eee;
+	padding: 0.5em 1em;
+	margin-bottom: 1em;
+	.field-group {
+		label {
+			font-weight: normal;
+		}
+		label,
+		.title {
+			width: 18em;
+		}
+	}
+}
 .assignment-output {
 	.success {
 		color: green;
