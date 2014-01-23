@@ -87,7 +87,7 @@ Template.login.events = {
 			if (hasRole('admin', user)) {
 				Router.go('admin');
 			} else if (hasRole('grader', user)) {
-				Router.go('grade-temp');
+				Router.go('grader-profile');
 			} else {
 				if (currentApp().status === 'completed') {
 					Router.go('profile');
