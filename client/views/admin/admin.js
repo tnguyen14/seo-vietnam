@@ -1,11 +1,13 @@
 AdminController = RouteController.extend({
 	waitOn: function() {
 		return [
-			Meteor.subscribe('allApps'),
-			Meteor.subscribe('allUsers')
+			// Meteor.subscribe('allApps'),
+			// Meteor.subscribe('allUsers')
 		];
 	},
 	data: function() {
+		Meteor.subscribe('allApps'),
+		Meteor.subscribe('allUsers')
 		var totalApps = Applications.find().fetch(),
 			submittedApps = Lazy(totalApps).filter(function(app) {
 				return app.status === 'completed';
