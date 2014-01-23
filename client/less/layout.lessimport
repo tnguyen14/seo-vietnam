@@ -17,6 +17,7 @@ body, html {
 
 .logout {
 	float: right;
+	margin-left: 1em;
 }
 
 .edit {
