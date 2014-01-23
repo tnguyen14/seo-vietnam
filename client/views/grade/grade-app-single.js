@@ -60,7 +60,9 @@ GradeAppSingleController = RouteController.extend({
 		return {
 			app: app,
 			user: user,
-			criteria: criteria
+			criteria: criteria,
+			// expose grade as well, for comments
+			grade: appGrade
 		}
 	}
 });
@@ -111,6 +113,7 @@ Template['grade'].events = {
 		});
 		// add grader id
 		g.grader = graderId;
+		console.log(g);
 		// add g to the grades array
 		Applications.update(appId, {
 			// pull out any grade from this grader previously
