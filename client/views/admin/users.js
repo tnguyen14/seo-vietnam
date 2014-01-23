@@ -60,7 +60,7 @@ AdminUserSingle = RouteController.extend({
 		];
 	},
 	data: function() {
-		var roles = ['applicant', 'admin', 'grader'],
+		var roles = getRoles(),
 			app = Applications.findOne({user: this.params._id});
 		if (app) {
 			app.url = Router.routes['admin-app-single'].path({_id: app._id});

@@ -112,6 +112,11 @@ Router.map(function(){
 		controller: AdminUsersController
 	});
 
+	this.route('admin-users-grader', {
+		path: '/admin/users/grader',
+		controller: AdminGradersController
+	});
+
 	this.route('admin-user-single', {
 		path: '/admin/users/:_id',
 		layoutTemplate: 'admin-layout',
@@ -158,6 +163,7 @@ Router.before(filters.isAdmin, {only: [
 	'admin-apps',
 	'admin-app-single',
 	'admin-users',
+	'admin-users-grader',
 	'admin-user-single',
 	'admin-graders',
 	'admin-grader-single'

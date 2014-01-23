@@ -53,12 +53,12 @@
 				</div>
 			{{/each}}
 		</div>
-		<div>
-			<label>App</label>
+		<div class="field-group">
+			<label>Application</label>
 			{{#if app}}
-				<div><a href="{{app.url}}">View app</a></div>
+				<div class="value"><a href="{{app.url}}">View app</a></div>
 			{{else}}
-				<div>No application found for this user.</div>
+				<div class="value">No application found for this user.</div>
 				<button class="btn btn-default" id="create-new-app">Create new app</button>
 			{{/if}}
 		</div>
