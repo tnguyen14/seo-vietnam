@@ -4,7 +4,7 @@ InterviewAppsController = RouteController.extend({
 			Meteor.subscribe('interviewerData'),
 			Meteor.subscribe('interviewerApps'),
 			Meteor.subscribe('interviewerUsers')
-		]
+		];
 	},
 	data: function() {
 		// does not include the grader's application, if they have any
@@ -12,7 +12,6 @@ InterviewAppsController = RouteController.extend({
 			assignedApps = interviewerAssignedApps(interviewer._id);
 			// apps that are assigned to this grader
 			apps = Applications.find({_id: {$in: assignedApps}}).fetch();
-		console.log('huh');
 		Lazy(apps).each(function(a) {
 			// applicant whom the app belongs to
 			var applicant = Meteor.users.findOne(a.user);
@@ -24,7 +23,6 @@ InterviewAppsController = RouteController.extend({
 
 			// find app status from the interviewer profile
 			var interviewerApp = Lazy(interviewer.interviewer.apps).findWhere({appId: a._id});
-			console.log(interviewerApp);
 			if (interviewerApp) a.interviewerStatus = interviewerApp.status;
 		});
 		return {

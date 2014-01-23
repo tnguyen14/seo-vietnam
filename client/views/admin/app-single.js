@@ -257,7 +257,7 @@ Template['admin-app-single'].events = {
 	'click #add-interviewer': function(e) {
 		e.preventDefault();
 		var $interviewerSelects = $('#interviewers select[name="interviewers"]');
-		if ($interviewerSelects.length < 3) {
+		if ($interviewerSelects.length < 1) {
 			$('#interviewers .editing').append(Meteor.render(Template['add-interviewer']));
 		}
 	},
