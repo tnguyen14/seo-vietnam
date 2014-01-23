@@ -1,17 +1,18 @@
-GradeAppsController = RouteController.extend({
+InterviewAppsController = RouteController.extend({
 	waitOn: function() {
 		return [
-			Meteor.subscribe('graderData'),
-			Meteor.subscribe('graderApps'),
-			Meteor.subscribe('graderUsers')
+			Meteor.subscribe('interviewerData'),
+			Meteor.subscribe('interviewerApps'),
+			Meteor.subscribe('interviewerUsers')
 		]
 	},
 	data: function() {
 		// does not include the grader's application, if they have any
-		var grader = Meteor.user(),
+		var interviewer = Meteor.user(),
+			assignedApps = interviewerAssignedApps(interviewer._id);
 			// apps that are assigned to this grader
-			assginedApps = graderAssignedApps(grader._id),
-			apps = Applications.find({_id: {$in: assginedApps}}).fetch();
+			apps = Applications.find({_id: {$in: assignedApps}}).fetch();
+		console.log('huh');
 		Lazy(apps).each(function(a) {
 			// applicant whom the app belongs to
 			var applicant = Meteor.users.findOne(a.user);
@@ -19,11 +20,12 @@ GradeAppsController = RouteController.extend({
 				a.profile = applicant.profile;
 				a.emails = applicant.emails;
 			}
-			a.appURL = Router.routes['grade-app-single'].path({_id: a._id});
+			a.appURL = Router.routes['interview-app-single'].path({_id: a._id});
 
-			// find app status from the grader profile
-			var graderApp = Lazy(grader.grader.apps).findWhere({appId: a._id});
-			if (graderApp) a.graderStatus = graderApp.status;
+			// find app status from the interviewer profile
+			var interviewerApp = Lazy(interviewer.interviewer.apps).findWhere({appId: a._id});
+			console.log(interviewerApp);
+			if (interviewerApp) a.interviewerStatus = interviewerApp.status;
 		});
 		return {
 			apps: apps
@@ -31,7 +33,7 @@ GradeAppsController = RouteController.extend({
 	}
 });
 
-Template['grade-apps'].rendered = function() {
+Template['interview-apps'].rendered = function() {
 	var listOptions = {
 		valueNames: [
 			'id',
@@ -41,7 +43,7 @@ Template['grade-apps'].rendered = function() {
 			'app-status',
 			'date-created',
 			'date-completed',
-			'grader-status'
+			'interviewer-status'
 		],
 		page: 10,
 		searchClass: 'searchApps',
@@ -51,10 +53,10 @@ Template['grade-apps'].rendered = function() {
 			})
 		]
 	}
-	this.appList = new List('grade-apps', listOptions);
+	this.appList = new List('interview-apps', listOptions);
 }
 
-Template['grade-apps'].events = {
+Template['interview-apps'].events = {
 	'click .assignedApp .drop a': function(e, template) {
 		e.preventDefault();
 		if (!hasRole('admin', Meteor.user())) {
@@ -65,13 +67,13 @@ Template['grade-apps'].events = {
 			});
 			return;
 		}
-		var graderId = $('#grade-apps').data('graderid'),
+		var interviewerId = $('#grade-apps').data('graderid'),
 			$assignedApp = $(e.target).closest('.assignedApp'),
 			appId = $assignedApp.data('id');
 		Q.all([
-			removeAppFromGrader(graderId, appId),
-			removeGraderFromApp(appId, graderId),
-			removeGradeFromApp(appId, graderId)
+			removeAppFromInterviewer(interviewerId, appId),
+			removeInterviewerFromApp(appId, interviewerId),
+			removeInterviewFromApp(appId, interviewerId)
 		]).then(function () {
 			notify({
 				message: 'Successfully removed grader',

@@ -1,0 +1,39 @@
+<template name="interview-apps">
+	<div class="interview-apps">
+		<h2>Applications Assigned</h2>
+		<form id="grade-apps" data-graderid="{{interviewerId}}">
+		<table id="interview-list-apps" class="table interview-list">
+			<caption>
+				<input type="text" class="searchApps form-control" placeholder="Search {{apps.length}} applications..." autofocus/>
+			</caption>
+			<thead>
+				<tr>
+					<th class="id">ID</th>
+					<th class="sort" data-sort="name">Name</th>
+					<th class="sort" data-sort="email">Email</th>
+					<th class="sort" data-sort="app-status">App Status</th>
+					<th class="sort desc" data-sort="date-created">Date created</th>
+					<th class="sort desc" data-sort="date-completed">Date submitted</th>
+					<th class="sort" data-sort="grader-status">Interviewer Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody class="list">
+				{{#each apps}}
+					<tr class="assignedApp" data-id="{{_id}}">
+						<td class="id">{{_id}}</td>
+						<td class="name"><a href="{{appURL}}">{{profile.name.first}} {{profile.name.last}}</a></td>
+						<td class="email"><a href="{{appURL}}">{{userEmail}}</a></td>
+						<td class="app-status">{{status}}</td>
+						<td class="date-created">{{date createdAt 'MMM Do YYYY, h:mma'}}</td>
+						<td class="date-completed">{{date completedAt 'MMM Do YYYY, h:mma'}}</td>
+						<td class="interviewer-status">{{interviewerStatus}}</td>
+						<td class="drop"><a href="#" class="drop">Drop app</a></td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<ul class="pagination"></ul>
+		</form>
+	</div><!-- .interview-apps -->
+</template>

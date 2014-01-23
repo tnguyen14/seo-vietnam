@@ -71,7 +71,7 @@ Router.map(function(){
 				token: this.params.token
 			}
 		}
-	})
+	});
 
 	this.route('apply', {
 		path: '/apply/:section?',
@@ -161,6 +161,14 @@ Router.map(function(){
 	this.route('interviewer-profile', {
 		path: '/interviewer/profile',
 		controller: InterviewerProfileController
+	});
+	this.route('interview-apps', {
+		path: '/interview/apps',
+		controller: InterviewAppsController
+	});
+	this.route('interview-app-single', {
+		path: '/interview/apps/:_id',
+		controller: GradeAppSingleController
 	});
 });
 

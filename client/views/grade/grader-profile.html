@@ -4,6 +4,10 @@
 	{{> logout}}
 	{{> edit}}
 	<form id="grader-profile" name="grader-profile" method="post" action="" data-graderid="{{graderId}}">
+		<div class="field-group">
+			<label for="email">Email</label>
+			<div class="value">{{email}}</div>
+		</div>
 		<div class="form-group" name="profile.name">
 			<div class="field-group">
 				<label for="first" class="{{#if editing}}control-label{{/if}}">First Name</label>

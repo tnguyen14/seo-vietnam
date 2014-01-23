@@ -11,7 +11,7 @@ GraderProfileController = RouteController.extend({
 		var graderId = (this.params._id) ? this.params._id : Meteor.userId(),
 			grader = Meteor.users.findOne(graderId),
 			assginedApps = graderAssignedApps(graderId),
-			apps = apps = Applications.find({_id: {$in: assginedApps}}).fetch();
+			apps = Applications.find({_id: {$in: assginedApps}}).fetch();
 		Lazy(apps).each(function(a) {
 			// applicant whom the app belongs to
 			var applicant = Meteor.users.findOne(a.user);
@@ -28,6 +28,7 @@ GraderProfileController = RouteController.extend({
 		return {
 			graderId: graderId,
 			profile: grader.profile,
+			email: grader.emails[0].address,
 			grader: grader.grader,
 			apps: apps,
 			locations: [

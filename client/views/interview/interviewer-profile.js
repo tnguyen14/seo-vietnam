@@ -26,7 +26,7 @@ InterviewerProfileController = RouteController.extend({
 
 			// find app data from the interviewer profile
 			var interviewerApp = Lazy(interviewer.interviewer.apps).findWhere({appId: a._id});
-			if (interviewerApp) a.interviewStatus = interviewerApp.status;
+			if (interviewerApp) a.interviewerStatus = interviewerApp.status;
 		});
 
 		// borrow grader location and profession if there is no exists
@@ -42,6 +42,7 @@ InterviewerProfileController = RouteController.extend({
 		return {
 			interviewerId: interviewerId,
 			profile: interviewer.profile,
+			email: interviewer.emails[0].address,
 			interviewer: interviewer.interviewer,
 			apps: apps,
 			locations: [
