@@ -41,16 +41,16 @@ AdminAppsCompletedController = AdminAppsController.extend({
 				var grades = [];
 				// limit to the first 3 graders
 				for (var i = 0; i < 3; i++) {
-					var grade = {};
-					grade.class = 'grade' + (i + 1);
+					var g = {};
+					g.class = 'grade' + (i + 1);
 					if (a.graders[i]) {
 						var graderId = a.graders[i],
 							grader = Meteor.users.findOne(graderId);
-						grade.status = 'assigned';
-						grade.graderId = graderId;
-						grade.grader = grader.emails[0].address;
+						g.status = 'assigned';
+						g.graderId = graderId;
+						g.grader = grader.emails[0].address;
 					}
-					grades.push(grade);
+					grades.push(g);
 				}
 				// if there are grades received
 				if (a.grades) {
@@ -84,7 +84,6 @@ Template['admin-apps'].rendered = function() {
 		],
 		page: 20,
 		searchClass: 'searchApps',
-		// indexAsync: true,
 		plugins: [
 			ListPagination({
 				outerWindow: 2

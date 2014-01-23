@@ -151,7 +151,7 @@ Router.before(filters.isLoggedIn, {except: [
 	'login',
 	'forgot-password',
 	'reset-password',
-	'grade-register'
+	'grader-register'
 ]});
 Router.before(filters.isAdmin, {only: [
 	'admin',
@@ -163,7 +163,6 @@ Router.before(filters.isAdmin, {only: [
 	'admin-grader-single'
 ]});
 Router.before(filters.isGrader, {only: [
-	'grade-temp',
 	'grader-profile',
 	'grade-apps',
 	'grade-app-single'
