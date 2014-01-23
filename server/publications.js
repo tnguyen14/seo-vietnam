@@ -139,14 +139,14 @@ Meteor.publish('allUsers', function(role) {
 });
 
 Meteor.publish('allGraders', function() {
-	if (!hasRole('admin', this.userId)) {
+	if (!hasRole('admin', this.userId) && !hasRole('interviewer', user)) {
 		return [];
 	}
 	return Meteor.users.find({roles: 'grader'});
 });
 
 Meteor.publish('allInterviewers', function() {
-	if (!hasRole('admin', this.userId)) {
+	if (!hasRole('admin', this.userId) && !hasRole('interviewer', user)) {
 		return [];
 	}
 	return Meteor.users.find({roles: 'interviewer'});
