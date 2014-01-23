@@ -4,7 +4,7 @@ Template.login.rendered = function() {
 		if (hasRole('admin', user)) {
 			Router.go('admin');
 		} else if (hasRole('grader', user)) {
-			Router.go('grade-temp');
+			Router.go('grader-profile');
 		} else {
 			Router.go('apply');
 		}
