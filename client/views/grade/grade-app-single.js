@@ -23,7 +23,6 @@ GradeAppSingleController = RouteController.extend({
 				// get the grades that were submitted by this grader if exists
 				appGrade = Lazy(app.grades).findWhere({grader: graderId});
 				criteria = parseGrade(appGrade);
-				console.log(criteria);
 			}
 		}
 		return {

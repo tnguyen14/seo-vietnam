@@ -136,9 +136,6 @@ removeGradeFromApp = function(appId, graderId) {
 // @param {object} grade object
 // @return {object} the criteria object with scores
 parseGrade = function(grade) {
-	if (!grade) {
-		return;
-	}
 	var criteria = gradeCriteria(),
 	// keys of all the criteria in the grade
 		gradeKeys = Lazy(grade).keys();
