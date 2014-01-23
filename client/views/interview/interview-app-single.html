@@ -1,0 +1,53 @@
+<template name="interview-app-single">
+	{{#with user}}
+		<h2>{{displayname}} - Application</h2>
+	{{/with}}
+	{{> notifications}}
+	<form id="interview-app-single" data-id="{{app._id}}" data-applicantid="{{user._id}}">
+		<div class="field-group">
+			<label for "status" class="">Status</label>
+			<div class="value">{{app.status}}</div>
+		</div><!-- .form-group status -->
+		<div class="field-group" id="graders">
+			<label for "grader" class="">Graders</label>
+			<div class="value list-group">
+			{{#each gradersAssigned}}
+				{{#if noAssessorFound}}
+					<span class="list-item">No grader found for id {{_id}}
+				{{else}}
+					<span class="list-item">{{name}} ({{email}})</span>
+				{{/if}}
+			{{/each}}
+			</div>
+		</div><!-- .form-group #graders -->
+		<div class="field-group" id="interviewers">
+			<label for "interviewer" class="">Interviewers</label>
+			<div class="value list-group">
+			{{#each interviewersAssigned}}
+				{{#if noAssessorFound}}
+					<span class="list-item">No interviewer found for id {{_id}}
+				{{else}}
+					<span class="list-item">{{name}} ({{email}})</span>
+				{{/if}}
+			{{/each}}
+			</div>
+		</div><!-- .form-group #interviewers -->
+		{{#with user}}
+			{{> display-personal-info}}
+		{{/with}}
+		{{> display-grades}}
+		{{#with app}}
+			<h2 class="section-title">Education</h2>
+				{{> display-education}}
+			<h2 class="section-title">Qualifications</h2>
+				{{> display-qualifications}}
+			<h2 class="section-title">Professional Interests</h2>
+				{{> display-professional}}
+			<h2 class="section-title">Essays</h2>
+				{{> display-essays}}
+
+			<h3 class="section-title">Files</h3>
+				{{> display-files}}
+		{{/with}}
+	</form>
+</template>

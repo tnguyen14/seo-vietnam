@@ -168,7 +168,7 @@ Router.map(function(){
 	});
 	this.route('interview-app-single', {
 		path: '/interview/apps/:_id',
-		controller: GradeAppSingleController
+		controller: InterviewAppSingleController
 	});
 });
 
