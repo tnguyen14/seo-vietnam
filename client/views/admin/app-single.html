@@ -25,7 +25,7 @@
 				{{#each gradersAssigned}}
 					<div class="edit-grader">
 						<select name="graders" class="graders form-control">
-							{{#if noGraderFound}}
+							{{#if noAssessorFound}}
 								<option value="{{_id}}" selected>No grader found for id {{_id}}</option>
 							{{/if}}
 							{{#each ../graders}}
@@ -40,7 +40,7 @@
 			{{else}}
 				<div class="value list-group">
 				{{#each gradersAssigned}}
-					{{#if noGraderFound}}
+					{{#if noAssessorFound}}
 						<span class="list-item">No grader found for id {{_id}}
 					{{else}}
 						<span class="list-item">{{name}} ({{email}})</span>
@@ -49,40 +49,41 @@
 				</div>
 			{{/if}}
 		</div><!-- .form-group #graders -->
+		<div class="{{#if editing}}form-group{{else}}field-group{{/if}}" id="interviewers">
+			<label for "interviewer" class="{{#if editing}}control-label{{/if}}">Interviewers</label>
+			{{#if editing}}
+				<div class="editing">
+				{{#each interviewersAssigned}}
+					<div class="edit-interviewer">
+						<select name="interviewers" class="interviewers form-control">
+							{{#if noAssessorFound}}
+								<option value="{{_id}}" selected>No interviewer found for id {{_id}}</option>
+							{{/if}}
+							{{#each ../interviewers}}
+								<option value="{{_id}}" {{selected _id ../_id}}>{{profile.name.first}} {{profile.name.last}} ({{emails.0.address}})</option>
+							{{/each}}
+						</select>
+						<a href="#" class="remove">Remove</a>
+					</div><!-- .edit-interviewer -->
+				{{/each}}
+				</div><!-- .editing -->
+				<button id="add-interviewer" class="btn">+ Add Interviewer</button>
+			{{else}}
+				<div class="value list-group">
+				{{#each interviewersAssigned}}
+					{{#if noAssessorFound}}
+						<span class="list-item">No interviewer found for id {{_id}}
+					{{else}}
+						<span class="list-item">{{name}} ({{email}})</span>
+					{{/if}}
+				{{/each}}
+				</div>
+			{{/if}}
+		</div><!-- .form-group #interviewers -->
 		{{#with user}}
 			{{> display-personal-info}}
 		{{/with}}
-		<div class="grades">
-			<h3>Grades</h3>
-			{{#each gradersAssigned}}
-				<div class="grade">
-					<div class="field-group">
-						<h5 class="title">Grader</h5>
-						<div class="value" data-id="{{_id}}">{{name}} ({{email}})</div>
-					</div>
-					{{#each criteria}}
-						<div class="criterion field-group">
-							<h5 class="title">{{title}}</h5>
-							{{#if factors}}
-								{{#each factors}}
-									<div>
-										<label>{{title}}</label>
-										<div class="value">
-										{{score}}</div>
-									</div>
-								{{/each}}
-							{{else}}
-								<div class="value">{{score}}</div>
-							{{/if}}
-						</div>
-					{{/each}}
-					<div class="field-group">
-						<h5 class="title">Total</h5>
-						<div class="value">{{total}}</div>
-					</div>
-				</div>
-			{{/each}}
-		</div><!-- .grades -->
+		{{> display-grades}}
 		{{#with app}}
 			<h2 class="section-title">Education</h2>
 				{{> display-education}}
@@ -99,6 +100,40 @@
 	</form>
 </template>
 
+<template name="display-grades">
+	<div class="grades">
+		<h3>Grades</h3>
+		{{#each gradersAssigned}}
+			<div class="grade">
+				<div class="field-group">
+					<h5 class="title">Grader</h5>
+					<div class="value" data-id="{{_id}}">{{name}} ({{email}})</div>
+				</div>
+				{{#each criteria}}
+					<div class="criterion field-group">
+						<h5 class="title">{{title}}</h5>
+						{{#if factors}}
+							{{#each factors}}
+								<div>
+									<label>{{title}}</label>
+									<div class="value">
+									{{score}}</div>
+								</div>
+							{{/each}}
+						{{else}}
+							<div class="value">{{score}}</div>
+						{{/if}}
+					</div>
+				{{/each}}
+				<div class="field-group">
+					<h5 class="title">Total</h5>
+					<div class="value">{{total}}</div>
+				</div>
+			</div>
+		{{/each}}
+	</div><!-- .grades -->
+</template>
+
 <template name="add-grader">
 	<div class="add-grader">
 		<select name="graders" class="graders form-control">
@@ -109,4 +144,16 @@
 		</select>
 		<a href="#" class="remove">Remove</a>
 	</div><!-- .add-grader -->
+</template>
+
+<template name="add-interviewer">
+	<div class="add-interviewer">
+		<select name="interviewers" class="interviewers form-control">
+			<option value=""></option>
+			{{#each interviewers}}
+			<option value="{{_id}}">{{profile.name.first}} {{profile.name.last}} ({{emails.0.address}})</option>
+			{{/each}}
+		</select>
+		<a href="#" class="remove">Remove</a>
+	</div><!-- .add-interviewer -->
 </template>

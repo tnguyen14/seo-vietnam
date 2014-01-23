@@ -241,7 +241,9 @@ body, html {
 }
 
 .add-grader,
-.edit-grader {
+.edit-grader,
+.add-interviewer,
+.edit-interviewer {
 	.clearfix();
 	select {
 		float: left;

@@ -22,8 +22,9 @@ Meteor.publish('allApps', function() {
 		return Applications.find({});
 	}
 	return [];
-})
+});
 
+// grader
 Meteor.publish('graderData', function(graderId) {
 	if (!_.isString(graderId)) {
 		graderId = this.userId;
@@ -37,7 +38,6 @@ Meteor.publish('graderData', function(graderId) {
 		}
 	});
 });
-
 Meteor.publish('graderApps', function(graderId) {
 	if (!_.isString(graderId)) {
 		graderId = this.userId;
@@ -50,7 +50,6 @@ Meteor.publish('graderApps', function(graderId) {
 		$in: assignedApps
 	}});
 });
-
 Meteor.publish('graderUsers', function(graderId) {
 	if (!_.isString(graderId)) {
 		graderId = this.userId;
@@ -62,8 +61,50 @@ Meteor.publish('graderUsers', function(graderId) {
 	return Meteor.users.find({_id: {
 		$in: assignedUsers
 	}})
-})
+});
 
+// interviewer
+Meteor.publish('interviewerData', function(interviewerId) {
+	if (!_.isString(interviewerId)) {
+		interviewerId = this.userId;
+	}
+	return Meteor.users.find({_id: interviewerId}, {
+		fields: {
+			'roles': 1,
+			'profile': 1,
+			'emails': 1,
+			'interviewer': 1,
+			// allow interviewer to see grader data
+			'grader': 1
+		}
+	});
+});
+Meteor.publish('interviewerApps', function(interviewerId) {
+	if (!_.isString(interviewerId)) {
+		interviewerId = this.userId;
+	}
+	if (!hasRole('interviewer', interviewerId)) {
+		return [];
+	}
+	var assignedApps = interviewerAssignedApps(interviewerId);
+	return Applications.find({_id: {
+		$in: assignedApps
+	}});
+});
+Meteor.publish('interviewerUsers', function(interviewerId) {
+	if (!_.isString(interviewerId)) {
+		interviewerId = this.userId;
+	}
+	if (!hasRole('interviewer', interviewerId)) {
+		return [];
+	}
+	var assignedUsers = interviewerAssignedUsers(interviewerId);
+	return Meteor.users.find({_id: {
+		$in: assignedUsers
+	}})
+});
+
+// users
 Meteor.publish('allUsers', function(role) {
 	if (isAdminById(this.userId)) {
 		var roles = [],
@@ -102,7 +143,14 @@ Meteor.publish('allGraders', function() {
 		return [];
 	}
 	return Meteor.users.find({roles: 'grader'});
-})
+});
+
+Meteor.publish('allInterviewers', function() {
+	if (!hasRole('admin', this.userId)) {
+		return [];
+	}
+	return Meteor.users.find({roles: 'interviewer'});
+});
 
 Meteor.publish('userData', function(userId) {
 	// find user based on app

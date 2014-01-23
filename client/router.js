@@ -35,6 +35,12 @@ var filters = {
 			this.render('oops');
 			this.stop();
 		}
+	},
+	isInterviewer: function() {
+		if (!(Meteor.loggingIn() || hasRole('interviewer', Meteor.user()))) {
+			this.render('oops');
+			this.stop();
+		}
 	}
 }
 
@@ -150,6 +156,12 @@ Router.map(function(){
 		path: '/grade/apps/:_id',
 		controller: GradeAppSingleController
 	});
+
+	// interview
+	this.route('interviewer-profile', {
+		path: '/interviewer/profile',
+		controller: InterviewerProfileController
+	});
 });
 
 Router.before(filters.isLoggedIn, {except: [
@@ -172,4 +184,7 @@ Router.before(filters.isGrader, {only: [
 	'grader-profile',
 	'grade-apps',
 	'grade-app-single'
+]});
+Router.before(filters.isInterviewer, {only: [
+	'interviewer-profile'
 ]});
