@@ -55,10 +55,16 @@ AdminAppsCompletedController = AdminAppsController.extend({
 				// if there are grades received
 				if (a.grades) {
 					for (var j = 0, numGrades = a.grades.length; j < numGrades; j++) {
-						var grade = a.grades[j],
-							g = _.findWhere(grades, {graderId: grade.grader});
-						g.status = 'graded';
-						g.score = calculateGrade(grade);
+						var grade = a.grades[j];
+						var g = _.findWhere(grades, {graderId: grade.grader});
+						if (g) {
+							g.status = 'graded';
+							g.score = calculateGrade(grade);
+						} else {
+							// console.table(a.grades);
+							// console.table(grades);
+							// console.log(a.graders);
+						}
 					}
 				}
 				a.displayGrades = grades;
