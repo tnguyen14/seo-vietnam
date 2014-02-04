@@ -162,6 +162,14 @@ Router.map(function(){
 		path: '/interviewer/profile',
 		controller: InterviewerProfileController
 	});
+	this.route('admin-interviewers', {
+		path: 'admin/interviewers/',
+		controller: AdminInterviewersController
+	});
+	this.route('admin-interviewer-single', {
+		path: 'admin/interviewers/:_id',
+		controller: InterviewerProfileController
+	});
 	this.route('interview-apps', {
 		path: '/interview/apps',
 		controller: InterviewAppsController

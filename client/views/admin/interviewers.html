@@ -1,0 +1,33 @@
+<template name="admin-interviewers">
+	{{> admin-menu}}
+	<h2>Interviewers</h2>
+	<form id="admin-interviewers">
+		<table id="admin-list-interviewers" class="table admin-list">
+			<caption>
+				<input type="text" class="searchInterviewers form-control" placeholder="Search {{interviewers.length}} interviewers..." autofocus/>
+			</caption>
+			<thead>
+				<tr>
+					<th class="sort" data-sort="name">Name</th>
+					<th class="sort" data-sort="email">Email</th>
+					<th class="sort" data-sort="location">Location</th>
+					<th class="sort" data-sort="profession">Profession</th>
+					<th class="sort" data-sort="app-assigned">App Assigned</th>
+				</tr>
+			</thead>
+			<tbody class="list">
+				{{#each interviewers}}
+					{{debug this}}
+					<tr>
+						<td class="name"><a href="{{profileURL}}" title="View User">{{profile.name.first}} {{profile.name.last}}</a></td>
+						<td class="email"><a href="{{profileURL}}" title="View User">{{emails.0.address}}</a></td>
+						<td class="location">{{interviewer.location}}</td>
+						<td class="profession">{{interviewer.profession}}</td>
+						<td class="app-assigned">{{#isEmpty interviewer.apps}}No app assigned{{else}}<a href="{{interviewer.apps.0.appURL}}">View app{{/isEmpty}}</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<ul class="pagination"></ul>
+	</form>
+</template>
