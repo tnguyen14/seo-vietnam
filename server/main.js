@@ -30,7 +30,9 @@ Meteor.startup(function(){
 				currentProfs = Information.findOne({category: 'profession'}).values;
 			Lazy(professions).each(function(p) {
 				currentP = Lazy(currentProfs).findWhere({slug: p.slug});
-				currentP.type = p.type;
+				if (currentP) {
+					currentP.type = p.type;
+				}
 			});
 			Information.update({category: 'profession'}, {$set: {values: currentProfs}});
 		}
