@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+export MONGO_URL=mongodb://localhost:27017/seo-vietnam
+
+if [[ ! "$(type -P mrt)" ]]; then
+	mrt install
+fi
+
+if [[ ! "$(type -P bower)" ]]; then
+	bower install
+fi
+
+meteor --settings settings.json
