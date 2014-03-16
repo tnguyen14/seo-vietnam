@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export MONGO_URL=mongodb://localhost:27017/seo-vietnam
+# export MONGO_URL=mongodb://localhost:27017/seo-vietnam
 
 if [[ ! "$(type -P mrt)" ]]; then
 	mrt install
@@ -10,4 +10,4 @@ if [[ ! "$(type -P bower)" ]]; then
 	bower install
 fi
 
-meteor --settings settings.json
+meteor -p 2000 --settings settings.json
