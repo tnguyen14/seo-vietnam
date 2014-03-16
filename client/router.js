@@ -178,6 +178,7 @@ Router.map(function(){
 		path: '/interview/apps/:_id',
 		controller: InterviewAppSingleController
 	});
+	this.route('loading');
 });
 
 Router.before(filters.isLoggedIn, {except: [
