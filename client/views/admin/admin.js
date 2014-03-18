@@ -52,21 +52,24 @@ appComplete = function (app) {
 }
 
 var getName = function(name) {
-  return name.first + ' ' + name.middle + ' ' + name.last;
+  return (name.first || '') + ' ' + (name.middle || '') + ' ' + (name.last || '');
 }
 
 Template['admin'].events = {
   'click #export-data': function() {
-    var header = 'userId,name,email,phone,school,location,graduationYear,appId,grader1,grade1,grade1Comment,grader2,grade2,grade2Comment,grader3,grade3,grade3Comment,interviewer,interviewScore,interviewComment',
+    var header = 'userId,name,email,phone,school,location,graduationYear,appId,grader1,grade1,grade1Comment,grader2,grade2,grade2Comment,grader3,grade3,grade3Comment,interviewer,interviewScore,interviewComment\r\n',
       body = '';
     completedApps.each(function(app) {
       // userId
       body += app.user + ',';
       var user = Meteor.users.findOne(app.user),
-        grade1 = grade2 = grade3 = interview = new Array(3),
+        grade1 = new Array(3),
+        grade2 = new Array(3),
+        grade3 = new Array(3),
+        interview = new Array(3),
         grader1, grader2, grader3, interviewer;
       // name
-      body += getName(user.profile.name);
+      body += getName(user.profile.name) + ',';
       // email
       body += user.emails[0].address + ',';
       // phone
@@ -84,6 +87,13 @@ Template['admin'].events = {
         grader1 = Meteor.users.findOne(app.graders[0]);
         if (grader1) {
           grade1[0] = getName(grader1.profile.name);
+          if (app.grades && app.grades.length > 0) {
+            var g1 = _.findWhere(app.grades, {grader: grader1._id});
+            if (g1) {
+              grade1[1] = calculateGrade(g1);
+              grade1[2] = '"' + (g1.comment || '') + '"';
+            }
+          }
         }
       }
       body += grade1.join(',') + ',';
@@ -92,6 +102,13 @@ Template['admin'].events = {
         grader2 = Meteor.users.findOne(app.graders[1]);
         if (grader2) {
           grade2[0] = getName(grader2.profile.name);
+          if (app.grades && app.grades.length > 0) {
+            var g2 = _.findWhere(app.grades, {grader: grader2._id});
+            if (g2) {
+              grade2[1] = calculateGrade(g2);
+              grade2[2] = '"' + (g2.comment || '') + '"';
+            }
+          }
         }
       }
       body += grade2.join(',') + ',';
@@ -101,6 +118,13 @@ Template['admin'].events = {
           grader3 = Meteor.users.findOne(app.graders[2]);
           if (grader3) {
             grade3[0] = getName(grader3.profile.name);
+            if (app.grades && app.grades.length > 0) {
+              var g3 = _.findWhere(app.grades, {grader: grader3._id});
+              if (g1) {
+                grade3[1] = calculateGrade(g3);
+                grade3[2] = '"' + (g3.comment || '') + '"';
+              }
+            }
           }
         }
       }
@@ -116,10 +140,14 @@ Template['admin'].events = {
       body += '\r\n';
     });
     var csv = new Blob([header, body], {type: 'text/csv'}),
-        a = document.createElement('a');
+        a = document.createElement('a'),
+        li = document.createElement('li');
     a.href = window.URL.createObjectURL(csv);
-    a.innerHTML = 'Download';
-    document.getElementsByClassName('admin-content')[0].appendChild(a);
+    a.title = 'Completed Apps';
+    a.innerHTML = 'Download Completed Apps';
+    a.download = "completedapps.csv";
+    li.appendChild(a);
+    document.getElementsByClassName('download-links')[0].appendChild(li);
   }
 };
 
