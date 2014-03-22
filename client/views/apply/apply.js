@@ -119,7 +119,7 @@ Template.apply.events = {
 			if (applyUserId === Meteor.userId()) {
 				Router.go('apply', {section: to});
 			} else {
-				Router.go('users-apply', {id: applyUserId, section: to});
+				Router.go('users-apply', {_id: applyUserId, section: to});
 			}
 
 		});

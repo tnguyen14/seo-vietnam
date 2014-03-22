@@ -1,7 +1,7 @@
 ApplyController = RouteController.extend({
 	id: function() {
-		if (this.params.id) {
-			return this.params.id;
+		if (this.params._id) {
+			return this.params._id;
 		} else {
 			return Meteor.userId();
 		}
@@ -27,7 +27,7 @@ ApplyController = RouteController.extend({
 	data: function() {
 		return {
 			app: Applications.findOne({user: this.id()}),
-			user: (this.params.id) ? Meteor.users.findOne(this.params.id) : Meteor.user()
+			user: (this.params._id) ? Meteor.users.findOne(this.params._id) : Meteor.user()
 		}
 	}
 });
@@ -94,7 +94,7 @@ Router.map(function(){
 	});
 
 	this.route('users-apply', {
-		path: '/users/:id/apply/:section?',
+		path: '/users/:_id/apply/:section?',
 		controller: ApplyController,
 		template: 'apply'
 	});

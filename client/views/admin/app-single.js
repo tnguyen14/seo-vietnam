@@ -247,10 +247,10 @@ Template['admin-app-single'].events = {
 			Session.set('editing', true);
 		}
 	},
-	'click #edit-app-details': function(e) {
-		e.preventDefault();
-		Router.go('users-apply', {id: $('#admin-app-single').data('applicantId')});
-	},
+	// 'click #edit-app-details': function(e) {
+	// 	e.preventDefault();
+	// 	Router.go('users-apply', {id: $('#admin-app-single').data('applicantId')});
+	// },
 	'click #add-grader': function(e) {
 		e.preventDefault();
 		var $graderSelects = $('#graders select[name="graders"]');
