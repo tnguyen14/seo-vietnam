@@ -57,7 +57,7 @@ var getName = function(name) {
 
 Template['admin'].events = {
   'click #export-data': function() {
-    var header = 'userId,name,email,phone,school,location,graduationYear,appId,grader1,grade1,grade1Comment,grader2,grade2,grade2Comment,grader3,grade3,grade3Comment,interviewer,interviewScore,interviewComment\r\n',
+    var header = 'userId,name,email,phone,school,degree,location,graduationYear,appId,grader1,grade1,grade1Comment,grader2,grade2,grade2Comment,grader3,grade3,grade3Comment,interviewer,interviewScore,interviewComment\r\n',
       body = '';
     completedApps.each(function(app) {
       // userId
@@ -76,6 +76,8 @@ Template['admin'].events = {
       body += user.profile.phone + ',';
       // school
       body += app.college + ',';
+      // degree
+      body += (app.degree || '') + ',';
       // location
       body += user.profile['country-residence'] + ',';
       // graduationYear

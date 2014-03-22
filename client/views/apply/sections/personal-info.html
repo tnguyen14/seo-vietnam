@@ -1,7 +1,7 @@
 <template name="personal-info">
 	<form id="personal-info" name="personal-info" class="fragment" method="post" action="">
 	<h2>Personal Information</h2>
-		{{#with currentUser.profile}}
+		{{#with user.profile}}
 			<div class="form-group" name="profile.name">
 				<div class="field-group">
 					<label for="first" class="control-label">First Name</label>

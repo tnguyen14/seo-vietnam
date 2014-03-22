@@ -54,10 +54,11 @@ Handlebars.registerHelper('isEmpty', function(thing, options) {
 	}
 });
 
-Handlebars.registerHelper('date', function(d, f) {
+Handlebars.registerHelper('date', function(d, f, inputF) {
 	if (d && d !== '') {
 		var format = (_.isString(f)) ? f : 'ddd, MMM Do YYYY, h:mm a';
-		return moment(d).zone('+0700').format(format);
+		inputF = (_.isString(inputF)) ? inputF : '';
+		return moment(d, inputF).zone('+0700').format(format);
 	}
 });
 

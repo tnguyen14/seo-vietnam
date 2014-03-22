@@ -23,3 +23,18 @@ Template.education.majors = function() {
 Template.education.colleges = function() {
 	return getInfo('college');
 };
+
+Template.education.degrees = function() {
+	return [
+		{
+			name: 'Bachelor',
+			slug: 'bachelor'
+		}, {
+			name: 'Master',
+			slug: 'master'
+		}, {
+			name: 'Ph. D',
+			slug: 'phd'
+		}
+	];
+};

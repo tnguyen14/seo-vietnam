@@ -44,11 +44,15 @@
 <template name="display-education">
 	<div class="field-group">
 		<label for="college">College/ University</label>
-		<div class="value">{{getInfoName 'college' college}} '{{date graduation-date 'YY'}}</div>
+		<div class="value">{{getInfoName 'college' college}} '{{date graduation-date 'YY' 'YYYY'}}</div>
 	</div>
 	<div class="field-group">
 		<label for="major">Major</label>
 		<div class="value">{{{getAppValue 'major'}}}</div>
+	</div>
+	<div class="field-group">
+		<label for="degree">Degree</label>
+		<div class="value">{{degree}}</div>
 	</div>
 </template>
 

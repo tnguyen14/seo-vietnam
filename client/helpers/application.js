@@ -23,7 +23,7 @@ newApplication = function (userId, cb) {
 }
 
 currentApp = function() {
-	var userId = Meteor.userId(),
+	var userId = Session.get('apply-userId') || Meteor.userId(),
 		count = Applications.find({user: userId}).count();
 	if (count === 0) {
 		notify({

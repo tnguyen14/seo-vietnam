@@ -22,7 +22,8 @@ var saveInputs = function (doneCb, failCb) {
 		saveUser({
 			groups: inputGroups,
 			success: doneCb,
-			error: failCb
+			error: failCb,
+			id: Session.get('apply-userId')
 		});
 	} else {
 		saveApp({
@@ -107,6 +108,7 @@ Template.apply.events = {
 		e.preventDefault();
 		// `this` is the context of of these li's
 		var current = Session.get('current'),
+			applyUserId = Session.get('apply-userId'),
 			to = this.slug;
 		// if form validation failes, don't do anything
 		if (!$('#' + current).valid()) {
@@ -114,7 +116,12 @@ Template.apply.events = {
 		}
 
 		saveInputs(function () {
-			Router.go('apply', {section: to});
+			if (applyUserId === Meteor.userId()) {
+				Router.go('apply', {section: to});
+			} else {
+				Router.go('users-apply', {id: applyUserId, section: to});
+			}
+
 		});
 	},
 	'click #app-save': function(e) {
@@ -160,7 +167,13 @@ Template.apply.events = {
 	},
 	'click #view-profile': function(e) {
 		e.preventDefault();
-		Router.go('profile');
+		var applyUserId = Session.get('apply-userId');
+		if (applyUserId === Meteor.userId()) {
+			Router.go('profile');
+		} else {
+			Router.go('admin-user-single', {_id: applyUserId});
+		}
+
 	},
 	// add own content
 	'click .add-own-content .add': function(e) {
