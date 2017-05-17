@@ -1,5 +1,7 @@
 #SEO Vietnam Web Application
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/tnguyen14/seo-vietnam.svg)](https://greenkeeper.io/)
+
 ##Architecture
 - [Meteor](http://meteor.com)
 - [AWS S3](http://aws.amazon.com/s3/)
